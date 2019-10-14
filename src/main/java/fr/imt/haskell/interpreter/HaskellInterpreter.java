@@ -3,6 +3,8 @@ package fr.imt.haskell.interpreter;
 import fr.imt.haskell.interpreter.ast.*;
 import fr.imt.haskell.interpreter.ast.constants.*;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.visitor.BetaReductionVisitor;
+import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 
 /** Main. */
 public class HaskellInterpreter {
@@ -18,5 +20,8 @@ public class HaskellInterpreter {
             new Number(5));
 
     System.out.println(application1);
+
+    final Visitor visitor = new BetaReductionVisitor();
+    application1.accept(visitor);
   }
 }
