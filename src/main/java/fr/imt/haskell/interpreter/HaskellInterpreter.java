@@ -12,6 +12,8 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
+    final Visitor visitor = new BetaReductionVisitor();
+
     final Application application1 =
         new Application(
             new Lambda(
@@ -19,9 +21,24 @@ public class HaskellInterpreter {
                 new Application(new Application(new Plus(), new Variable("x")), new Variable("x"))),
             new Number(5));
 
-    System.out.println("Expression to evaluate: " + application1 + "\n");
-
-    final Visitor visitor = new BetaReductionVisitor();
+    System.out.println("\nExpression to evaluate: " + application1 + "\n");
     application1.accept(visitor);
+
+    final Application application2 =
+        new Application(
+            new Lambda(
+                new Variable("z"),
+                new Application(
+                    new Application(
+                        new Plus(),
+                        new Application(
+                            new Lambda(
+                                new Variable("y"), new Application(new Minus(), new Variable("y"))),
+                            new Number(5))),
+                    new Variable("z"))),
+            new Number(42));
+
+    System.out.println("\nExpression to evaluate: " + application2 + "\n");
+    application2.accept(visitor);
   }
 }
