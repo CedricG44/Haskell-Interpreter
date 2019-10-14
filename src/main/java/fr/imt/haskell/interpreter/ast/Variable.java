@@ -21,7 +21,7 @@ public final class Variable extends Expression {
   }
 
   @Override
-  public void accept(Visitor visitor) {
+  public void accept(final Visitor visitor) {
     visitor.visit(this);
   }
 }

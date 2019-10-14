@@ -13,12 +13,12 @@ public final class Application extends Expression {
     this.expR = expR;
   }
 
-  public void setExpL(Expression expL) {
-    this.expL = expL;
+  public Expression getExpL() {
+    return expL;
   }
 
-  public void setExpR(Expression expR) {
-    this.expR = expR;
+  public Expression getExpR() {
+    return expR;
   }
 
   @Override
@@ -27,8 +27,7 @@ public final class Application extends Expression {
   }
 
   @Override
-  public void accept(Visitor visitor) {
-    visitor.visit(expL);
-    visitor.visit(expR);
+  public void accept(final Visitor visitor) {
+    visitor.visit(this);
   }
 }

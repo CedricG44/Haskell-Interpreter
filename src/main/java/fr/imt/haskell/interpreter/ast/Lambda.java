@@ -23,12 +23,11 @@ public final class Lambda extends Expression {
 
   @Override
   public String toString() {
-    return "(λ" + var + ". " + exp + ")";
+    return "(\\" + var + " -> " + exp + ")";
   }
 
   @Override
-  public void accept(Visitor visitor) {
-    visitor.visit(var);
-    visitor.visit(exp);
+  public void accept(final Visitor visitor) {
+    visitor.visit(this);
   }
 }

@@ -10,7 +10,7 @@ import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 public class HaskellInterpreter {
 
   public static void main(String[] args) {
-    System.out.println("HaskellInterpreter !");
+    System.out.println("HaskellInterpreter !\n");
 
     final Application application1 =
         new Application(
@@ -19,7 +19,7 @@ public class HaskellInterpreter {
                 new Application(new Application(new Plus(), new Variable("x")), new Variable("x"))),
             new Number(5));
 
-    System.out.println(application1);
+    System.out.println("Expression to evaluate: " + application1 + "\n");
 
     final Visitor visitor = new BetaReductionVisitor();
     application1.accept(visitor);
