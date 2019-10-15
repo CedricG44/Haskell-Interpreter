@@ -26,5 +26,4 @@ public final class Plus extends Constant {
   public int hashCode() {
     return Objects.hash(value);
   }
-
 }

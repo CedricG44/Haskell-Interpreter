@@ -1,10 +1,19 @@
 package fr.imt.haskell.interpreter.ast;
 
-public interface Expression {
+/** Lambda calculus expression. */
+public abstract class Expression {
 
-    Expression reduce();
+  public abstract boolean isReducible();
 
-    Expression substituate(Variable variable, Expression substitute);
+  public abstract Expression reduce();
 
-    boolean isReducible();
+  public abstract Expression substitute(final Variable var, final Expression substitute);
+
+  public abstract boolean isApplication();
+
+  public abstract boolean isLambda();
+
+  public abstract boolean isVariable();
+
+  public abstract boolean isConstant();
 }

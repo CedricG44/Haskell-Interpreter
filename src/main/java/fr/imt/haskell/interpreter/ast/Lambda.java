@@ -1,35 +1,79 @@
 package fr.imt.haskell.interpreter.ast;
 
-public final class Lambda implements Expression {
+import java.util.Objects;
 
-    public final Variable name;
-    public final Expression expression;
+/** Lambda abstractions. */
+public final class Lambda extends Expression {
 
-    public Lambda(Variable name, Expression expression){
-        this.name = name;
-        this.expression = expression;
+  private Variable var;
+  private Expression exp;
+
+  public Lambda(Variable var, Expression exp) {
+    this.var = var;
+    this.exp = exp;
+  }
+
+  @Override
+  public boolean isReducible() {
+    return this.exp.isReducible();
+  }
+
+  @Override
+  public Expression reduce() {
+    if (isReducible()) {
+      return new Lambda(var, this.exp.reduce());
     }
+    return this;
+  }
 
-    @Override
-    public Expression reduce() {
-        if(isReducible()){
-            return new Lambda(this.name, this.expression.reduce());
-        }
-        return this;
-    }
+  @Override
+  public Expression substitute(final Variable var, final Expression substitute) {
+    return new Lambda(var, exp.substitute(this.var, substitute));
+  }
 
-    @Override
-    public Expression substituate(Variable variable, Expression substitute) {
-        return this.expression.substituate(variable, substitute);
-    }
+  public Variable getVar() {
+    return var;
+  }
 
-    @Override
-    public boolean isReducible() {
-        return this.expression.isReducible();
-    }
+  public Expression getExp() {
+    return exp;
+  }
 
-    @Override
-    public String toString() {
-        return "(\\" + this.name + " -> " + this.expression + ")";
-    }
+  @Override
+  public String toString() {
+    return "(\\" + var + " -> " + exp + ")";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Lambda lambda = (Lambda) o;
+    return var.equals(lambda.var) && exp.equals(lambda.exp);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(var, exp);
+  }
+
+  @Override
+  public boolean isApplication() {
+    return false;
+  }
+
+  @Override
+  public boolean isLambda() {
+    return true;
+  }
+
+  @Override
+  public boolean isVariable() {
+    return false;
+  }
+
+  @Override
+  public boolean isConstant() {
+    return false;
+  }
 }
