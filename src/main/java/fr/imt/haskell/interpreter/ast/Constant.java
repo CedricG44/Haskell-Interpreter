@@ -14,4 +14,26 @@ public class Constant extends Expression {
   public void accept(final Visitor visitor) {
     visitor.visit(this);
   }
+
+  @Override
+  public boolean isApplication() {
+    return false;
+  }
+
+  @Override
+  public boolean isLambda() {
+    return false;
+  }
+
+  @Override
+  public boolean isVariable() {
+    return false;
+  }
+
+  @Override
+  public boolean isConstant() {
+    return true;
+  }
+
+
 }

@@ -37,11 +37,35 @@ public final class Variable extends Expression {
 
   @Override
   public Expression reduct(final Variable var, final Expression exp) {
+    if (this.equals(var)) {
+      return exp;
+    }
+
     return this;
   }
 
   @Override
   public void accept(final Visitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public boolean isApplication() {
+    return false;
+  }
+
+  @Override
+  public boolean isLambda() {
+    return false;
+  }
+
+  @Override
+  public boolean isVariable() {
+    return true;
+  }
+
+  @Override
+  public boolean isConstant() {
+    return false;
   }
 }

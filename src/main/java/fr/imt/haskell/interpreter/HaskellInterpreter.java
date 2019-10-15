@@ -42,7 +42,7 @@ public class HaskellInterpreter {
                     new Variable("z"))),
             new Number(42));
 
-    //System.out.println("\nExpression to evaluate: " + application2 + "\n");
-    //application2.accept(printer);
+    System.out.println("\nExpression to evaluate: " + application2 + "\n");
+    application2.accept(printer);
   }
 }

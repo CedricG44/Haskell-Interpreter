@@ -15,14 +15,25 @@ public class BetaReductionVisitor implements Visitor {
   }
 
   @Override
-  public void visit(Application application) {}
+  public void visit(Application application) {
+    if (application.getExpL().isLambda()) {
+      Lambda lambda = (Lambda) application.getExpL();
+      exp = lambda.reduct(lambda.getVar(), application.getExpR());
+    }
+  }
 
   @Override
-  public void visit(Lambda lambda) {}
+  public void visit(final Lambda lambda) {
+    exp = lambda;
+  }
 
   @Override
-  public void visit(Variable variable) {}
+  public void visit(final Variable variable) {
+    exp = variable;
+  }
 
   @Override
-  public void visit(Constant constant) {}
+  public void visit(final Constant constant) {
+    exp = constant;
+  }
 }
