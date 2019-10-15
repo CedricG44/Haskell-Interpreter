@@ -1,29 +1,25 @@
 package fr.imt.haskell.interpreter.ast.visitor;
 
-import fr.imt.haskell.interpreter.ast.*;
+import fr.imt.haskell.interpreter.ast.Application;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Lambda;
+import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.constants.Minus;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.constants.Plus;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
 public class BetaReductionVisitorTest {
 
-  private BetaReductionVisitor betaReductionVisitor;
   private Expression exp;
   private Expression expectedExp;
-
-  @Before
-  public void initVisitor() {
-    betaReductionVisitor = new BetaReductionVisitor();
-  }
 
   @Parameterized.Parameters(name = "{index}: {0}")
   public static Iterable<Object[]> data() {
@@ -59,8 +55,7 @@ public class BetaReductionVisitorTest {
           {
             new Application(new Lambda(new Variable("x"), new Variable("y")), new Number(5)),
             new Variable("y")
-          }
-          /*,
+          },
           {
             new Application(
                 new Lambda(
@@ -78,7 +73,7 @@ public class BetaReductionVisitorTest {
             new Application(
                 new Application(new Plus(), new Application(new Minus(), new Number(5))),
                 new Number(42))
-          }*/
+          }
         });
   }
 
@@ -90,8 +85,8 @@ public class BetaReductionVisitorTest {
   @Test
   public void betaReduction() {
     System.out.println("\nExpression to reduce: " + exp);
-    exp.accept(betaReductionVisitor);
-    System.out.println("Reducted expression: " + betaReductionVisitor.getExp());
-    assertEquals(expectedExp, betaReductionVisitor.getExp());
+    final Expression reducedExp = exp.reduce();
+    System.out.println("Reduced expression: " + reducedExp + "\n");
+    assertEquals(expectedExp, reducedExp);
   }
 }

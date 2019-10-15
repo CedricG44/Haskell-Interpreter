@@ -1,7 +1,5 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
-
 import java.util.Objects;
 
 /** Variable names. */
@@ -11,6 +9,16 @@ public final class Variable extends Expression {
 
   public Variable(String value) {
     this.value = value;
+  }
+
+  @Override
+  public boolean isReducible() {
+    return false;
+  }
+
+  @Override
+  public Expression reduce() {
+    return this;
   }
 
   public String getValue() {
@@ -33,20 +41,6 @@ public final class Variable extends Expression {
   @Override
   public int hashCode() {
     return Objects.hash(value);
-  }
-
-  @Override
-  public Expression reduct(final Variable var, final Expression exp) {
-    if (this.equals(var)) {
-      return exp;
-    }
-
-    return this;
-  }
-
-  @Override
-  public void accept(final Visitor visitor) {
-    visitor.visit(this);
   }
 
   @Override

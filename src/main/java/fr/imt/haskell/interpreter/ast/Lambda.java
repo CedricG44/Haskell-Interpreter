@@ -1,7 +1,5 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
-
 import java.util.Objects;
 
 /** Lambda abstractions. */
@@ -13,6 +11,19 @@ public final class Lambda extends Expression {
   public Lambda(Variable var, Expression exp) {
     this.var = var;
     this.exp = exp;
+  }
+
+  @Override
+  public boolean isReducible() {
+    return this.exp.isReducible();
+  }
+
+  @Override
+  public Expression reduce() {
+    if (isReducible()) {
+      return new Lambda(var, this.exp.reduce());
+    }
+    return this;
   }
 
   public Variable getVar() {
@@ -39,25 +50,6 @@ public final class Lambda extends Expression {
   @Override
   public int hashCode() {
     return Objects.hash(var, exp);
-  }
-
-  @Override
-  public Expression reduct(final Variable var, final Expression exp) {
-    if (exp.isApplication()) {
-      Application app = (Application) exp;
-
-      if (var.equals(app.getExpL())) {
-        return new Application(exp, app.getExpR());
-      } else if (var.equals(app.getExpR())) {
-        return new Application(app.getExpL(), exp);
-      }
-    }
-    return this.exp.reduct(var, exp);
-  }
-
-  @Override
-  public void accept(final Visitor visitor) {
-    visitor.visit(this);
   }
 
   @Override

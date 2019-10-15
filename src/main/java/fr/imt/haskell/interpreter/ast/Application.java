@@ -1,6 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
+import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.reductor.Reductor;
 
 import java.util.Objects;
 
@@ -33,8 +34,7 @@ public final class Application extends Expression {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Application that = (Application) o;
-    return expL.equals(that.expL) &&
-            expR.equals(that.expR);
+    return expL.equals(that.expL) && expR.equals(that.expR);
   }
 
   @Override
@@ -43,13 +43,28 @@ public final class Application extends Expression {
   }
 
   @Override
-  public Expression reduct(final Variable var, final Expression exp) {
-    return new Application(expL.reduct(var, exp), expR.reduct(var, exp));
+  public boolean isReducible() {
+    return expL.isReducible() || expR.isReducible() || expL.isLambda();
   }
 
   @Override
-  public void accept(final Visitor visitor) {
-    visitor.visit(this);
+  public Expression reduce() {
+    Expression exp = new Number(666);
+
+    if (expL.isReducible()) {
+      exp = new Application(expL.reduce(), expR);
+    } else if (expR.isReducible()) {
+      exp = new Application(expL, expR.reduce());
+    } else if (expL.isLambda()) {
+      Lambda lambda = (Lambda) expL;
+      exp = Reductor.substitute(lambda.getExp(), lambda.getVar(), expR);
+    }
+
+    if (exp.isReducible()) {
+      return exp.reduce();
+    }
+
+    return exp;
   }
 
   @Override

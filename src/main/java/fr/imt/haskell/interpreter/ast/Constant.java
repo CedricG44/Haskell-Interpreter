@@ -1,18 +1,16 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
-
 /** Built-in constants. */
 public class Constant extends Expression {
 
   @Override
-  public Expression reduct(final Variable var, final Expression exp) {
-    return this;
+  public boolean isReducible() {
+    return false;
   }
 
   @Override
-  public void accept(final Visitor visitor) {
-    visitor.visit(this);
+  public Expression reduce() {
+    return this;
   }
 
   @Override
@@ -34,6 +32,4 @@ public class Constant extends Expression {
   public boolean isConstant() {
     return true;
   }
-
-
 }

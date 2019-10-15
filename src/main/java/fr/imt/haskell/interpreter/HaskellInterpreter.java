@@ -1,20 +1,18 @@
 package fr.imt.haskell.interpreter;
 
-import fr.imt.haskell.interpreter.ast.*;
-import fr.imt.haskell.interpreter.ast.constants.*;
+import fr.imt.haskell.interpreter.ast.Application;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Lambda;
+import fr.imt.haskell.interpreter.ast.Variable;
+import fr.imt.haskell.interpreter.ast.constants.Minus;
 import fr.imt.haskell.interpreter.ast.constants.Number;
-import fr.imt.haskell.interpreter.ast.visitor.BetaReductionVisitor;
-import fr.imt.haskell.interpreter.ast.visitor.PrinterVisitor;
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
+import fr.imt.haskell.interpreter.ast.constants.Plus;
 
 /** Main. */
 public class HaskellInterpreter {
 
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
-
-    final Visitor printer = new PrinterVisitor();
-    final BetaReductionVisitor betaReductionVisitor = new BetaReductionVisitor();
 
     final Application application1 =
         new Application(
@@ -24,9 +22,7 @@ public class HaskellInterpreter {
             new Number(5));
 
     System.out.println("\nExpression to evaluate: " + application1 + "\n");
-    application1.accept(printer);
-    application1.accept(betaReductionVisitor);
-    System.out.println("\nReducted expression: " + betaReductionVisitor.getExp() + "\n");
+    System.out.println("\nReduced expression: " + application1.reduce() + "\n");
 
     final Application application2 =
         new Application(
@@ -43,7 +39,7 @@ public class HaskellInterpreter {
             new Number(42));
 
     System.out.println("\nExpression to evaluate: " + application2 + "\n");
-    application2.accept(printer);
+    System.out.println("\nReduced expression: " + application2.reduce() + "\n");
 
     final Application application3 =
         new Application(
@@ -53,6 +49,23 @@ public class HaskellInterpreter {
             new Lambda(new Variable("z"), new Variable("z")));
 
     System.out.println("\nExpression to evaluate: " + application3 + "\n");
-    application3.accept(printer);
+    System.out.println("\nReduced expression: " + application3.reduce() + "\n");
+
+    final Application application4 =
+            new Application(
+                    new Lambda(
+                            new Variable("z"),
+                            new Application(
+                                    new Application(
+                                            new Plus(),
+                                            new Application(
+                                                    new Lambda(
+                                                            new Variable("z"), new Application(new Minus(), new Variable("z"))),
+                                                    new Number(5))),
+                                    new Variable("z"))),
+                    new Number(42));
+
+    System.out.println("\nExpression to evaluate: " + application4 + "\n");
+    System.out.println("\nReduced expression: " + application4.reduce() + "\n");
   }
 }

@@ -1,13 +1,11 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.visitor.Visitor;
-
 /** Lambda calculus expression. */
 public abstract class Expression {
 
-  public abstract Expression reduct(final Variable var, final Expression exp);
+  public abstract boolean isReducible();
 
-  public abstract void accept(final Visitor visitor);
+  public abstract Expression reduce();
 
   public abstract boolean isApplication();
 
