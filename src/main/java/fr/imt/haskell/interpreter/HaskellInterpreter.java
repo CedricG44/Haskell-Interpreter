@@ -4,6 +4,7 @@ import fr.imt.haskell.interpreter.ast.*;
 import fr.imt.haskell.interpreter.ast.constants.*;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.visitor.BetaReductionVisitor;
+import fr.imt.haskell.interpreter.ast.visitor.PrinterVisitor;
 import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 
 /** Main. */
@@ -12,7 +13,8 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    final Visitor visitor = new BetaReductionVisitor();
+    final Visitor printer = new PrinterVisitor();
+    final BetaReductionVisitor betaReductionVisitor = new BetaReductionVisitor();
 
     final Application application1 =
         new Application(
@@ -22,7 +24,9 @@ public class HaskellInterpreter {
             new Number(5));
 
     System.out.println("\nExpression to evaluate: " + application1 + "\n");
-    application1.accept(visitor);
+    application1.accept(printer);
+    application1.accept(betaReductionVisitor);
+    System.out.println("\nReducted expression: " + betaReductionVisitor.getExp() + "\n");
 
     final Application application2 =
         new Application(
@@ -38,7 +42,7 @@ public class HaskellInterpreter {
                     new Variable("z"))),
             new Number(42));
 
-    System.out.println("\nExpression to evaluate: " + application2 + "\n");
-    application2.accept(visitor);
+    //System.out.println("\nExpression to evaluate: " + application2 + "\n");
+    //application2.accept(printer);
   }
 }

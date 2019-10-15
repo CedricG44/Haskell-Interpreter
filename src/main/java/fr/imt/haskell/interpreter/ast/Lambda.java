@@ -27,6 +27,11 @@ public final class Lambda extends Expression {
   }
 
   @Override
+  public Expression reduct(final Variable var, final Expression exp) {
+    return this;
+  }
+
+  @Override
   public void accept(final Visitor visitor) {
     visitor.visit(this);
   }

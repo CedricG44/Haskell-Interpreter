@@ -5,5 +5,7 @@ import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 /** Lambda calculus expression. */
 public abstract class Expression {
 
+    public abstract Expression reduct(final Variable var, final Expression exp);
+
     public abstract void accept(final Visitor visitor);
 }

@@ -2,6 +2,8 @@ package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 
+import java.util.Objects;
+
 /** Variable names. */
 public final class Variable extends Expression {
 
@@ -18,6 +20,24 @@ public final class Variable extends Expression {
   @Override
   public String toString() {
     return value;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Variable variable = (Variable) o;
+    return value.equals(variable.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
+
+  @Override
+  public Expression reduct(final Variable var, final Expression exp) {
+    return this;
   }
 
   @Override

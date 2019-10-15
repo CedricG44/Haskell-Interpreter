@@ -6,6 +6,11 @@ import fr.imt.haskell.interpreter.ast.visitor.Visitor;
 public class Constant extends Expression {
 
   @Override
+  public Expression reduct(final Variable var, final Expression exp) {
+    return this;
+  }
+
+  @Override
   public void accept(final Visitor visitor) {
     visitor.visit(this);
   }
