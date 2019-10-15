@@ -1,5 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
+import java.util.Objects;
+
 /** Variable names. */
 public final class Variable extends Expression {
 
@@ -42,5 +44,10 @@ public final class Variable extends Expression {
     if (o == null || getClass() != o.getClass()) return false;
     Variable variable = (Variable) o;
     return value.equals(variable.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
   }
 }

@@ -13,32 +13,6 @@ public final class Application extends Expression {
     this.expR = expR;
   }
 
-  public Expression getExpL() {
-    return expL;
-  }
-
-  public Expression getExpR() {
-    return expR;
-  }
-
-  @Override
-  public String toString() {
-    return "(" + expL + " " + expR + ")";
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Application that = (Application) o;
-    return expL.equals(that.expL) && expR.equals(that.expR);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(expL, expR);
-  }
-
   @Override
   public boolean isReducible() {
     return expL.isReducible() || expR.isReducible() || expL instanceof Lambda;
@@ -67,5 +41,31 @@ public final class Application extends Expression {
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
     return new Application(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  }
+
+  public Expression getExpL() {
+    return expL;
+  }
+
+  public Expression getExpR() {
+    return expR;
+  }
+
+  @Override
+  public String toString() {
+    return "(" + expL + " " + expR + ")";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Application that = (Application) o;
+    return expL.equals(that.expL) && expR.equals(that.expR);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(expL, expR);
   }
 }
