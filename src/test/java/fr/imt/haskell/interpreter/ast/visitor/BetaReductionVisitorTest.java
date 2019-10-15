@@ -47,25 +47,38 @@ public class BetaReductionVisitorTest {
                     new Lambda(new Variable("y"), new Variable("y"))),
                 new Lambda(new Variable("z"), new Variable("z"))),
             new Lambda(new Variable("z"), new Variable("z"))
-          } /*,
-            {
-              new Application(
-                  new Lambda(
-                      new Variable("z"),
-                      new Application(
-                          new Application(
-                              new Plus(),
-                              new Application(
-                                  new Lambda(
-                                      new Variable("y"),
-                                      new Application(new Minus(), new Variable("y"))),
-                                  new Number(5))),
-                          new Variable("z"))),
-                  new Number(42)),
-              new Application(
-                  new Application(new Plus(), new Application(new Minus(), new Number(5))),
-                  new Number(42))
-            }*/
+          },
+          {
+            new Application(
+                new Lambda(new Variable("x"), new Variable("x")),
+                new Application(
+                    new Lambda(new Variable("y"), new Variable("y")),
+                    new Lambda(new Variable("z"), new Variable("z")))),
+            new Lambda(new Variable("z"), new Variable("z"))
+          },
+          {
+            new Application(new Lambda(new Variable("x"), new Variable("y")), new Number(5)),
+            new Variable("y")
+          }
+          /*,
+          {
+            new Application(
+                new Lambda(
+                    new Variable("z"),
+                    new Application(
+                        new Application(
+                            new Plus(),
+                            new Application(
+                                new Lambda(
+                                    new Variable("y"),
+                                    new Application(new Minus(), new Variable("y"))),
+                                new Number(5))),
+                        new Variable("z"))),
+                new Number(42)),
+            new Application(
+                new Application(new Plus(), new Application(new Minus(), new Number(5))),
+                new Number(42))
+          }*/
         });
   }
 

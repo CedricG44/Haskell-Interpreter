@@ -16,7 +16,7 @@ public class BetaReductionVisitor implements Visitor {
 
   @Override
   public void visit(Application application) {
-    if (application.getExpL().isLambda()) {
+    if (application.getExpL().isLambda() && !application.getExpR().isApplication()) {
       Lambda lambda = (Lambda) application.getExpL();
       exp = lambda.reduct(lambda.getVar(), application.getExpR());
     } else {
