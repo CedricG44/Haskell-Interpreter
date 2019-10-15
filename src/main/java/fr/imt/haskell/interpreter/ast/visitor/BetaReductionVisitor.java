@@ -19,6 +19,9 @@ public class BetaReductionVisitor implements Visitor {
     if (application.getExpL().isLambda()) {
       Lambda lambda = (Lambda) application.getExpL();
       exp = lambda.reduct(lambda.getVar(), application.getExpR());
+    } else {
+      application.getExpL().accept(this);
+      application.getExpR().accept(this);
     }
   }
 

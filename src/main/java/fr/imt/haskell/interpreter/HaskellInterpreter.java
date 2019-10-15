@@ -44,5 +44,15 @@ public class HaskellInterpreter {
 
     System.out.println("\nExpression to evaluate: " + application2 + "\n");
     application2.accept(printer);
+
+    final Application application3 =
+        new Application(
+            new Application(
+                new Lambda(new Variable("x"), new Variable("x")),
+                new Lambda(new Variable("y"), new Variable("y"))),
+            new Lambda(new Variable("z"), new Variable("z")));
+
+    System.out.println("\nExpression to evaluate: " + application3 + "\n");
+    application3.accept(printer);
   }
 }
