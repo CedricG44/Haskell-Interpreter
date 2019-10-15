@@ -7,7 +7,7 @@ import java.util.Objects;
 /** Number constants. */
 public final class Number extends Constant {
 
-  private int value;
+  private final int value;
 
   public Number(int value) {
     this.value = value;

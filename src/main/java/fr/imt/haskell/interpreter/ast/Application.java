@@ -1,14 +1,12 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.constants.Number;
-
 import java.util.Objects;
 
 /** Applications. */
 public final class Application extends Expression {
 
-  private Expression expL;
-  private Expression expR;
+  private final Expression expL;
+  private final Expression expR;
 
   public Application(Expression expL, Expression expR) {
     this.expL = expL;
@@ -43,18 +41,18 @@ public final class Application extends Expression {
 
   @Override
   public boolean isReducible() {
-    return expL.isReducible() || expR.isReducible() || expL.isLambda();
+    return expL.isReducible() || expR.isReducible() || expL instanceof Lambda;
   }
 
   @Override
   public Expression reduce() {
-    Expression exp = new Number(666);
+    Expression exp = null;
 
     if (expL.isReducible()) {
       exp = new Application(expL.reduce(), expR);
     } else if (expR.isReducible()) {
       exp = new Application(expL, expR.reduce());
-    } else if (expL.isLambda()) {
+    } else if (expL instanceof Lambda) {
       Lambda lambda = (Lambda) expL;
       exp = lambda.getExp().substitute(lambda.getVar(), expR);
     }
@@ -69,25 +67,5 @@ public final class Application extends Expression {
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
     return new Application(expL.substitute(var, substitute), expR.substitute(var, substitute));
-  }
-
-  @Override
-  public boolean isApplication() {
-    return true;
-  }
-
-  @Override
-  public boolean isLambda() {
-    return false;
-  }
-
-  @Override
-  public boolean isVariable() {
-    return false;
-  }
-
-  @Override
-  public boolean isConstant() {
-    return false;
   }
 }

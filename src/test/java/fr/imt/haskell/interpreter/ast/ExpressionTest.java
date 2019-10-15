@@ -1,9 +1,5 @@
-package fr.imt.haskell.interpreter.ast.visitor;
+package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.Application;
-import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Lambda;
-import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.constants.Minus;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.constants.Plus;
@@ -16,10 +12,10 @@ import java.util.Arrays;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(Parameterized.class)
-public class BetaReductionVisitorTest {
+public class ExpressionTest {
 
-  private Expression exp;
-  private Expression expectedExp;
+  private final Expression exp;
+  private final Expression expectedExp;
 
   @Parameterized.Parameters(name = "{index}: {0}")
   public static Iterable<Object[]> data() {
@@ -77,7 +73,7 @@ public class BetaReductionVisitorTest {
         });
   }
 
-  public BetaReductionVisitorTest(Expression exp, Expression expectedExp) {
+  public ExpressionTest(Expression exp, Expression expectedExp) {
     this.exp = exp;
     this.expectedExp = expectedExp;
   }

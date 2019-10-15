@@ -5,8 +5,8 @@ import java.util.Objects;
 /** Lambda abstractions. */
 public final class Lambda extends Expression {
 
-  private Variable var;
-  private Expression exp;
+  private final Variable var;
+  private final Expression exp;
 
   public Lambda(Variable var, Expression exp) {
     this.var = var;
@@ -55,25 +55,5 @@ public final class Lambda extends Expression {
   @Override
   public int hashCode() {
     return Objects.hash(var, exp);
-  }
-
-  @Override
-  public boolean isApplication() {
-    return false;
-  }
-
-  @Override
-  public boolean isLambda() {
-    return true;
-  }
-
-  @Override
-  public boolean isVariable() {
-    return false;
-  }
-
-  @Override
-  public boolean isConstant() {
-    return false;
   }
 }

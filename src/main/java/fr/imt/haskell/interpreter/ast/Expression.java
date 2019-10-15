@@ -8,12 +8,4 @@ public abstract class Expression {
   public abstract Expression reduce();
 
   public abstract Expression substitute(final Variable var, final Expression substitute);
-
-  public abstract boolean isApplication();
-
-  public abstract boolean isLambda();
-
-  public abstract boolean isVariable();
-
-  public abstract boolean isConstant();
 }
