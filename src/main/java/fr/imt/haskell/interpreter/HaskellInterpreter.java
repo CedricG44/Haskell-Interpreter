@@ -1,7 +1,6 @@
 package fr.imt.haskell.interpreter;
 
 import fr.imt.haskell.interpreter.ast.Application;
-import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.constants.Minus;

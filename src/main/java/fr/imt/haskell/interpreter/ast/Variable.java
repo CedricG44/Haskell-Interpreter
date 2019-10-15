@@ -1,73 +1,38 @@
 package fr.imt.haskell.interpreter.ast;
 
-import java.util.Objects;
+public class Variable implements Expression {
 
-/** Variable names. */
-public final class Variable extends Expression {
+    public final String value;
 
-  private String value;
-
-  public Variable(String value) {
-    this.value = value;
-  }
-
-  @Override
-  public boolean isReducible() {
-    return false;
-  }
-
-  @Override
-  public Expression reduce() {
-    return this;
-  }
-
-  @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    if (var.equals(this)) {
-      return substitute;
+    public Variable(String value){
+        this.value = value;
     }
-    return this;
-  }
 
-  public String getValue() {
-    return value;
-  }
+    @Override
+    public Expression reduce() {
+        return this;
+    }
 
-  @Override
-  public String toString() {
-    return value;
-  }
+    @Override
+    public Expression substituate(Variable variable, Expression substitute) {
+        return variable.equals(this) ? substitute : this;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Variable variable = (Variable) o;
-    return value.equals(variable.value);
-  }
+    @Override
+    public boolean isReducible() {
+        return false;
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(value);
-  }
+    @Override
+    public String toString() {
+        return this.value;
+    }
 
-  @Override
-  public boolean isApplication() {
-    return false;
-  }
-
-  @Override
-  public boolean isLambda() {
-    return false;
-  }
-
-  @Override
-  public boolean isVariable() {
-    return true;
-  }
-
-  @Override
-  public boolean isConstant() {
-    return false;
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Variable variable = (Variable) o;
+        return value.equals(variable.value);
+    }
 }
