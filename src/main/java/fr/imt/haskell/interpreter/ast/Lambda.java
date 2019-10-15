@@ -26,6 +26,11 @@ public final class Lambda extends Expression {
     return this;
   }
 
+  @Override
+  public Expression substitute(final Variable var, final Expression substitute) {
+    return new Lambda(var, exp.substitute(this.var, substitute));
+  }
+
   public Variable getVar() {
     return var;
   }

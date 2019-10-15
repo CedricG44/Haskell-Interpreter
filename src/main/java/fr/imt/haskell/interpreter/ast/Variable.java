@@ -21,6 +21,14 @@ public final class Variable extends Expression {
     return this;
   }
 
+  @Override
+  public Expression substitute(final Variable var, final Expression substitute) {
+    if (var.equals(this)) {
+      return substitute;
+    }
+    return this;
+  }
+
   public String getValue() {
     return value;
   }

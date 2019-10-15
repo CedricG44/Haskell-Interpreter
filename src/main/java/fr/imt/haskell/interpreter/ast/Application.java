@@ -1,7 +1,6 @@
 package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.constants.Number;
-import fr.imt.haskell.interpreter.ast.reductor.Reductor;
 
 import java.util.Objects;
 
@@ -57,7 +56,7 @@ public final class Application extends Expression {
       exp = new Application(expL, expR.reduce());
     } else if (expL.isLambda()) {
       Lambda lambda = (Lambda) expL;
-      exp = Reductor.substitute(lambda.getExp(), lambda.getVar(), expR);
+      exp = lambda.getExp().substitute(lambda.getVar(), expR);
     }
 
     if (exp.isReducible()) {
@@ -65,6 +64,11 @@ public final class Application extends Expression {
     }
 
     return exp;
+  }
+
+  @Override
+  public Expression substitute(final Variable var, final Expression substitute) {
+    return new Application(expL.substitute(var, substitute), expR.substitute(var, substitute));
   }
 
   @Override

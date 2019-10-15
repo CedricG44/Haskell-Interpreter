@@ -14,6 +14,11 @@ public class Constant extends Expression {
   }
 
   @Override
+  public Expression substitute(final Variable var, final Expression substitute) {
+    return this;
+  }
+
+  @Override
   public boolean isApplication() {
     return false;
   }
