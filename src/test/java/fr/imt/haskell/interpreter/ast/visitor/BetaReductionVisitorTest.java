@@ -89,6 +89,7 @@ public class BetaReductionVisitorTest {
 
   @Test
   public void betaReduction() {
+    System.out.println("\nExpression to reduce: " + exp);
     exp.accept(betaReductionVisitor);
     System.out.println("Reducted expression: " + betaReductionVisitor.getExp());
     assertEquals(expectedExp, betaReductionVisitor.getExp());

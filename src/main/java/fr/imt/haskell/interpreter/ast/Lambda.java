@@ -43,12 +43,16 @@ public final class Lambda extends Expression {
 
   @Override
   public Expression reduct(final Variable var, final Expression exp) {
-    if (this.var.equals(var)) {
-      return this.exp.reduct(var, exp);
-    } else {
-      // TODO
-      return this;
+    if (exp.isApplication()) {
+      Application app = (Application) exp;
+
+      if (var.equals(app.getExpL())) {
+        return new Application(exp, app.getExpR());
+      } else if (var.equals(app.getExpR())) {
+        return new Application(app.getExpL(), exp);
+      }
     }
+    return this.exp.reduct(var, exp);
   }
 
   @Override
