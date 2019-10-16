@@ -21,6 +21,7 @@ public final class Application extends Expression {
   @Override
   public Expression reduce() {
     Expression exp = this;
+    System.out.println("Reduction step: " + exp);
 
     if (expL.isReducible()) {
       exp = new Application(expL.reduce(), expR);
