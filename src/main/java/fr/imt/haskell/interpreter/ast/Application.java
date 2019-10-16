@@ -20,7 +20,7 @@ public final class Application extends Expression {
 
   @Override
   public Expression reduce() {
-    Expression exp = null;
+    Expression exp = this;
 
     if (expL.isReducible()) {
       exp = new Application(expL.reduce(), expR);
