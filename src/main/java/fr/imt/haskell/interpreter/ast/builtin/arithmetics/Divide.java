@@ -13,17 +13,13 @@ public final class Divide extends BinaryExpression {
   }
 
   @Override
-  public String toString() {
-    return "((/ " + expL + ") " + expR + ")";
-  }
-
-  @Override
   public boolean isReducible() {
     return expL.isReducible() || expR.isReducible();
   }
 
   @Override
   public Expression reduce() {
+    System.out.println("[Divide] Reduction step: " + this);
     final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
     final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
     return new Divide(expL, expR).eval();
@@ -40,5 +36,10 @@ public final class Divide extends BinaryExpression {
       return new Divide(expL, expR);
     }
     return new Number(((Number) expL).getValue() / ((Number) expR).getValue());
+  }
+
+  @Override
+  public String toString() {
+    return "((/ " + expL + ") " + expR + ")";
   }
 }

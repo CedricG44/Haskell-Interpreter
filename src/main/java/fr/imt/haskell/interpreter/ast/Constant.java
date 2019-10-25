@@ -10,6 +10,7 @@ public class Constant extends Expression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Constant] Reduction step: " + this);
     return this;
   }
 

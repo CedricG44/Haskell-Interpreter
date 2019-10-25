@@ -30,9 +30,10 @@ public class HaskellInterpreter {
                         new Lambda(new Variable("y"), new Minus(new Variable("y"))), new Number(5)),
                     new Variable("z"))),
             new Number(42));
+
     System.out.println("\nExpression to reduce: " + application2 + "\n");
     System.out.println("\nReduced expression: " + application2.reduce() + "\n");
-    /*
+
     final Application application3 =
         new Application(
             new Application(
@@ -42,7 +43,7 @@ public class HaskellInterpreter {
 
     System.out.println("\nExpression to reduce: " + application3 + "\n");
     System.out.println("\nReduced expression: " + application3.reduce() + "\n");
-
+    /*
     final Application application4 =
         new Application(
             new Lambda(

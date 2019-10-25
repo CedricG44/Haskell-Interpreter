@@ -13,7 +13,11 @@ public final class Not extends UnaryExpression {
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
-    final Expression exp = this.expression.substitute(var, substitute);
+    return new Not(exp.substitute(var, substitute)).eval();
+  }
+
+  @Override
+  public Expression eval() {
     if (!(exp instanceof Boolean)) {
       return new Not(exp);
     }
@@ -22,6 +26,6 @@ public final class Not extends UnaryExpression {
 
   @Override
   public String toString() {
-    return "(! " + expression + ")";
+    return "(! " + exp + ")";
   }
 }

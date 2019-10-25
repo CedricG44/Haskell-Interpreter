@@ -14,7 +14,11 @@ public final class Minus extends UnaryExpression {
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
-    final Expression exp = this.expression.substitute(var, substitute);
+    return new Minus(exp.substitute(var, substitute)).eval();
+  }
+
+  @Override
+  public Expression eval() {
     if (!(exp instanceof Number)) {
       return new Minus(exp);
     }
@@ -23,6 +27,6 @@ public final class Minus extends UnaryExpression {
 
   @Override
   public String toString() {
-    return "(- " + expression + ")";
+    return "(- " + exp + ")";
   }
 }

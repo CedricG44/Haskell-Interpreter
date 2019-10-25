@@ -5,7 +5,7 @@ import fr.imt.haskell.interpreter.ast.Constant;
 import java.util.Objects;
 
 /** Boolean constants. */
-public class Boolean extends Constant {
+public final class Boolean extends Constant {
 
   private final boolean value;
 

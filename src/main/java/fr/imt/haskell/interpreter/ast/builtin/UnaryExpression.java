@@ -5,19 +5,22 @@ import fr.imt.haskell.interpreter.ast.Expression;
 /** Unary expressions. */
 public abstract class UnaryExpression extends Expression {
 
-  protected Expression expression;
+  protected final Expression exp;
 
-  public UnaryExpression(Expression expression) {
-    this.expression = expression;
+  public UnaryExpression(Expression exp) {
+    this.exp = exp;
   }
 
   @Override
   public boolean isReducible() {
-    return expression.isReducible();
+    return exp.isReducible();
   }
 
   @Override
   public Expression reduce() {
-    return isReducible() ? expression.reduce() : this;
+    System.out.println("[UnaryExpression] Reduction step: " + this);
+    return isReducible() ? exp.reduce() : this.eval();
   }
+
+  public abstract Expression eval();
 }

@@ -20,6 +20,7 @@ public final class Lambda extends Expression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Lambda] Reduction step: " + this);
     if (isReducible()) {
       return new Lambda(var, this.exp.reduce());
     }

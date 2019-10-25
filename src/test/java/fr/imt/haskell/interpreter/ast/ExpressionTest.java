@@ -5,6 +5,7 @@ import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import org.junit.Test;
@@ -82,7 +83,9 @@ public class ExpressionTest {
                 new Boolean(true)),
             new Boolean(true)
           },
-          {new Plus(new Number(20), new Number(10)), new Number(30)}
+          {new Plus(new Number(20), new Number(10)), new Number(30)},
+          {new Not(new Boolean(true)), new Boolean(false)},
+          {new Minus(new Number(20)), new Number(-20)}
         });
   }
 

@@ -18,6 +18,7 @@ public final class Variable extends Expression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Variable] Reduction step: " + this);
     return this;
   }
 

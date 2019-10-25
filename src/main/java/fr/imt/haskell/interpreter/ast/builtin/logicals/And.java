@@ -13,17 +13,13 @@ public final class And extends BinaryExpression {
   }
 
   @Override
-  public String toString() {
-    return "((&& " + expL + ") " + expR + ")";
-  }
-
-  @Override
   public boolean isReducible() {
     return expL.isReducible() || expR.isReducible();
   }
 
   @Override
   public Expression reduce() {
+    System.out.println("[And] Reduction step: " + this);
     final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
     final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
     return new And(expL, expR).eval();
@@ -40,5 +36,10 @@ public final class And extends BinaryExpression {
       return new And(expL, expR);
     }
     return new Boolean(((Boolean) expL).getValue() && ((Boolean) expR).getValue());
+  }
+
+  @Override
+  public String toString() {
+    return "((&& " + expL + ") " + expR + ")";
   }
 }
