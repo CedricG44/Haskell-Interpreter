@@ -1,8 +1,12 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.builtin.Minus;
-import fr.imt.haskell.interpreter.ast.builtin.Number;
-import fr.imt.haskell.interpreter.ast.builtin.Plus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Divide;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
+import fr.imt.haskell.interpreter.ast.constants.Boolean;
+import fr.imt.haskell.interpreter.ast.constants.Number;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -58,8 +62,27 @@ public class ExpressionTest {
                             new Number(5)),
                         new Variable("z"))),
                 new Number(42)),
-                new Number(37)
-          }
+            new Number(37)
+          },
+          {
+            new Application(
+                new Lambda(new Variable("x"), new Times(new Variable("x"), new Variable("x"))),
+                new Number(7)),
+            new Number(49)
+          },
+          {
+            new Application(
+                new Lambda(new Variable("x"), new Divide(new Variable("x"), new Variable("x"))),
+                new Number(78000)),
+            new Number(1)
+          },
+          {
+            new Application(
+                new Lambda(new Variable("x"), new And(new Boolean(true), new Variable("x"))),
+                new Boolean(true)),
+            new Boolean(true)
+          },
+          {new Plus(new Number(20), new Number(10)), new Number(30)}
         });
   }
 

@@ -1,33 +1,33 @@
-package fr.imt.haskell.interpreter.ast.builtin;
+package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Constant;
 
 import java.util.Objects;
 
-/** Number constants. */
-public final class Number extends Constant {
+/** Boolean constants. */
+public class Boolean extends Constant {
 
-  private final int value;
+  private final boolean value;
 
-  public Number(int value) {
+  public Boolean(boolean value) {
     this.value = value;
   }
 
-  public int getValue() {
+  public boolean getValue() {
     return value;
   }
 
   @Override
   public String toString() {
-    return String.valueOf(value);
+    return value ? "True" : "False";
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Number number = (Number) o;
-    return value == number.value;
+    Boolean aBoolean = (Boolean) o;
+    return value == aBoolean.value;
   }
 
   @Override

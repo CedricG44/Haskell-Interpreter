@@ -3,9 +3,9 @@ package fr.imt.haskell.interpreter;
 import fr.imt.haskell.interpreter.ast.Application;
 import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
-import fr.imt.haskell.interpreter.ast.builtin.Minus;
-import fr.imt.haskell.interpreter.ast.builtin.Number;
-import fr.imt.haskell.interpreter.ast.builtin.Plus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
+import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 
 /** Main. */
 public class HaskellInterpreter {
