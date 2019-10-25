@@ -3,10 +3,10 @@ package fr.imt.haskell.interpreter.ast;
 import java.util.Objects;
 
 /** Applications. */
-public final class Application extends Expression {
+public class Application extends Expression {
 
-  private final Expression expL;
-  private final Expression expR;
+  protected final Expression expL;
+  protected final Expression expR;
 
   public Application(Expression expL, Expression expR) {
     this.expL = expL;

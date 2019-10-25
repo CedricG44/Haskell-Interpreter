@@ -19,8 +19,12 @@ public abstract class UnaryExpression extends Expression {
   @Override
   public Expression reduce() {
     System.out.println("[UnaryExpression] Reduction step: " + this);
-    return isReducible() ? exp.reduce() : this.eval();
+    return isReducible() ? exp.reduce() : eval();
   }
 
   public abstract Expression eval();
+
+  public Expression getExp() {
+    return exp;
+  }
 }
