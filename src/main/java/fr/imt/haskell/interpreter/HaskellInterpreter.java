@@ -22,16 +22,14 @@ public class HaskellInterpreter {
     System.out.println("\nReduced expression: " + application1.reduce() + "\n");
 
     final Application application2 =
-            new Application(
-                    new Lambda(
-                            new Variable("z"),
-                            new Application(
-                                    new Plus(
-                                            new Lambda(
-                                                    new Variable("y"), new Minus(new Variable("y"))),
-                                            new Number(5)),
-                                    new Variable("z"))),
-                    new Number(42));
+        new Application(
+            new Lambda(
+                new Variable("z"),
+                new Plus(
+                    new Application(
+                        new Lambda(new Variable("y"), new Minus(new Variable("y"))), new Number(5)),
+                    new Variable("z"))),
+            new Number(42));
     System.out.println("\nExpression to reduce: " + application2 + "\n");
     System.out.println("\nReduced expression: " + application2.reduce() + "\n");
     /*

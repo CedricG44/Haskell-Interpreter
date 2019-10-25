@@ -26,7 +26,7 @@ public class ExpressionTest {
             new Application(
                 new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
                 new Number(5)),
-            new Plus(new Number(5), new Number(5))
+            new Number(10)
           },
           {
             new Application(
@@ -52,18 +52,12 @@ public class ExpressionTest {
             new Application(
                 new Lambda(
                     new Variable("z"),
-                    new Application(
-                        new Plus(
-                                new Lambda(
-                                    new Variable("y"),
-                                    new Minus(new Variable("y"))
-                                ),
-                                new Number(5)
-                        ),
-                        new Variable("z"))
-                    ),
-                new Number(42)
-            ),
+                    new Plus(
+                        new Application(
+                            new Lambda(new Variable("y"), new Minus(new Variable("y"))),
+                            new Number(5)),
+                        new Variable("z"))),
+                new Number(42)),
             new Plus(new Minus(new Number(5)), new Number(42))
           }
         });
