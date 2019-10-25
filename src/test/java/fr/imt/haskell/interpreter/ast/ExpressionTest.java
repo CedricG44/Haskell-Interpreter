@@ -21,16 +21,12 @@ public class ExpressionTest {
   public static Iterable<Object[]> data() {
     return Arrays.asList(
         new Object[][] {
-          {new Plus(), new Plus()},
           {new Number(5), new Number(5)},
           {
             new Application(
-                new Lambda(
-                    new Variable("x"),
-                    new Application(
-                        new Application(new Plus(), new Variable("x")), new Variable("x"))),
+                new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
                 new Number(5)),
-            new Application(new Application(new Plus(), new Number(5)), new Number(5))
+            new Plus(new Number(5), new Number(5))
           },
           {
             new Application(
@@ -57,18 +53,18 @@ public class ExpressionTest {
                 new Lambda(
                     new Variable("z"),
                     new Application(
-                        new Application(
-                            new Plus(),
-                            new Application(
+                        new Plus(
                                 new Lambda(
                                     new Variable("y"),
-                                    new Application(new Minus(), new Variable("y"))),
-                                new Number(5))),
-                        new Variable("z"))),
-                new Number(42)),
-            new Application(
-                new Application(new Plus(), new Application(new Minus(), new Number(5))),
-                new Number(42))
+                                    new Minus(new Variable("y"))
+                                ),
+                                new Number(5)
+                        ),
+                        new Variable("z"))
+                    ),
+                new Number(42)
+            ),
+            new Plus(new Minus(new Number(5)), new Number(42))
           }
         });
   }

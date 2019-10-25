@@ -1,29 +1,47 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Constant;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Variable;
 
 import java.util.Objects;
 
 /** Plus constant. */
-public final class Plus extends Constant {
+public final class Plus extends BinaryExpression {
 
-  private final String value = "+";
+  private Expression left;
+  private Expression right;
+
+  public Plus(Expression left, Expression right){
+    this.left = left;
+    this.right = right;
+  }
 
   @Override
   public String toString() {
-    return value;
+    return "((+ " + left.toString() + ") " + right.toString() + ")";
+  }
+
+
+  @Override
+  public boolean isReducible() {
+    return left.isReducible() || right.isReducible();
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Plus plus = (Plus) o;
-    return value.equals(plus.value);
+  public Expression reduce() {
+    Expression expL = left.isReducible() ? left.reduce() : left;
+    Expression expR = right.isReducible() ? right.reduce() : right;
+    return new Plus(expL, expR);
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(value);
+  public Expression substitute(Variable var, Expression substitute) {
+    Expression expL = left.substitute(var, substitute);
+    Expression expR = right.substitute(var, substitute);
+    if( ! (expL instanceof Number && expR instanceof Number) ){
+      return new Plus(expL, expR);
+    }
+    return new Number(((Number) expL).getValue() + ((Number) expR).getValue());
   }
+
 }

@@ -1,29 +1,38 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Constant;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Variable;
 
-import java.util.Objects;
+/** Minus unary expression */
+public final class Minus extends UnaryExpression {
 
-/** Minus constant. */
-public final class Minus extends Constant {
+  public Expression expression;
 
-  private final String value = "-";
+  public Minus(Expression expression){
+    this.expression = expression;
+  }
 
   @Override
   public String toString() {
-    return value;
+    return "(- " + expression.toString() + ")";
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Minus minus = (Minus) o;
-    return value.equals(minus.value);
+  public boolean isReducible() {
+    return expression.isReducible();
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(value);
+  public Expression reduce() {
+    return isReducible() ? expression.reduce() : this;
+  }
+
+  @Override
+  public Expression substitute(Variable var, Expression substitute) {
+    Expression exp = this.expression.substitute(var, substitute);
+    if(! (exp instanceof Number)){
+      return new Minus(expression);
+    }
+    return new Number(- ((Number) exp).getValue());
   }
 }
