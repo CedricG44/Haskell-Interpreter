@@ -1,17 +1,15 @@
-package fr.imt.haskell.interpreter.ast.constants;
+package fr.imt.haskell.interpreter.ast.builtin;
 
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 
-import java.util.Objects;
-
-/** Plus constant. */
+/** Plus built-in functions. */
 public final class Plus extends BinaryExpression {
 
   private Expression left;
   private Expression right;
 
-  public Plus(Expression left, Expression right){
+  public Plus(Expression left, Expression right) {
     this.left = left;
     this.right = right;
   }
@@ -20,7 +18,6 @@ public final class Plus extends BinaryExpression {
   public String toString() {
     return "((+ " + left.toString() + ") " + right.toString() + ")";
   }
-
 
   @Override
   public boolean isReducible() {
@@ -38,10 +35,9 @@ public final class Plus extends BinaryExpression {
   public Expression substitute(Variable var, Expression substitute) {
     Expression expL = left.substitute(var, substitute);
     Expression expR = right.substitute(var, substitute);
-    if( ! (expL instanceof Number && expR instanceof Number) ){
+    if (!(expL instanceof Number && expR instanceof Number)) {
       return new Plus(expL, expR);
     }
     return new Number(((Number) expL).getValue() + ((Number) expR).getValue());
   }
-
 }
