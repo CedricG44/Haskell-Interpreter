@@ -1,8 +1,8 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.constants.Minus;
-import fr.imt.haskell.interpreter.ast.constants.Number;
-import fr.imt.haskell.interpreter.ast.constants.Plus;
+import fr.imt.haskell.interpreter.ast.builtin.Minus;
+import fr.imt.haskell.interpreter.ast.builtin.Number;
+import fr.imt.haskell.interpreter.ast.builtin.Plus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

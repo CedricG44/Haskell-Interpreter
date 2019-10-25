@@ -1,14 +1,14 @@
-package fr.imt.haskell.interpreter.ast.constants;
+package fr.imt.haskell.interpreter.ast.builtin;
 
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 
-/** Minus unary expression */
+/** Minus built-in functions. */
 public final class Minus extends UnaryExpression {
 
   public Expression expression;
 
-  public Minus(Expression expression){
+  public Minus(Expression expression) {
     this.expression = expression;
   }
 
@@ -30,9 +30,9 @@ public final class Minus extends UnaryExpression {
   @Override
   public Expression substitute(Variable var, Expression substitute) {
     Expression exp = this.expression.substitute(var, substitute);
-    if(! (exp instanceof Number)){
+    if (!(exp instanceof Number)) {
       return new Minus(expression);
     }
-    return new Number(- ((Number) exp).getValue());
+    return new Number(-((Number) exp).getValue());
   }
 }
