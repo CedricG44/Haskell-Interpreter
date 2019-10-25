@@ -44,7 +44,7 @@ public class ExpressionTest {
                     new Lambda(new Variable("z"), new Variable("z")))),
             new Lambda(new Variable("z"), new Variable("z"))
           },
-          {
+          { // Ne devrait pas marcher
             new Application(new Lambda(new Variable("x"), new Variable("y")), new Number(5)),
             new Variable("y")
           },
@@ -58,7 +58,7 @@ public class ExpressionTest {
                             new Number(5)),
                         new Variable("z"))),
                 new Number(42)),
-            new Plus(new Minus(new Number(5)), new Number(42))
+                new Number(37)
           }
         });
   }
