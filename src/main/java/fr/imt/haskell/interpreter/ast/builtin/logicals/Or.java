@@ -1,33 +1,16 @@
 package fr.imt.haskell.interpreter.ast.builtin.logicals;
 
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
+
+import static fr.imt.haskell.interpreter.ast.builtin.Operation.OR;
 
 /** Or built-in functions. */
 public final class Or extends BinaryExpression {
 
   public Or(Expression expL, Expression expR) {
-    super(expL, expR);
-  }
-
-  @Override
-  public boolean isReducible() {
-    return expL.isReducible() || expR.isReducible();
-  }
-
-  @Override
-  public Expression reduce() {
-    System.out.println("[Or] Reduction step: " + this);
-    final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
-    final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
-    return new Or(expL, expR).eval();
-  }
-
-  @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Or(expL.substitute(var, substitute), expR.substitute(var, substitute)).eval();
+    super(OR, expL, expR);
   }
 
   @Override

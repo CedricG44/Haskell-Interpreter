@@ -1,9 +1,6 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Divide;
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
@@ -85,7 +82,8 @@ public class ExpressionTest {
           },
           {new Plus(new Number(20), new Number(10)), new Number(30)},
           {new Not(new Boolean(true)), new Boolean(false)},
-          {new Minus(new Number(20)), new Number(-20)}
+          {new Minus(new Number(20)), new Number(-20)},
+          {new Equal(new Number(20), new Number(20)), new Boolean(true)}
         });
   }
 

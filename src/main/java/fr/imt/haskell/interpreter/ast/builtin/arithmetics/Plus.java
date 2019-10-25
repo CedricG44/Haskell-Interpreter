@@ -1,33 +1,16 @@
 package fr.imt.haskell.interpreter.ast.builtin.arithmetics;
 
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+
+import static fr.imt.haskell.interpreter.ast.builtin.Operation.PLUS;
 
 /** Plus built-in functions. */
 public final class Plus extends BinaryExpression {
 
   public Plus(Expression expL, Expression expR) {
-    super(expL, expR);
-  }
-
-  @Override
-  public boolean isReducible() {
-    return expL.isReducible() || expR.isReducible();
-  }
-
-  @Override
-  public Expression reduce() {
-    System.out.println("[Plus] Reduction step: " + this);
-    final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
-    final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
-    return new Plus(expL, expR).eval();
-  }
-
-  @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Plus(expL.substitute(var, substitute), expR.substitute(var, substitute)).eval();
+    super(PLUS, expL, expR);
   }
 
   @Override

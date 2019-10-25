@@ -1,33 +1,16 @@
 package fr.imt.haskell.interpreter.ast.builtin.arithmetics;
 
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+
+import static fr.imt.haskell.interpreter.ast.builtin.Operation.TIMES;
 
 /** Times built-in functions. */
 public final class Times extends BinaryExpression {
 
   public Times(Expression expL, Expression expR) {
-    super(expL, expR);
-  }
-
-  @Override
-  public boolean isReducible() {
-    return expL.isReducible() || expR.isReducible();
-  }
-
-  @Override
-  public Expression reduce() {
-    System.out.println("[Times] Reduction step: " + this);
-    final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
-    final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
-    return new Times(expL, expR).eval();
-  }
-
-  @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Times(expL.substitute(var, substitute), expR.substitute(var, substitute)).eval();
+    super(TIMES, expL, expR);
   }
 
   @Override
