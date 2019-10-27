@@ -6,7 +6,7 @@ import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
 
 /** Unary expressions. */
-public abstract class UnaryExpression extends Expression {
+public abstract class UnaryExpression extends Expression implements BuiltInFunction {
 
   private final Operation op;
   protected final Expression exp;
@@ -24,7 +24,7 @@ public abstract class UnaryExpression extends Expression {
   @Override
   public Expression reduce() {
     System.out.println("[" + op.getName() + "] Reduction step: " + this);
-    return isReducible() ? exp.reduce() : eval();
+    return isReducible() || (exp instanceof BuiltInFunction) ? exp.reduce() : eval();
   }
 
   @Override
@@ -38,8 +38,6 @@ public abstract class UnaryExpression extends Expression {
         return eval();
     }
   }
-
-  public abstract Expression eval();
 
   public Expression getExp() {
     return exp;

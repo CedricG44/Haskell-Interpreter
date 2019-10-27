@@ -11,7 +11,7 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Or;
 
 /** Binary expressions. */
-public abstract class BinaryExpression extends Application {
+public abstract class BinaryExpression extends Application implements BuiltInFunction {
 
   private final Operation op;
 
@@ -28,8 +28,14 @@ public abstract class BinaryExpression extends Application {
   @Override
   public Expression reduce() {
     System.out.println("[" + op.getName() + "] Reduction step: " + this);
-    final Expression expL = this.expL.isReducible() ? this.expL.reduce() : this.expL;
-    final Expression expR = this.expR.isReducible() ? this.expR.reduce() : this.expR;
+    final Expression expL =
+        this.expL.isReducible() || (this.expL instanceof BuiltInFunction)
+            ? this.expL.reduce()
+            : this.expL;
+    final Expression expR =
+        this.expR.isReducible() || (this.expR instanceof BuiltInFunction)
+            ? this.expR.reduce()
+            : this.expR;
 
     switch (op) {
       case DIVIDE:
@@ -70,6 +76,4 @@ public abstract class BinaryExpression extends Application {
         return eval();
     }
   }
-
-  public abstract Expression eval();
 }

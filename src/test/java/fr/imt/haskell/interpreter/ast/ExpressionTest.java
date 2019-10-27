@@ -83,7 +83,15 @@ public class ExpressionTest {
           {new Plus(new Number(20), new Number(10)), new Number(30)},
           {new Not(new Boolean(true)), new Boolean(false)},
           {new Minus(new Number(20)), new Number(-20)},
-          {new Equal(new Number(20), new Number(20)), new Boolean(true)}
+          {new Equal(new Number(20), new Number(20)), new Boolean(true)},
+          {new Equal(new Plus(new Number(5), new Number(15)), new Number(20)), new Boolean(true)},
+          {
+            new Equal(
+                new Plus(new Number(5), new Plus(new Number(5), new Number(10))), new Number(20)),
+            new Boolean(true)
+          },
+          {new Equal(new Minus(new Number(5)), new Number(-5)), new Boolean(true)},
+//          {new Equal(new Minus(new Minus(new Number(5))), new Number(5)), new Boolean(true)},
         });
   }
 
