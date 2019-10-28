@@ -18,15 +18,15 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    /*    final Application application1 =
+    final Application application1 =
         new Application(
             new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
             new Number(5));
 
     System.out.println("\nExpression to reduce: " + application1 + "\n");
-    System.out.println("\nReduced expression: " + application1.reduce() + "\n");*/
+    System.out.println("\nReduced expression: " + application1.reduce() + "\n");
 
-    /*final Application application2 =
+    final Application application2 =
         new Application(
             new Lambda(
                 new Variable("z"),
@@ -47,31 +47,14 @@ public class HaskellInterpreter {
             new Lambda(new Variable("z"), new Variable("z")));
 
     System.out.println("\nExpression to reduce: " + application3 + "\n");
-    System.out.println("\nReduced expression: " + application3.reduce() + "\n");*/
+    System.out.println("\nReduced expression: " + application3.reduce() + "\n");
 
-    /*    final Expression application5 = new Equal(new Minus(new Minus(new Number(5))), new Number(5));
-
-    System.out.println("\nExpression to reduce: " + application5 + "\n");
-    System.out.println("\nReduced expression: " + application5.reduce() + "\n");*/
-    /*
-    final Application application4 =
-        new Application(
-            new Lambda(
-                new Variable("z"),
-                new Application(
-                    new Application(
-                        new Plus(),
-                        new Application(
-                            new Lambda(
-                                new Variable("z"), new Application(new Minus(), new Variable("z"))),
-                            new Number(5))),
-                    new Variable("z"))),
-            new Number(42));
+    final Expression application4 = new Equal(new Minus(new Minus(new Number(5))), new Number(5));
 
     System.out.println("\nExpression to reduce: " + application4 + "\n");
-    System.out.println("\nReduced expression: " + application4.reduce() + "\n");*/
+    System.out.println("\nReduced expression: " + application4.reduce() + "\n");
 
-    final Expression factorielNoRecursive =
+    final Expression factorial =
         new Lambda(
             new Variable("fac"),
             new Lambda(
@@ -85,10 +68,9 @@ public class HaskellInterpreter {
                             new Variable("fac"),
                             new Plus(new Variable("n"), new Minus(new Number(1))))))));
 
-    final Expression application8 =
-        new Application(new Recursion(factorielNoRecursive), new Number(1));
+    final Expression application5 = new Application(new Recursion(factorial), new Number(1));
 
-    System.out.println("\nExpression to reduce: " + application8 + "\n");
-    System.out.println("\nReduced expression: " + application8.reduce() + "\n");
+    System.out.println("\nExpression to reduce: " + application5 + "\n");
+    System.out.println("\nReduced expression: " + application5.reduce() + "\n");
   }
 }

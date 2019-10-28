@@ -13,7 +13,7 @@ public final class Lambda extends Expression {
 
   @Override
   public Expression reduce() {
-    return new Lambda(var, exp.reduce());
+    return this;
   }
 
   @Override

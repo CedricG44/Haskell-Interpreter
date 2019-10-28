@@ -1,7 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
 /** Applications. */
-public class Application extends Expression {
+public final class Application extends Expression {
 
   private final Expression expL;
   private final Expression expR;

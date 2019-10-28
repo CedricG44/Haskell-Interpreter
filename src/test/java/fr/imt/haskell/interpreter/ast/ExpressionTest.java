@@ -1,6 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
+import fr.imt.haskell.interpreter.ast.builtin.Recursion;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
@@ -105,7 +106,8 @@ public class ExpressionTest {
                     new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
                     new Number(5))),
             new Number(10)
-          }
+          },
+          {factorial(5), new Number(120)}
         });
   }
 
@@ -126,5 +128,23 @@ public class ExpressionTest {
       assertEquals("Weak Head Normal Form !", ex.getMessage());
       System.out.println(ex.getMessage());
     }
+  }
+
+  private static Expression factorial(final int value) {
+    return new Application(
+        new Recursion(
+            new Lambda(
+                new Variable("fac"),
+                new Lambda(
+                    new Variable("n"),
+                    new ConditionalExpression(
+                        new Equal(new Variable("n"), new Number(0)),
+                        new Number(1),
+                        new Times(
+                            new Variable("n"),
+                            new Application(
+                                new Variable("fac"),
+                                new Plus(new Variable("n"), new Minus(new Number(1))))))))),
+        new Number(value));
   }
 }
