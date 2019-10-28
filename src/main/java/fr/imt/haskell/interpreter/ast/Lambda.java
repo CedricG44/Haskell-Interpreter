@@ -1,7 +1,5 @@
 package fr.imt.haskell.interpreter.ast;
 
-import java.util.Objects;
-
 /** Lambda abstractions. */
 public final class Lambda extends Expression {
 
@@ -21,7 +19,7 @@ public final class Lambda extends Expression {
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
     System.out.println("[Lambda] Reduction step:  " + this);
-    if (this.var.equals(var)) {
+    if (this.var.getValue().equals(var.getValue())) {
       return this;
     }
     return new Lambda(this.var, exp.substitute(var, substitute));
@@ -38,18 +36,5 @@ public final class Lambda extends Expression {
   @Override
   public String toString() {
     return "(\\" + var + " -> " + exp + ")";
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Lambda lambda = (Lambda) o;
-    return var.equals(lambda.var) && exp.equals(lambda.exp);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(var, exp);
   }
 }

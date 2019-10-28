@@ -13,7 +13,7 @@ public final class Variable extends Expression {
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
-    if (var.equals(this)) {
+    if (value.equals(var.getValue())) {
       return substitute;
     }
     return this;
