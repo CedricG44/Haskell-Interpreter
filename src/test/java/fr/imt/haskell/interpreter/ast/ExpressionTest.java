@@ -39,7 +39,7 @@ public class ExpressionTest {
                     new Lambda(new Variable("x"), new Variable("x")),
                     new Lambda(new Variable("y"), new Variable("y"))),
                 new Lambda(new Variable("z"), new Variable("z"))),
-            null
+            new Lambda(new Variable("z"), new Variable("z"))
           },
           {
             new Application(
@@ -47,7 +47,7 @@ public class ExpressionTest {
                 new Application(
                     new Lambda(new Variable("y"), new Variable("y")),
                     new Lambda(new Variable("z"), new Variable("z")))),
-            null
+            new Lambda(new Variable("z"), new Variable("z"))
           },
           {
             new Application(

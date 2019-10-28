@@ -1,5 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
+import java.util.Objects;
+
 /** Applications. */
 public final class Application extends Expression {
 
@@ -26,5 +28,18 @@ public final class Application extends Expression {
   @Override
   public String toString() {
     return "(" + expL + " " + expR + ")";
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Application that = (Application) o;
+    return expL.equals(that.expL) && expR.equals(that.expR);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(expL, expR);
   }
 }
