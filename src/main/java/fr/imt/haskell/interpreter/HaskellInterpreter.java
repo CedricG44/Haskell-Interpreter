@@ -1,6 +1,7 @@
 package fr.imt.haskell.interpreter;
 
 import fr.imt.haskell.interpreter.ast.Application;
+import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Equal;
@@ -45,7 +46,7 @@ public class HaskellInterpreter {
     System.out.println("\nExpression to reduce: " + application3 + "\n");
     System.out.println("\nReduced expression: " + application3.reduce() + "\n");*/
 
-    final Application application5 =
+    final Expression application5 =
             new Equal(new Minus(new Minus(new Number(5))), new Number(5));
 
     System.out.println("\nExpression to reduce: " + application5 + "\n");

@@ -11,13 +11,16 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Or;
 
 /** Binary expressions. */
-public abstract class BinaryExpression extends Application implements BuiltInFunction {
+public abstract class BinaryExpression extends BuiltInFunction {
 
   private final Operation op;
+  protected final Expression expL;
+  protected final Expression expR;
 
   public BinaryExpression(Operation op, Expression expL, Expression expR) {
-    super(expL, expR);
     this.op = op;
+    this.expL = expL;
+    this.expR = expR;
   }
 
   @Override

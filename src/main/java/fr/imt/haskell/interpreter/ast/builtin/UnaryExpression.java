@@ -6,7 +6,7 @@ import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
 
 /** Unary expressions. */
-public abstract class UnaryExpression extends Expression implements BuiltInFunction {
+public abstract class UnaryExpression extends BuiltInFunction {
 
   private final Operation op;
   protected final Expression exp;
