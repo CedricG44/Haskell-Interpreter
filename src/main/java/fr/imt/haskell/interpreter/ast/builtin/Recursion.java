@@ -20,7 +20,7 @@ public final class Recursion extends Expression {
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
-    System.out.println("[Lambda] Reduction step:  " + this);
+    System.out.println("[Recursion] Reduction step:  " + this);
     return new Recursion(h.substitute(var, substitute));
   }
 
