@@ -14,22 +14,16 @@ public final class Lambda extends Expression {
   }
 
   @Override
-  public boolean isReducible() {
-    return this.exp.isReducible();
-  }
-
-  @Override
   public Expression reduce() {
-    System.out.println("[Lambda] Reduction step: " + this);
-    if (isReducible()) {
-      return new Lambda(var, this.exp.reduce());
-    }
-    return this;
+    return new Lambda(var, exp.reduce());
   }
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
-    return new Lambda(var, exp.substitute(this.var, substitute));
+    if (this.var.equals(var)) {
+      return this;
+    }
+    return new Lambda(this.var, exp.substitute(var, substitute));
   }
 
   public Variable getVar() {

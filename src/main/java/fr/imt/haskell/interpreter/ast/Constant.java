@@ -4,13 +4,7 @@ package fr.imt.haskell.interpreter.ast;
 public class Constant extends Expression {
 
   @Override
-  public boolean isReducible() {
-    return false;
-  }
-
-  @Override
   public Expression reduce() {
-    System.out.println("[Constant] Reduction step: " + this);
     return this;
   }
 

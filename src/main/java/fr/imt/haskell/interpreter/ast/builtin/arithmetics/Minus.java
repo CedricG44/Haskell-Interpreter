@@ -1,24 +1,25 @@
 package fr.imt.haskell.interpreter.ast.builtin.arithmetics;
 
 import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
-
-import static fr.imt.haskell.interpreter.ast.builtin.Operation.MINUS;
 
 /** Minus built-in functions. */
 public final class Minus extends UnaryExpression {
 
   public Minus(Expression expression) {
-    super(MINUS, expression);
+    super(expression);
   }
 
   @Override
-  public Expression eval() {
-    if (!(exp instanceof Number)) {
-      return new Minus(exp);
-    }
-    return new Number(-((Number) exp).getValue());
+  public Expression reduce() {
+    return new Number(-((Number) exp.reduce()).getValue());
+  }
+
+  @Override
+  public Expression substitute(Variable var, Expression substitute) {
+    return new Minus(exp.substitute(var, substitute));
   }
 
   @Override

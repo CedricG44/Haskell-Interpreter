@@ -12,17 +12,6 @@ public final class Variable extends Expression {
   }
 
   @Override
-  public boolean isReducible() {
-    return false;
-  }
-
-  @Override
-  public Expression reduce() {
-    System.out.println("[Variable] Reduction step: " + this);
-    return this;
-  }
-
-  @Override
   public Expression substitute(final Variable var, final Expression substitute) {
     if (var.equals(this)) {
       return substitute;

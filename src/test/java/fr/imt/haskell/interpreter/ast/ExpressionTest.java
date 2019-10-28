@@ -1,5 +1,6 @@
 package fr.imt.haskell.interpreter.ast;
 
+import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
@@ -12,6 +13,7 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class ExpressionTest {
@@ -45,10 +47,6 @@ public class ExpressionTest {
                     new Lambda(new Variable("y"), new Variable("y")),
                     new Lambda(new Variable("z"), new Variable("z")))),
             new Lambda(new Variable("z"), new Variable("z"))
-          },
-          { // Ne devrait pas marcher
-            new Application(new Lambda(new Variable("x"), new Variable("y")), new Number(5)),
-            new Variable("y")
           },
           {
             new Application(
@@ -91,7 +89,14 @@ public class ExpressionTest {
             new Boolean(true)
           },
           {new Equal(new Minus(new Number(5)), new Number(-5)), new Boolean(true)},
-//          {new Equal(new Minus(new Minus(new Number(5))), new Number(5)), new Boolean(true)},
+          {new Equal(new Minus(new Minus(new Number(5))), new Number(5)), new Boolean(true)},
+          {
+            new ConditionalExpression(
+                new Not(new Equal(new Number(20), new Number(20))),
+                new Number(42),
+                new Number(666)),
+            new Number(666)
+          }
         });
   }
 
@@ -103,8 +108,13 @@ public class ExpressionTest {
   @Test
   public void betaReduction() {
     System.out.println("\nExpression to reduce: " + exp);
-    final Expression reducedExp = exp.reduce();
-    System.out.println("Reduced expression: " + reducedExp + "\n");
-    assertEquals(expectedExp, reducedExp);
+    try {
+      final Expression reducedExp = exp.reduce();
+      System.out.println("Reduced expression: " + reducedExp + "\n");
+      assertEquals(expectedExp, reducedExp);
+    } catch (Exception ex) {
+      assertTrue(ex instanceof UnsupportedOperationException);
+      assertEquals("Weak Head Normal Form !", ex.getMessage());
+    }
   }
 }
