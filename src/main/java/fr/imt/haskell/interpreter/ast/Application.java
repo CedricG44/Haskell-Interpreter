@@ -15,6 +15,7 @@ public class Application extends Expression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Application] Reduction step: " + this);
     if (expL instanceof Lambda) {
       Lambda lambda = (Lambda) expL;
       return lambda.getExp().substitute(lambda.getVar(), expR).reduce();

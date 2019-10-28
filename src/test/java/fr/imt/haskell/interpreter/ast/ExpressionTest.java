@@ -96,6 +96,15 @@ public class ExpressionTest {
                 new Number(42),
                 new Number(666)),
             new Number(666)
+          },
+          {
+            new ConditionalExpression(
+                new Not(new Equal(new Number(20), new Number(20))),
+                new Number(42),
+                new Application(
+                    new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+                    new Number(5))),
+            new Number(10)
           }
         });
   }
@@ -115,6 +124,7 @@ public class ExpressionTest {
     } catch (Exception ex) {
       assertTrue(ex instanceof UnsupportedOperationException);
       assertEquals("Weak Head Normal Form !", ex.getMessage());
+      System.out.println(ex.getMessage());
     }
   }
 }

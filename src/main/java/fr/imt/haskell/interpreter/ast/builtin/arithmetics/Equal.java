@@ -14,6 +14,7 @@ public final class Equal extends BinaryExpression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Equal] Reduction step: " + this);
     return new Boolean(expL.reduce().equals(expR.reduce()));
   }
 

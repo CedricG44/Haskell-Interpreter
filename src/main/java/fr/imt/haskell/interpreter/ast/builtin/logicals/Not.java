@@ -13,11 +13,12 @@ public final class Not extends UnaryExpression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Not] Reduction step: " + this);
     return new Boolean(!((Boolean) exp.reduce()).getValue());
   }
 
   @Override
-  public Expression substitute(Variable var, Expression substitute) {
+  public Expression substitute(final Variable var, final Expression substitute) {
     return new Not(exp.substitute(var, substitute));
   }
 

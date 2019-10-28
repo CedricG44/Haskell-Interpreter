@@ -14,6 +14,7 @@ public final class And extends BinaryExpression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[And] Reduction step: " + this);
     return new Boolean(
         ((Boolean) expL.reduce()).getValue() && ((Boolean) expR.reduce()).getValue());
   }

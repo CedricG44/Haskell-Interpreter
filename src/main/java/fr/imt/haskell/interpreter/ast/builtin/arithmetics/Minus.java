@@ -14,11 +14,12 @@ public final class Minus extends UnaryExpression {
 
   @Override
   public Expression reduce() {
+    System.out.println("[Minus] Reduction step: " + this);
     return new Number(-((Number) exp.reduce()).getValue());
   }
 
   @Override
-  public Expression substitute(Variable var, Expression substitute) {
+  public Expression substitute(final Variable var, final Expression substitute) {
     return new Minus(exp.substitute(var, substitute));
   }
 

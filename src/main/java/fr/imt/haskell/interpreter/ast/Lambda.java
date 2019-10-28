@@ -20,6 +20,7 @@ public final class Lambda extends Expression {
 
   @Override
   public Expression substitute(final Variable var, final Expression substitute) {
+    System.out.println("[Lambda] Reduction step:  " + this);
     if (this.var.equals(var)) {
       return this;
     }
