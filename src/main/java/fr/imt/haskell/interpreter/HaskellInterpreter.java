@@ -74,8 +74,8 @@ public class HaskellInterpreter {
     reduce(new Equal(new Head(list), new Number(1)));*/
     reduce(
         new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
-    //    reduce(
-    //        new Map(list, new Plus(new Variable("x"), new Number(1))));
+    // TODO: find the trick
+//    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
 
     /*    final List<List<Number>> listList =
         Cons(
