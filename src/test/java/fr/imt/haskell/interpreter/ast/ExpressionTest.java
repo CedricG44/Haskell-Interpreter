@@ -2,20 +2,24 @@ package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.Recursion;
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Divide;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
+import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.*;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.constants.Pair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
-import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Cons;
-import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Nil;
+import static fr.imt.haskell.interpreter.ast.constants.List.Cons;
+import static fr.imt.haskell.interpreter.ast.constants.List.Nil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -124,6 +128,14 @@ public class ExpressionTest {
           {new LessThanOrEqual(new Number(1), new Number(2)), new Boolean(true)},
           {new GreaterThanOrEqual(new Number(1), new Number(1)), new Boolean(true)},
           {new GreaterThanOrEqual(new Number(2), new Number(1)), new Boolean(true)},
+          {
+            new Pair(
+                new Number(1),
+                new Application(
+                    new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+                    new Number(5))),
+            new Pair(new Number(1), new Number(10))
+          }
         });
   }
 

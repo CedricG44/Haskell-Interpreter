@@ -1,9 +1,9 @@
-package fr.imt.haskell.interpreter.ast.builtin.lists;
+package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Constant;
 
-import static fr.imt.haskell.interpreter.ast.builtin.lists.Cons.getCons;
-import static fr.imt.haskell.interpreter.ast.builtin.lists.Nil.getNil;
+import static fr.imt.haskell.interpreter.ast.constants.Cons.getCons;
+import static fr.imt.haskell.interpreter.ast.constants.Nil.getNil;
 
 /** List constants. */
 public abstract class List<T extends Constant> extends Constant {

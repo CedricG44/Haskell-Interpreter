@@ -1,4 +1,4 @@
-package fr.imt.haskell.interpreter.ast.builtin.lists;
+package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Constant;
 

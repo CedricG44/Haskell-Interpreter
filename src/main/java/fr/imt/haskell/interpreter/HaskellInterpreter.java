@@ -10,11 +10,15 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
-import fr.imt.haskell.interpreter.ast.builtin.lists.*;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Head;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Length;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
+import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 
-import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Cons;
-import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Nil;
+import static fr.imt.haskell.interpreter.ast.constants.List.Cons;
+import static fr.imt.haskell.interpreter.ast.constants.List.Nil;
 
 /** Main. */
 public class HaskellInterpreter {

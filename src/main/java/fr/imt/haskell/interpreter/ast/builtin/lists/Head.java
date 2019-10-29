@@ -3,6 +3,7 @@ package fr.imt.haskell.interpreter.ast.builtin.lists;
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
+import fr.imt.haskell.interpreter.ast.constants.List;
 
 /** List head built-in functions. */
 public final class Head extends UnaryExpression {

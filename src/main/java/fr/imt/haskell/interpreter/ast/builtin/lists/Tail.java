@@ -3,6 +3,7 @@ package fr.imt.haskell.interpreter.ast.builtin.lists;
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
+import fr.imt.haskell.interpreter.ast.constants.List;
 
 /** List tail built-in functions. */
 public final class Tail extends UnaryExpression {
