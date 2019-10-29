@@ -6,14 +6,11 @@ import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.Recursion;
+import fr.imt.haskell.interpreter.ast.builtin.lists.*;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
-import fr.imt.haskell.interpreter.ast.builtin.lists.Head;
-import fr.imt.haskell.interpreter.ast.builtin.lists.Length;
-import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
-import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 
@@ -26,7 +23,7 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    reduce(
+    /*    reduce(
         new Application(
             new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
             new Number(5)));
@@ -64,26 +61,30 @@ public class HaskellInterpreter {
                             new Variable("fac"),
                             new Plus(new Variable("n"), new Minus(new Number(1))))))));
 
-    reduce(new Application(new Recursion(factorial), new Number(1)));
+    reduce(new Application(new Recursion(factorial), new Number(1)));*/
 
-    final List<Number> list =
+    final List list =
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))));
 
-    reduce(new Head(list));
+/*    reduce(new Head(list));
     reduce(new Tail(list));
     reduce(new Null(list));
     reduce(new Head(list));
     reduce(new Length(list));
-    reduce(new Equal(new Head(list), new Number(1)));
+    reduce(new Equal(new Head(list), new Number(1)));*/
+    reduce(
+        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
+    //    reduce(
+    //        new Map(list, new Plus(new Variable("x"), new Number(1))));
 
-    final List<List<Number>> listList =
+    /*    final List<List<Number>> listList =
         Cons(
             Cons(new Number(1), Cons(new Number(2), Nil())),
             Cons(Cons(new Number(3), Nil()), Nil()));
 
     reduce(new Head(listList));
     reduce(new Tail(listList));
-    reduce(new Length(listList));
+    reduce(new Length(listList));*/
   }
 
   public static void reduce(final Expression exp) {

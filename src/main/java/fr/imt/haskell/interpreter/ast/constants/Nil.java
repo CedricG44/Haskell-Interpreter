@@ -1,23 +1,24 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Constant;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Lambda;
 
 /** Empty list constants. */
-public final class Nil<T extends Constant> extends List<T> {
+public final class Nil extends List {
 
-  static <T extends Constant> Nil<T> getNil() {
-    return new Nil<>();
+  static Nil getNil() {
+    return new Nil();
   }
 
   private Nil() {}
 
   @Override
-  public T head() {
+  public Expression head() {
     throw new UnsupportedOperationException("Empty list.");
   }
 
   @Override
-  public List<T> tail() {
+  public List tail() {
     throw new UnsupportedOperationException("Empty list.");
   }
 
@@ -29,6 +30,11 @@ public final class Nil<T extends Constant> extends List<T> {
   @Override
   public int length() {
     return 0;
+  }
+
+  @Override
+  public List map(Lambda lambda) {
+    return this;
   }
 
   @Override

@@ -1,29 +1,31 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Constant;
+import fr.imt.haskell.interpreter.ast.Application;
+import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Lambda;
 
 /** Non-empty list constants. */
-public final class Cons<T extends Constant> extends List<T> {
+public final class Cons extends List {
 
-  private final T head;
-  private final List<T> tail;
+  private final Expression head;
+  private final List tail;
 
-  static <T extends Constant> Cons<T> getCons(T head, List<T> tail) {
-    return new Cons<>(head, tail);
+  static Cons getCons(Expression head, List tail) {
+    return new Cons(head, tail);
   }
 
-  private Cons(T head, List<T> tail) {
+  private Cons(Expression head, List tail) {
     this.head = head;
     this.tail = tail;
   }
 
   @Override
-  public T head() {
+  public Expression head() {
     return head;
   }
 
   @Override
-  public List<T> tail() {
+  public List tail() {
     return tail;
   }
 
@@ -35,6 +37,11 @@ public final class Cons<T extends Constant> extends List<T> {
   @Override
   public int length() {
     return 1 + tail.length();
+  }
+
+  @Override
+  public List map(Lambda lambda) {
+    return new Cons(new Application(lambda, head).reduce(), tail.map(lambda));
   }
 
   @Override
