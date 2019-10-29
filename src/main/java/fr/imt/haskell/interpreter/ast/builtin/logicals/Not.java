@@ -5,6 +5,7 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 
+/** Not built-in functions. */
 public final class Not extends UnaryExpression {
 
   public Not(Expression expression) {

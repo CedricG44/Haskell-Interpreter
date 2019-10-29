@@ -6,6 +6,7 @@ import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 
+/** Greater than built-in functions. */
 public class GreaterThan extends BinaryExpression {
 
   public GreaterThan(Expression expL, Expression expR) {

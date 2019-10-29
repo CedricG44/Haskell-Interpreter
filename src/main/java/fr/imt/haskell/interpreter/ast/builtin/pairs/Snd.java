@@ -5,6 +5,7 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Pair;
 
+/** Pair second built-in functions. */
 public class Snd extends UnaryExpression {
 
   public Snd(Expression exp) {

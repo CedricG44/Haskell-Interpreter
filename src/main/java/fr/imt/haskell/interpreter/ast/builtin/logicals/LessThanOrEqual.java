@@ -6,6 +6,7 @@ import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 
+/** Less than or equal built-in functions. */
 public class LessThanOrEqual extends BinaryExpression {
 
   public LessThanOrEqual(Expression expL, Expression expR) {
