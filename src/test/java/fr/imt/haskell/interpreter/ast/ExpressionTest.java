@@ -3,6 +3,8 @@ package fr.imt.haskell.interpreter.ast;
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.Recursion;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
@@ -13,6 +15,8 @@ import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 
+import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Cons;
+import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Nil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -107,7 +111,14 @@ public class ExpressionTest {
                     new Number(5))),
             new Number(10)
           },
-          {factorial(5), new Number(120)}
+          {factorial(5), new Number(120)},
+          {
+            length(
+                Cons(
+                    new Number(1),
+                    Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))))),
+            new Number(4)
+          }
         });
   }
 
@@ -146,5 +157,21 @@ public class ExpressionTest {
                                 new Variable("fac"),
                                 new Plus(new Variable("n"), new Minus(new Number(1))))))))),
         new Number(value));
+  }
+
+  private static Expression length(final Expression list) {
+    return new Application(
+        new Recursion(
+            new Lambda(
+                new Variable("length"),
+                new Lambda(
+                    new Variable("l"),
+                    new ConditionalExpression(
+                        new Null(new Variable("l")),
+                        new Number(0),
+                        new Plus(
+                            new Application(new Variable("length"), new Tail(new Variable("l"))),
+                            new Number(1)))))),
+        list);
   }
 }

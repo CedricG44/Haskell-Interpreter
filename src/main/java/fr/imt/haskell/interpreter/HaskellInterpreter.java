@@ -10,7 +10,11 @@ import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
+import fr.imt.haskell.interpreter.ast.builtin.lists.*;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+
+import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Cons;
+import static fr.imt.haskell.interpreter.ast.builtin.lists.List.Nil;
 
 /** Main. */
 public class HaskellInterpreter {
@@ -57,6 +61,25 @@ public class HaskellInterpreter {
                             new Plus(new Variable("n"), new Minus(new Number(1))))))));
 
     reduce(new Application(new Recursion(factorial), new Number(1)));
+
+    final List<Number> list =
+        Cons(new Number(1), Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))));
+
+    reduce(new Head(list));
+    reduce(new Tail(list));
+    reduce(new Null(list));
+    reduce(new Head(list));
+    reduce(new Length(list));
+    reduce(new Equal(new Head(list), new Number(1)));
+
+    final List<List<Number>> listList =
+        Cons(
+            Cons(new Number(1), Cons(new Number(2), Nil())),
+            Cons(Cons(new Number(3), Nil()), Nil()));
+
+    reduce(new Head(listList));
+    reduce(new Tail(listList));
+    reduce(new Length(listList));
   }
 
   public static void reduce(final Expression exp) {
