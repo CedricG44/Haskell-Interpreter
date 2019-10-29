@@ -5,8 +5,7 @@ import fr.imt.haskell.interpreter.ast.builtin.Recursion;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.*;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
-import fr.imt.haskell.interpreter.ast.builtin.logicals.And;
-import fr.imt.haskell.interpreter.ast.builtin.logicals.Not;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.*;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import org.junit.Test;
@@ -118,7 +117,13 @@ public class ExpressionTest {
                     new Number(1),
                     Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))))),
             new Number(4)
-          }
+          },
+          {new GreaterThan(new Number(2), new Number(1)), new Boolean(true)},
+          {new LessThan(new Number(1), new Number(2)), new Boolean(true)},
+          {new LessThanOrEqual(new Number(1), new Number(1)), new Boolean(true)},
+          {new LessThanOrEqual(new Number(1), new Number(2)), new Boolean(true)},
+          {new GreaterThanOrEqual(new Number(1), new Number(1)), new Boolean(true)},
+          {new GreaterThanOrEqual(new Number(2), new Number(1)), new Boolean(true)},
         });
   }
 

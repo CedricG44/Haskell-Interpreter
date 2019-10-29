@@ -1,4 +1,4 @@
-package fr.imt.haskell.interpreter.ast.builtin.arithmetics;
+package fr.imt.haskell.interpreter.ast.builtin.logicals;
 
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;

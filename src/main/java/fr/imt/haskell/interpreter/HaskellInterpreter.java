@@ -6,7 +6,7 @@ import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.Recursion;
-import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Equal;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
