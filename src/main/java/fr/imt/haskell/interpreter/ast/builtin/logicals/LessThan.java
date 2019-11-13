@@ -20,8 +20,8 @@ public class LessThan extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new LessThan(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new LessThan(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

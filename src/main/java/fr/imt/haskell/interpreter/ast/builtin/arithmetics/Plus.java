@@ -19,8 +19,8 @@ public final class Plus extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Plus(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Plus(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

@@ -17,12 +17,12 @@ public final class Application extends Expression {
   public Expression reduce() {
     System.out.println("[Application] Reduction step: " + this);
     Lambda lambda = (Lambda) expL.reduce();
-    return lambda.getExp().substitute(lambda.getVar(), expR).reduce();
+    return lambda.getExp().instantiate(lambda.getVar(), expR).reduce();
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Application(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Application(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

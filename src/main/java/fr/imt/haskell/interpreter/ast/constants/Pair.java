@@ -30,8 +30,8 @@ public class Pair extends Constant {
   }
 
   @Override
-  public Expression substitute(Variable var, Expression substitute) {
-    return new Pair(left.substitute(var, substitute), right.substitute(var, substitute));
+  public Expression instantiate(Variable var, Expression exp) {
+    return new Pair(left.instantiate(var, exp), right.instantiate(var, exp));
   }
 
   @Override

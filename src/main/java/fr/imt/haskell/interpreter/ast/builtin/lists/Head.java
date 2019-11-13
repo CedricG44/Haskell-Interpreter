@@ -19,8 +19,8 @@ public final class Head extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Head(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Head(this.exp.instantiate(var, exp));
   }
 
   @Override

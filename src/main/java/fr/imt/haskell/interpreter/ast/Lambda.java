@@ -19,12 +19,12 @@ public final class Lambda extends Expression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     System.out.println("[Lambda] Reduction step:  " + this);
     if (this.var.equals(var)) {
       return this;
     }
-    return new Lambda(this.var, exp.substitute(var, substitute));
+    return new Lambda(this.var, this.exp.instantiate(var, exp));
   }
 
   public Variable getVar() {

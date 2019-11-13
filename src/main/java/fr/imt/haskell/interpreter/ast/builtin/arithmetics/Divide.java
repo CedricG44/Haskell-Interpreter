@@ -19,8 +19,8 @@ public final class Divide extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Divide(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Divide(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

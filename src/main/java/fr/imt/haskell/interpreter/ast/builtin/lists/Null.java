@@ -20,8 +20,8 @@ public final class Null extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Null(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Null(this.exp.instantiate(var, exp));
   }
 
   @Override

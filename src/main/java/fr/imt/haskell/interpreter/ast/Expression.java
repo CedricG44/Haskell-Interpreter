@@ -7,5 +7,5 @@ public abstract class Expression {
     throw new UnsupportedOperationException("Weak Head Normal Form !");
   }
 
-  public abstract Expression substitute(final Variable var, final Expression substitute);
+  public abstract Expression instantiate(final Variable var, final Expression exp);
 }

@@ -19,9 +19,9 @@ public final class Recursion extends Expression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     System.out.println("[Recursion] Reduction step:  " + this);
-    return new Recursion(h.substitute(var, substitute));
+    return new Recursion(h.instantiate(var, exp));
   }
 
   @Override

@@ -5,7 +5,6 @@ import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.List;
-import fr.imt.haskell.interpreter.ast.constants.Number;
 
 /** List map built-in functions. */
 public final class Map extends UnaryExpression {
@@ -24,8 +23,8 @@ public final class Map extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Map(exp.substitute(var, substitute), lambda);
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Map(this.exp.instantiate(var, exp), lambda);
   }
 
   @Override

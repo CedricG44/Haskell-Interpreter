@@ -19,8 +19,8 @@ public final class Tail extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Tail(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Tail(this.exp.instantiate(var, exp));
   }
 
   @Override

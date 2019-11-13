@@ -18,8 +18,8 @@ public class Snd extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Snd(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Snd(this.exp.instantiate(var, exp));
   }
 
   @Override

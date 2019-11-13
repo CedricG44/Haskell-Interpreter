@@ -20,9 +20,9 @@ public class GreaterThanOrEqual extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     return new GreaterThanOrEqual(
-        expL.substitute(var, substitute), expR.substitute(var, substitute));
+        expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

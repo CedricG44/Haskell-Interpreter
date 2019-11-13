@@ -10,7 +10,7 @@ public abstract class Constant extends Expression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     return this;
   }
 }

@@ -24,11 +24,11 @@ public final class ConditionalExpression extends Expression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     return new ConditionalExpression(
-        cond.substitute(var, substitute),
-        expL.substitute(var, substitute),
-        expR.substitute(var, substitute));
+        cond.instantiate(var, exp),
+        expL.instantiate(var, exp),
+        expR.instantiate(var, exp));
   }
 
   @Override

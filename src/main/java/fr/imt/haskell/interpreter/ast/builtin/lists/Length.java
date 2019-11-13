@@ -20,8 +20,8 @@ public final class Length extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Length(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Length(this.exp.instantiate(var, exp));
   }
 
   @Override

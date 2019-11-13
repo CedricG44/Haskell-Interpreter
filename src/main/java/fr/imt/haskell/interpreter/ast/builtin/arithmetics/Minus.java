@@ -19,8 +19,8 @@ public final class Minus extends UnaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Minus(exp.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Minus(this.exp.instantiate(var, exp));
   }
 
   @Override

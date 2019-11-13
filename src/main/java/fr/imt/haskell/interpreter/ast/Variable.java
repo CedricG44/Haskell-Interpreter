@@ -12,9 +12,9 @@ public final class Variable extends Expression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     if (this.equals(var)) {
-      return substitute;
+      return exp;
     }
     return this;
   }

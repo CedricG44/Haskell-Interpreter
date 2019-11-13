@@ -19,8 +19,8 @@ public final class Times extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new Times(expL.substitute(var, substitute), expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new Times(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

@@ -20,8 +20,8 @@ public final class And extends BinaryExpression {
   }
 
   @Override
-  public Expression substitute(final Variable var, final Expression substitute) {
-    return new And(this.expL.substitute(var, substitute), this.expR.substitute(var, substitute));
+  public Expression instantiate(final Variable var, final Expression exp) {
+    return new And(this.expL.instantiate(var, exp), this.expR.instantiate(var, exp));
   }
 
   @Override
