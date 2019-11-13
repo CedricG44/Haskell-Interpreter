@@ -18,6 +18,11 @@ public class Snd extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    return ((Pair) exp.reduceByValue()).second();
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Snd(this.exp.instantiate(var, exp));
   }

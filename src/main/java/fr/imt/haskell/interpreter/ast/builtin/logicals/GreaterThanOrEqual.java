@@ -20,9 +20,15 @@ public class GreaterThanOrEqual extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[GreaterThanOrEqual] Reduction step: " + this);
+    return new Boolean(
+        ((Number) expL.reduceByValue()).getValue() >= ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
-    return new GreaterThanOrEqual(
-        expL.instantiate(var, exp), expR.instantiate(var, exp));
+    return new GreaterThanOrEqual(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override

@@ -20,6 +20,13 @@ public class GreaterThan extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[GreaterThan] Reduction step: " + this);
+    return new Boolean(
+        ((Number) expL.reduceByValue()).getValue() > ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new GreaterThan(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

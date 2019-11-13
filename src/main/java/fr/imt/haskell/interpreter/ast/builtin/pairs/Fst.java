@@ -18,6 +18,11 @@ public class Fst extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    return ((Pair) exp.reduceByValue()).first();
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Fst(this.exp.instantiate(var, exp));
   }

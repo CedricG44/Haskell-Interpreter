@@ -20,6 +20,12 @@ public final class Null extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Null] Reduction step: " + this);
+    return new Boolean(((List) exp.reduceByValue()).isEmpty());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Null(this.exp.instantiate(var, exp));
   }

@@ -20,6 +20,13 @@ public final class And extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[And] Reduction step: " + this);
+    return new Boolean(
+        ((Boolean) expL.reduceByValue()).getValue() && ((Boolean) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new And(this.expL.instantiate(var, exp), this.expR.instantiate(var, exp));
   }

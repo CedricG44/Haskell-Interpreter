@@ -20,6 +20,13 @@ public class LessThanOrEqual extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[LessThanOrEqual] Reduction step: " + this);
+    return new Boolean(
+        ((Number) expL.reduceByValue()).getValue() <= ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new LessThanOrEqual(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

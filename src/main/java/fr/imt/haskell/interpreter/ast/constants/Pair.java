@@ -30,6 +30,11 @@ public class Pair extends Constant {
   }
 
   @Override
+  public Expression reduceByValue() {
+    return new Pair(left.reduceByValue(), right.reduceByValue());
+  }
+
+  @Override
   public Expression instantiate(Variable var, Expression exp) {
     return new Pair(left.instantiate(var, exp), right.instantiate(var, exp));
   }

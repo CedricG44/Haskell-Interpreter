@@ -19,8 +19,13 @@ public final class Lambda extends Expression {
   }
 
   @Override
-  public Expression instantiate(final Variable var, final Expression exp) {
+  public Expression reduceByValue() {
     System.out.println("[Lambda] Reduction step:  " + this);
+    return this;
+  }
+
+  @Override
+  public Expression instantiate(final Variable var, final Expression exp) {
     if (this.var.equals(var)) {
       return this;
     }

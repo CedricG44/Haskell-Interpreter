@@ -19,6 +19,13 @@ public final class Times extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Times] Reduction step: " + this);
+    return new Number(
+        ((Number) expL.reduceByValue()).getValue() * ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Times(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

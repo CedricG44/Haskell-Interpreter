@@ -19,6 +19,13 @@ public final class Plus extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Plus] Reduction step: " + this);
+    return new Number(
+        ((Number) expL.reduceByValue()).getValue() + ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Plus(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

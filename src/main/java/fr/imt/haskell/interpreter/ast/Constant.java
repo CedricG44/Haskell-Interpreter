@@ -10,6 +10,11 @@ public abstract class Constant extends Expression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    return this;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return this;
   }

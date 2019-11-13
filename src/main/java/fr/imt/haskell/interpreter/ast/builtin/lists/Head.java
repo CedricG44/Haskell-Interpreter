@@ -19,6 +19,12 @@ public final class Head extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Head] Reduction step: " + this);
+    return ((List) exp.reduceByValue()).head();
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Head(this.exp.instantiate(var, exp));
   }

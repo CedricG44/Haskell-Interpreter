@@ -136,7 +136,11 @@ public class ExpressionTest {
                     new Number(5))),
             new Pair(new Number(1), new Number(10))
           }
-        });
+        ,{
+              Cons(new Plus( new Number(1), new Number(2)), Nil()),
+                Cons(new Number(3), Nil())
+
+        }});
   }
 
   public ExpressionTest(Expression exp, Expression expectedExp) {
@@ -148,7 +152,7 @@ public class ExpressionTest {
   public void betaReduction() {
     System.out.println("\nExpression to reduce: " + exp);
     try {
-      final Expression reducedExp = exp.reduce();
+      final Expression reducedExp = exp.reduceByValue();
       System.out.println("Reduced expression: " + reducedExp + "\n");
       assertEquals(expectedExp, reducedExp);
     } catch (Exception ex) {

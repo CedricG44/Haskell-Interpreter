@@ -63,18 +63,18 @@ public class HaskellInterpreter {
 
     reduce(new Application(new Recursion(factorial), new Number(1)));*/
 
-    final List list =
+    /*final List list =
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))));
-
+*/
 /*    reduce(new Head(list));
     reduce(new Tail(list));
     reduce(new Null(list));
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-    reduce(
+  /*  reduce(
         new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
-    // TODO: find the trick
+  */  // TODO: find the trick
 //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
 
     /*    final List<List<Number>> listList =
@@ -85,10 +85,27 @@ public class HaskellInterpreter {
     reduce(new Head(listList));
     reduce(new Tail(listList));
     reduce(new Length(listList));*/
+
+    Expression exp = new Application(
+            new Recursion(
+                    new Lambda(
+                            new Variable("fac"),
+                            new Lambda(
+                                    new Variable("n"),
+                                    new ConditionalExpression(
+                                            new Equal(new Variable("n"), new Number(0)),
+                                            new Number(1),
+                                            new Times(
+                                                    new Variable("n"),
+                                                    new Application(
+                                                            new Variable("fac"),
+                                                            new Plus(new Variable("n"), new Minus(new Number(1))))))))),
+            new Number(5));
+    reduce(exp);
   }
 
   public static void reduce(final Expression exp) {
     System.out.println("\nExpression to reduce: " + exp + "\n");
-    System.out.println("\nReduced expression: " + exp.reduce() + "\n");
+    System.out.println("\nReduced expression: " + exp.reduceByValue() + "\n");
   }
 }

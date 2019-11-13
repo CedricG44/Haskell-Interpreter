@@ -19,6 +19,11 @@ public final class Minus extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    return new Number(-((Number) exp.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Minus(this.exp.instantiate(var, exp));
   }

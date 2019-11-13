@@ -19,6 +19,12 @@ public final class Divide extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Divide] Reduction step: " + this);
+    return new Number(((Number) expL.reduceByValue()).getValue() / ((Number) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Divide(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

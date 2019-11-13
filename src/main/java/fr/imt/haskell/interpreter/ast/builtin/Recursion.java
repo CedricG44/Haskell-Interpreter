@@ -15,12 +15,19 @@ public final class Recursion extends Expression {
 
   @Override
   public Expression reduce() {
-    return new Application(h, this).reduce();
+    System.out.println("[Recursion] Before reduction step:  " + this);
+    Expression reduce = new Application(h, this).reduce();
+    System.out.println("[Recursion] After reduction step:  " + this);
+    return reduce;
+  }
+
+  @Override
+  public Expression reduceByValue() {
+    return new Application(h, this).reduceByValue();
   }
 
   @Override
   public Expression instantiate(final Variable var, final Expression exp) {
-    System.out.println("[Recursion] Reduction step:  " + this);
     return new Recursion(h.instantiate(var, exp));
   }
 

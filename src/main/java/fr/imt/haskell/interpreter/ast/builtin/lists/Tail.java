@@ -19,6 +19,12 @@ public final class Tail extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Tail] Reduction step: " + this);
+    return ((List) exp.reduceByValue()).tail();
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Tail(this.exp.instantiate(var, exp));
   }

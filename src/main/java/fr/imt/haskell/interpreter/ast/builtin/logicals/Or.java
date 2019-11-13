@@ -20,6 +20,13 @@ public final class Or extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Or] Reduction step: " + this);
+    return new Boolean(
+        ((Boolean) expL.reduceByValue()).getValue() || ((Boolean) expR.reduceByValue()).getValue());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Or(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

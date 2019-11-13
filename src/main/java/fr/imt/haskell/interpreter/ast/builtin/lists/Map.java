@@ -23,6 +23,12 @@ public final class Map extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Map] Reduction step: " + this);
+    return ((List) exp.reduceByValue()).map(this.lambda);
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Map(this.exp.instantiate(var, exp), lambda);
   }

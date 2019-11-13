@@ -20,6 +20,12 @@ public final class Length extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByValue() {
+    System.out.println("[Length] Reduction step: " + this);
+    return new Number(((List) exp.reduceByValue()).length());
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Length(this.exp.instantiate(var, exp));
   }
