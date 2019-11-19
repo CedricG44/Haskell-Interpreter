@@ -2,6 +2,7 @@ package fr.imt.haskell.interpreter.ast.builtin;
 
 import fr.imt.haskell.interpreter.ast.Application;
 import fr.imt.haskell.interpreter.ast.Expression;
+import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 
 /** Recursive built-in functions (fixpoint combinator). */
@@ -15,15 +16,14 @@ public final class Recursion extends Expression {
 
   @Override
   public Expression reduce() {
-    System.out.println("[Recursion] Before reduction step:  " + this);
-    Expression reduce = new Application(h, this).reduce();
-    System.out.println("[Recursion] After reduction step:  " + this);
-    return reduce;
+    return new Application(h, this).reduce();
   }
 
   @Override
   public Expression reduceByValue() {
-    return new Application(h, this).reduceByValue();
+    // Y combinator strict
+    // Y(f) = x -> f(Y(f), x)
+    return new Lambda(new Variable("x"), new Application(new Application(h, this), new Variable("x")));
   }
 
   @Override

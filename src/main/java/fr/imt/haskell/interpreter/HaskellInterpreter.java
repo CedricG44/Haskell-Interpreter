@@ -106,6 +106,6 @@ public class HaskellInterpreter {
 
   public static void reduce(final Expression exp) {
     System.out.println("\nExpression to reduce: " + exp + "\n");
-    System.out.println("\nReduced expression: " + exp.reduceByValue() + "\n");
+    System.out.println("\nReduced expression: " + exp.reduce() + "\n");
   }
 }
