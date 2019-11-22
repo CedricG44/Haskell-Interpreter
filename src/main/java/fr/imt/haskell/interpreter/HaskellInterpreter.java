@@ -122,12 +122,12 @@ public class HaskellInterpreter {
                                     new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
 
-    reduce(exp4);
+    reduce(exp6);
   }
 
   private static Expression infiniteList() {
     return new Recursion(
-        new Lambda(new Variable("inf"), Cons(new Number(1), Cons(new Variable("inf"), Nil()))));
+        new Lambda(new Variable("inf"), Cons(new Number(1),new Variable("inf"))));
   }
 
   public static void reduce(final Expression exp) {
@@ -135,10 +135,9 @@ public class HaskellInterpreter {
     System.out.println(exp);
 
     final Expression result = exp.reduce(new Printer(exp));
-    System.out.println(result);
+    System.out.println("Résulat: " + result);
 
-    System.out.println(
-        "\nReduced expression with printer: " + result.print(new Printer(result)) + "\n");
+    System.out.println("\nReduced expression with printer: " + result.print(new Printer(result)) + "\n");
   }
 
   private static Expression insert(final Expression element, final Expression list) {
@@ -159,18 +158,17 @@ public class HaskellInterpreter {
                                         new Variable("element"), new Head(new Variable("list"))),
                                     Cons(
                                         new Head(new Variable("list")),
-                                        Cons(
+                                        new Application(
                                             new Application(
-                                                new Application(
-                                                    new Variable("insert"),
-                                                    new Variable("element")),
-                                                new Tail(new Variable("list"))),
-                                            Nil())),
+                                                new Variable("insert"),
+                                                new Variable("element")),
+                                            new Tail(new Variable("list")))
+                                        ),
                                     Cons(
                                         new Variable("element"),
                                         Cons(
                                             new Head(new Variable("list")),
-                                            Cons(new Tail(new Variable("list")), Nil()))))))))),
+                                            new Tail(new Variable("list")))))))))),
             element),
         list);
   }

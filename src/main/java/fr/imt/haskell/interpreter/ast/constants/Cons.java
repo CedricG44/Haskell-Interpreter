@@ -8,13 +8,13 @@ import fr.imt.haskell.interpreter.ast.printer.Printer;
 public final class Cons extends List {
 
   private final Expression head;
-  private final List tail;
+  private final Expression tail;
 
-  static Cons getCons(Expression head, List tail) {
+  static Cons getCons(Expression head, Expression tail) {
     return new Cons(head, tail);
   }
 
-  private Cons(Expression head, List tail) {
+  private Cons(Expression head, Expression tail) {
     this.head = head;
     this.tail = tail;
   }
@@ -25,7 +25,7 @@ public final class Cons extends List {
   }
 
   @Override
-  public List tail() {
+  public Expression tail() {
     return tail;
   }
 
@@ -36,7 +36,7 @@ public final class Cons extends List {
 
   @Override
   public int length() {
-    return 1 + tail.length();
+    return 1 + ((List) tail).length();
   }
 
   @Override
@@ -61,11 +61,11 @@ public final class Cons extends List {
 
   @Override
   public Expression reducePrinter(final Printer printer) {
-    return new Cons(head.reducePrinter(printer), (List) tail.reducePrinter(printer));
+    return new Cons(head.reducePrinter(printer), tail.reducePrinter(printer));
   }
 
   @Override
   public Expression instantiate(Variable var, Expression exp) {
-    return new Cons(head.instantiate(var, exp), (List) tail.instantiate(var, exp));
+    return new Cons(head.instantiate(var, exp), tail.instantiate(var, exp));
   }
 }
