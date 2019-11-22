@@ -1,23 +1,25 @@
 package fr.imt.haskell.interpreter.ast;
 
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+
 /** Lambda calculus expression. */
 public abstract class Expression {
 
-  public Expression reduce() {
+  public Expression reduce(final Printer printer) {
     throw new UnsupportedOperationException("Weak Head Normal Form !");
   }
 
-  public Expression reduceByValue() {
+  public Expression reduceByValue(final Printer printer) {
     throw new UnsupportedOperationException("Weak Head Normal Form !");
+  }
+
+  public Expression reducePrinter(final Printer printer) {
+    return this;
   }
 
   public abstract Expression instantiate(final Variable var, final Expression exp);
 
-  public String print() {
+  public String print(final Printer printer) {
     return "Print not implemented";
-  }
-
-  public Expression reducePrinter() {
-    return this;
   }
 }

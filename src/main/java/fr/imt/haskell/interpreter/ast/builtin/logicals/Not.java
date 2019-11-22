@@ -4,6 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Not built-in functions. */
 public final class Not extends UnaryExpression {
@@ -13,15 +15,19 @@ public final class Not extends UnaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Not] Reduction step: " + this);
-    return new Boolean(!((Boolean) exp.reduce()).getValue());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(!((Boolean) exp.reduce(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Not] Reduction step: " + this);
-    return new Boolean(!((Boolean) exp.reduceByValue()).getValue());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(!((Boolean) exp.reduceByValue(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

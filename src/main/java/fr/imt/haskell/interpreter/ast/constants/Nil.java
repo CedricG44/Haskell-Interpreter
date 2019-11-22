@@ -1,8 +1,8 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 
 /** Empty list constants. */
 public final class Nil extends List {
@@ -34,22 +34,17 @@ public final class Nil extends List {
   }
 
   @Override
-  public List map(Lambda lambda) {
-    return this;
-  }
-
-  @Override
   public String toString() {
     return "[]";
   }
 
   @Override
-  public Expression reduce() {
+  public Expression reduce(final Printer printer) {
     return this;
   }
 
   @Override
-  public Expression reduceByValue() {
+  public Expression reduceByValue(final Printer printer) {
     return this;
   }
 

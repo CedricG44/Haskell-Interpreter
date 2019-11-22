@@ -1,16 +1,17 @@
 package fr.imt.haskell.interpreter.ast;
 
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+
 /** Built-in constants. */
 public abstract class Constant extends Expression {
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Constant] Reduction step:  " + this);
+  public Expression reduce(final Printer printer) {
     return this;
   }
 
   @Override
-  public Expression reduceByValue() {
+  public Expression reduceByValue(final Printer printer) {
     return this;
   }
 

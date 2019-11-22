@@ -4,6 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Or built-in functions. */
 public final class Or extends BinaryExpression {
@@ -13,17 +15,25 @@ public final class Or extends BinaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Or] Reduction step: " + this);
-    return new Boolean(
-        ((Boolean) expL.reduce()).getValue() || ((Boolean) expR.reduce()).getValue());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(
+            ((Boolean) expL.reduce(printer)).getValue()
+                || ((Boolean) expR.reduce(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Or] Reduction step: " + this);
-    return new Boolean(
-        ((Boolean) expL.reduceByValue()).getValue() || ((Boolean) expR.reduceByValue()).getValue());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(
+            ((Boolean) expL.reduceByValue(printer)).getValue()
+                || ((Boolean) expR.reduceByValue(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

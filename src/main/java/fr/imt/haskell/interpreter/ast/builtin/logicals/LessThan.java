@@ -5,6 +5,8 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Less than built-in functions. */
 public class LessThan extends BinaryExpression {
@@ -14,16 +16,25 @@ public class LessThan extends BinaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[LessThan] Reduction step: " + this);
-    return new Boolean(((Number) expL.reduce()).getValue() < ((Number) expR.reduce()).getValue());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(
+            ((Number) expL.reduce(printer)).getValue()
+                < ((Number) expR.reduce(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[LessThan] Reduction step: " + this);
-    return new Boolean(
-        ((Number) expL.reduceByValue()).getValue() < ((Number) expR.reduceByValue()).getValue());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(
+            ((Number) expL.reduceByValue(printer)).getValue()
+                < ((Number) expR.reduceByValue(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

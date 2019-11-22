@@ -4,6 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Equal built-in functions. */
 public final class Equal extends BinaryExpression {
@@ -13,15 +15,20 @@ public final class Equal extends BinaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Equal] Reduction step: " + this);
-    return new Boolean(expL.reduce().equals(expR.reduce()));
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(expL.reduce(printer).equals(expR.reduce(printer)));
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Equal] Reduction step: " + this);
-    return new Boolean(expL.reduceByValue().equals(expR.reduceByValue()));
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(expL.reduceByValue(printer).equals(expR.reduceByValue(printer)));
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

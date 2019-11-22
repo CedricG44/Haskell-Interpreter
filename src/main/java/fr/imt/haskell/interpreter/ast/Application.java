@@ -1,6 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
-import fr.imt.haskell.interpreter.ast.builtin.Recursion;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 import java.util.Objects;
 
@@ -16,26 +17,43 @@ public final class Application extends Expression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Application] Reduction step: " + this);
-    Lambda lambda = (Lambda) expL.reduce();
-    return lambda.getExp().instantiate(lambda.getVar(), expR).reduce();
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Lambda lambda = (Lambda) expL.reduce(printer);
+
+    final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+
+    final Expression newReducedExp = newExp.reduce(printer);
+    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    return newReducedExp;
   }
 
   @Override
-  public Expression reducePrinter() {
-    System.out.println("[Application] Reduction step: " + this);
-    Lambda lambda = (Lambda) expL.reduce();
-    return lambda.getExp().instantiate(lambda.getVar(), expR).reducePrinter();
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Lambda lambda = (Lambda) expL.reduceByValue(printer);
+
+    final Expression newExp =
+        lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue(printer));
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+
+    final Expression newReducedExp = newExp.reduceByValue(printer);
+    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    return newReducedExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Application] Before reduction step: " + this);
-    Lambda lambda = (Lambda) expL.reduceByValue();
-    Expression expression = lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue());
-    System.out.println("[Application] After reduction step: " + this);
-    return expression.reduceByValue();
+  public Expression reducePrinter(final Printer printer) {
+    final String oldExp = toString();
+    final Lambda lambda = (Lambda) expL.reduce(printer);
+
+    final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+
+    final Expression newReducedExp = newExp.reducePrinter(printer);
+    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    return newReducedExp;
   }
 
   @Override

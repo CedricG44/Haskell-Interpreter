@@ -6,15 +6,19 @@ import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.ConditionalExpression;
 import fr.imt.haskell.interpreter.ast.builtin.Recursion;
-import fr.imt.haskell.interpreter.ast.builtin.lists.*;
-import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Head;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Map;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.GreaterThan;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.LessThanOrEqual;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 
 import static fr.imt.haskell.interpreter.ast.constants.List.Cons;
 import static fr.imt.haskell.interpreter.ast.constants.List.Nil;
@@ -25,10 +29,10 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    /*    reduce(
-        new Application(
-            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
-            new Number(5)));
+    /*reduce(
+    new Application(
+        new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+        new Number(5)));
 
     reduce(
         new Application(
@@ -47,7 +51,7 @@ public class HaskellInterpreter {
                 new Lambda(new Variable("y"), new Variable("y"))),
             new Lambda(new Variable("z"), new Variable("z"))));
 
-    reduce(new Equal(new Minus(new Minus(new Number(5))), new Number(5)));
+    reduce(new Equal(new Minus(new Minus(new Number(5))), new Number(5)));*/
 
     final Expression factorial =
         new Lambda(
@@ -63,7 +67,7 @@ public class HaskellInterpreter {
                             new Variable("fac"),
                             new Plus(new Variable("n"), new Minus(new Number(1))))))));
 
-    reduce(new Application(new Recursion(factorial), new Number(1)));*/
+    /*reduce(new Application(new Recursion(factorial), new Number(1)));*/
 
     final List list =
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(4), Cons(new Number(5), Nil()))));
@@ -77,9 +81,9 @@ public class HaskellInterpreter {
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-    /*  reduce(
-          new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
-    */
+    reduce(
+        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
+
     // TODO: find the trick
     //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
 
@@ -92,7 +96,7 @@ public class HaskellInterpreter {
     reduce(new Tail(listList));
     reduce(new Length(listList));*/
 
-    Expression exp1 = Cons(new Plus( new Number(1), new Number(2)), Nil());
+    Expression exp1 = Cons(new Plus(new Number(1), new Number(2)), Nil());
     Expression exp2 = infiniteList();
     Expression exp3 = insert(new Number(3), list);
     Expression exp4 =
@@ -118,7 +122,7 @@ public class HaskellInterpreter {
                                     new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
 
-    reduce(exp3);
+    reduce(exp4);
   }
 
   private static Expression infiniteList() {
@@ -128,9 +132,13 @@ public class HaskellInterpreter {
 
   public static void reduce(final Expression exp) {
     System.out.println("\nExpression to reduce: " + exp + "\n");
-    Expression result = exp.reduce();
-    System.out.println("\nReduced expression: " + result + "\n");
-    System.out.println("\nReduced expression with printer: " + result.print() + "\n");
+    System.out.println(exp);
+
+    final Expression result = exp.reduce(new Printer(exp));
+    System.out.println(result);
+
+    System.out.println(
+        "\nReduced expression with printer: " + result.print(new Printer(result)) + "\n");
   }
 
   private static Expression insert(final Expression element, final Expression list) {

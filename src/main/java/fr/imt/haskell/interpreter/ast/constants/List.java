@@ -1,8 +1,6 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Constant;
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Lambda;
 
 import static fr.imt.haskell.interpreter.ast.constants.Cons.getCons;
 import static fr.imt.haskell.interpreter.ast.constants.Nil.getNil;
@@ -25,6 +23,4 @@ public abstract class List extends Expression {
   public abstract boolean isEmpty();
 
   public abstract int length();
-
-  public abstract List map(Lambda lambda);
 }

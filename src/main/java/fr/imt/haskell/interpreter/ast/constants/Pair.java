@@ -3,6 +3,7 @@ package fr.imt.haskell.interpreter.ast.constants;
 import fr.imt.haskell.interpreter.ast.Constant;
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 
 import java.util.Objects;
 
@@ -25,13 +26,19 @@ public class Pair extends Constant {
   }
 
   @Override
-  public Expression reduce() {
-    return new Pair(left.reduce(), right.reduce());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Pair(left.reduce(printer), right.reduce(printer));
+    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    return new Pair(left.reduceByValue(), right.reduceByValue());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Pair(left.reduceByValue(printer), right.reduceByValue(printer));
+    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

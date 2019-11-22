@@ -3,6 +3,8 @@ package fr.imt.haskell.interpreter.ast.builtin;
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Conditional expressions. */
 public final class ConditionalExpression extends Expression {
@@ -18,24 +20,30 @@ public final class ConditionalExpression extends Expression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[ConditionalExpression] Reduction step: " + this);
-    return ((Boolean) cond.reduce()).getValue() ? expL.reduce() : expR.reduce();
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reducePrinter() {
-    return ((Boolean) cond.reducePrinter()).getValue()
-        ? expL.reducePrinter()
-        : expR.reducePrinter();
+  public Expression reducePrinter(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[ConditionalExpression] Reduction step: " + this);
-    return ((Boolean) cond.reduceByValue()).getValue()
-        ? expL.reduceByValue()
-        : expR.reduceByValue();
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

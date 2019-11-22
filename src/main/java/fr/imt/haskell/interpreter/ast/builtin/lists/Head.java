@@ -4,6 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.List;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** List head built-in functions. */
 public final class Head extends UnaryExpression {
@@ -13,25 +15,32 @@ public final class Head extends UnaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Head] Reduction step: " + this);
-    return ((List) exp.reduce()).head();
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = ((List) exp.reduce(printer)).head();
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Head] Reduction step: " + this);
-    return ((List) exp.reduceByValue()).head();
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = ((List) exp.reduceByValue(printer)).head();
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
+  public Expression reducePrinter(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = ((List) exp.reducePrinter(printer)).head();
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Head(this.exp.instantiate(var, exp));
-  }
-
-  @Override
-  public Expression reducePrinter() {
-    return ((List) exp.reducePrinter()).head();
   }
 
   @Override

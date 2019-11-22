@@ -1,9 +1,8 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
-import fr.imt.haskell.interpreter.ast.Application;
 import fr.imt.haskell.interpreter.ast.Expression;
-import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 
 /** Non-empty list constants. */
 public final class Cons extends List {
@@ -41,32 +40,28 @@ public final class Cons extends List {
   }
 
   @Override
-  public List map(Lambda lambda) {
-    return new Cons(new Application(lambda, head).reduce(), tail.map(lambda));
-  }
-
-  @Override
   public String toString() {
     return "(" + head + " : " + tail + ")";
   }
 
   @Override
-  public String print() {
-    return "(" + head.reducePrinter() + " : " + tail.reducePrinter() + ")";
-  }
-
-  public Expression reducePrinter() {
-    return new Cons(head.reducePrinter(), (List) tail.reducePrinter());
+  public String print(final Printer printer) {
+    return "(" + head.reducePrinter(printer) + " : " + tail.reducePrinter(printer) + ")";
   }
 
   @Override
-  public Expression reduce() {
+  public Expression reduce(final Printer printer) {
     return this;
   }
 
   @Override
-  public Expression reduceByValue() {
+  public Expression reduceByValue(final Printer printer) {
     return this;
+  }
+
+  @Override
+  public Expression reducePrinter(final Printer printer) {
+    return new Cons(head.reducePrinter(printer), (List) tail.reducePrinter(printer));
   }
 
   @Override

@@ -1,5 +1,7 @@
 package fr.imt.haskell.interpreter.ast;
 
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+
 import java.util.Objects;
 
 /** Lambda abstractions. */
@@ -14,13 +16,12 @@ public final class Lambda extends Expression {
   }
 
   @Override
-  public Expression reduce() {
+  public Expression reduce(final Printer printer) {
     return this;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Lambda] Reduction step:  " + this);
+  public Expression reduceByValue(final Printer printer) {
     return this;
   }
 

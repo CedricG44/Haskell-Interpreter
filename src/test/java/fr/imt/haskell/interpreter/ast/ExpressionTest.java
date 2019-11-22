@@ -12,6 +12,7 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.*;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.constants.Pair;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -135,12 +136,9 @@ public class ExpressionTest {
                     new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
                     new Number(5))),
             new Pair(new Number(1), new Number(10))
-          }
-        ,{
-              Cons(new Plus( new Number(1), new Number(2)), Nil()),
-                Cons(new Number(3), Nil())
-
-        }});
+          },
+          {Cons(new Plus(new Number(1), new Number(2)), Nil()), Cons(new Number(3), Nil())}
+        });
   }
 
   public ExpressionTest(Expression exp, Expression expectedExp) {
@@ -150,10 +148,11 @@ public class ExpressionTest {
 
   @Test
   public void betaReduction() {
-    System.out.println("\nExpression to reduce: " + exp);
+    System.out.println("\nExpression to reduce: " + exp + "\n");
+    System.out.println(exp);
     try {
-      final Expression reducedExp = exp.reduceByValue();
-      System.out.println("Reduced expression: " + reducedExp + "\n");
+      final Expression reducedExp = exp.reduce(new Printer(exp));
+      System.out.println(reducedExp);
       assertEquals(expectedExp, reducedExp);
     } catch (Exception ex) {
       assertTrue(ex instanceof UnsupportedOperationException);

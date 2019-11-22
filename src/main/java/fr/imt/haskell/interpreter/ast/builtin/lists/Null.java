@@ -5,6 +5,7 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.List;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
 
 /** List null built-in functions. */
 public final class Null extends UnaryExpression {
@@ -14,20 +15,27 @@ public final class Null extends UnaryExpression {
   }
 
   @Override
-  public Expression reducePrinter() {
-    return new Boolean(((List) exp.reducePrinter()).isEmpty());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(((List) exp.reduce(printer)).isEmpty());
+    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Null] Reduction step: " + this);
-    return new Boolean(((List) exp.reduce()).isEmpty());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
+    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    System.out.println("[Null] Reduction step: " + this);
-    return new Boolean(((List) exp.reduceByValue()).isEmpty());
+  public Expression reducePrinter(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
+    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override

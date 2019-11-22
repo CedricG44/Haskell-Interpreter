@@ -4,6 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
+import fr.imt.haskell.interpreter.ast.printer.Printer;
+import javafx.util.Pair;
 
 /** Minus built-in functions. */
 public final class Minus extends UnaryExpression {
@@ -13,14 +15,27 @@ public final class Minus extends UnaryExpression {
   }
 
   @Override
-  public Expression reduce() {
-    System.out.println("[Minus] Reduction step: " + this);
-    return new Number(-((Number) exp.reduce()).getValue());
+  public Expression reduce(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Number(-((Number) exp.reduce(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
-  public Expression reduceByValue() {
-    return new Number(-((Number) exp.reduceByValue()).getValue());
+  public Expression reduceByValue(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Number(-((Number) exp.reduceByValue(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
+  public Expression reducePrinter(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Number(-((Number) exp.reducePrinter(printer)).getValue());
+    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    return newExp;
   }
 
   @Override
