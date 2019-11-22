@@ -2,6 +2,7 @@ package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Lambda;
+import fr.imt.haskell.interpreter.ast.Variable;
 
 /** Empty list constants. */
 public final class Nil extends List {
@@ -40,5 +41,20 @@ public final class Nil extends List {
   @Override
   public String toString() {
     return "[]";
+  }
+
+  @Override
+  public Expression reduce() {
+    return this;
+  }
+
+  @Override
+  public Expression reduceByValue() {
+    return this;
+  }
+
+  @Override
+  public Expression instantiate(Variable var, Expression exp) {
+    return this;
   }
 }

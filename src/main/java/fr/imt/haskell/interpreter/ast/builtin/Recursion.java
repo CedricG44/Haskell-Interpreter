@@ -23,7 +23,13 @@ public final class Recursion extends Expression {
   public Expression reduceByValue() {
     // Y combinator strict
     // Y(f) = x -> f(Y(f), x)
-    return new Lambda(new Variable("x"), new Application(new Application(h, this), new Variable("x")));
+    return new Lambda(
+        new Variable("x"), new Application(new Application(h, this), new Variable("x")));
+  }
+
+  @Override
+  public Expression reducePrinter() {
+    return new Application(h, this).reducePrinter();
   }
 
   @Override

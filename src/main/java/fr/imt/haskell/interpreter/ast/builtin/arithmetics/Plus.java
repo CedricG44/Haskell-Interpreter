@@ -13,6 +13,12 @@ public final class Plus extends BinaryExpression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return new Number(
+        ((Number) expL.reducePrinter()).getValue() + ((Number) expR.reducePrinter()).getValue());
+  }
+
+  @Override
   public Expression reduce() {
     System.out.println("[Plus] Reduction step: " + this);
     return new Number(((Number) expL.reduce()).getValue() + ((Number) expR.reduce()).getValue());

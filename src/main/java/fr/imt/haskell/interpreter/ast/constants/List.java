@@ -8,7 +8,7 @@ import static fr.imt.haskell.interpreter.ast.constants.Cons.getCons;
 import static fr.imt.haskell.interpreter.ast.constants.Nil.getNil;
 
 /** List constants. */
-public abstract class List extends Constant {
+public abstract class List extends Expression {
 
   public static List Cons(Expression head, List tail) {
     return getCons(head, tail);

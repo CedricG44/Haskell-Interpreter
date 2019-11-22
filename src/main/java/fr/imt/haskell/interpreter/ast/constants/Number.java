@@ -1,6 +1,7 @@
 package fr.imt.haskell.interpreter.ast.constants;
 
 import fr.imt.haskell.interpreter.ast.Constant;
+import fr.imt.haskell.interpreter.ast.Expression;
 
 import java.util.Objects;
 

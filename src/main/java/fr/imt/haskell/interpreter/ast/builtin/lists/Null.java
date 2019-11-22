@@ -14,6 +14,11 @@ public final class Null extends UnaryExpression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return new Boolean(((List) exp.reducePrinter()).isEmpty());
+  }
+
+  @Override
   public Expression reduce() {
     System.out.println("[Null] Reduction step: " + this);
     return new Boolean(((List) exp.reduce()).isEmpty());

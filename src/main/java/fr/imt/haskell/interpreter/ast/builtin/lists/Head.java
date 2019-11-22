@@ -30,6 +30,11 @@ public final class Head extends UnaryExpression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return ((List) exp.reducePrinter()).head();
+  }
+
+  @Override
   public String toString() {
     return "(head " + exp + ")";
   }

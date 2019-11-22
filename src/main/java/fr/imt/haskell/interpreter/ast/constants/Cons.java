@@ -3,6 +3,7 @@ package fr.imt.haskell.interpreter.ast.constants;
 import fr.imt.haskell.interpreter.ast.Application;
 import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Lambda;
+import fr.imt.haskell.interpreter.ast.Variable;
 
 /** Non-empty list constants. */
 public final class Cons extends List {
@@ -47,5 +48,29 @@ public final class Cons extends List {
   @Override
   public String toString() {
     return "(" + head + " : " + tail + ")";
+  }
+
+  @Override
+  public String print() {
+    return "(" + head.reducePrinter() + " : " + tail.reducePrinter() + ")";
+  }
+
+  public Expression reducePrinter() {
+    return new Cons(head.reducePrinter(), (List) tail.reducePrinter());
+  }
+
+  @Override
+  public Expression reduce() {
+    return this;
+  }
+
+  @Override
+  public Expression reduceByValue() {
+    return this;
+  }
+
+  @Override
+  public Expression instantiate(Variable var, Expression exp) {
+    return new Cons(head.instantiate(var, exp), (List) tail.instantiate(var, exp));
   }
 }

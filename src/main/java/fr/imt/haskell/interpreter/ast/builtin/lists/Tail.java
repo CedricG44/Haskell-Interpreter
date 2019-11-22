@@ -30,6 +30,11 @@ public final class Tail extends UnaryExpression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return ((List) exp.reducePrinter()).tail();
+  }
+
+  @Override
   public String toString() {
     return "(tail " + exp + ")";
   }

@@ -12,4 +12,12 @@ public abstract class Expression {
   }
 
   public abstract Expression instantiate(final Variable var, final Expression exp);
+
+  public String print() {
+    return "Print not implemented";
+  }
+
+  public Expression reducePrinter() {
+    return this;
+  }
 }

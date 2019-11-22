@@ -23,6 +23,13 @@ public final class Application extends Expression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    System.out.println("[Application] Reduction step: " + this);
+    Lambda lambda = (Lambda) expL.reduce();
+    return lambda.getExp().instantiate(lambda.getVar(), expR).reducePrinter();
+  }
+
+  @Override
   public Expression reduceByValue() {
     System.out.println("[Application] Before reduction step: " + this);
     Lambda lambda = (Lambda) expL.reduceByValue();

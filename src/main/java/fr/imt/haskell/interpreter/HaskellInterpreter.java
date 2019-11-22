@@ -11,6 +11,8 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.GreaterThan;
+import fr.imt.haskell.interpreter.ast.builtin.logicals.LessThanOrEqual;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 
@@ -63,19 +65,23 @@ public class HaskellInterpreter {
 
     reduce(new Application(new Recursion(factorial), new Number(1)));*/
 
-    /*final List list =
-        Cons(new Number(1), Cons(new Number(2), Cons(new Number(3), Cons(new Number(4), Nil()))));
-*/
-/*    reduce(new Head(list));
+    final List list =
+        Cons(new Number(1), Cons(new Number(2), Cons(new Number(4), Cons(new Number(5), Nil()))));
+
+    final List listUnordered =
+        Cons(new Number(1), Cons(new Number(2), Cons(new Number(5), Cons(new Number(4), Nil()))));
+
+    /*    reduce(new Head(list));
     reduce(new Tail(list));
     reduce(new Null(list));
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-  /*  reduce(
-        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
-  */  // TODO: find the trick
-//    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
+    /*  reduce(
+          new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
+    */
+    // TODO: find the trick
+    //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
 
     /*    final List<List<Number>> listList =
         Cons(
@@ -86,26 +92,152 @@ public class HaskellInterpreter {
     reduce(new Tail(listList));
     reduce(new Length(listList));*/
 
-    Expression exp = new Application(
+    Expression exp1 = Cons(new Plus( new Number(1), new Number(2)), Nil());
+    Expression exp2 = infiniteList();
+    Expression exp3 = insert(new Number(3), list);
+    Expression exp4 =
+        map(new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))), list);
+    // TODO: fix
+    Expression exp5 = sort(listUnordered);
+    Expression exp6 = take(new Number(6), infiniteList());
+
+    Expression exp =
+        new Application(
             new Recursion(
+                new Lambda(
+                    new Variable("fac"),
                     new Lambda(
-                            new Variable("fac"),
-                            new Lambda(
-                                    new Variable("n"),
-                                    new ConditionalExpression(
-                                            new Equal(new Variable("n"), new Number(0)),
-                                            new Number(1),
-                                            new Times(
-                                                    new Variable("n"),
-                                                    new Application(
-                                                            new Variable("fac"),
-                                                            new Plus(new Variable("n"), new Minus(new Number(1))))))))),
+                        new Variable("n"),
+                        new ConditionalExpression(
+                            new Equal(new Variable("n"), new Number(0)),
+                            new Number(1),
+                            new Times(
+                                new Variable("n"),
+                                new Application(
+                                    new Variable("fac"),
+                                    new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
-    reduce(exp);
+
+    reduce(exp3);
+  }
+
+  private static Expression infiniteList() {
+    return new Recursion(
+        new Lambda(new Variable("inf"), Cons(new Number(1), Cons(new Variable("inf"), Nil()))));
   }
 
   public static void reduce(final Expression exp) {
     System.out.println("\nExpression to reduce: " + exp + "\n");
-    System.out.println("\nReduced expression: " + exp.reduce() + "\n");
+    Expression result = exp.reduce();
+    System.out.println("\nReduced expression: " + result + "\n");
+    System.out.println("\nReduced expression with printer: " + result.print() + "\n");
+  }
+
+  private static Expression insert(final Expression element, final Expression list) {
+    return new Application(
+        new Application(
+            new Recursion(
+                new Lambda(
+                    new Variable("insert"),
+                    new Lambda(
+                        new Variable("element"),
+                        new Lambda(
+                            new Variable("list"),
+                            new ConditionalExpression(
+                                new Null(new Variable("list")),
+                                Cons(new Variable("element"), Nil()),
+                                new ConditionalExpression(
+                                    new GreaterThan(
+                                        new Variable("element"), new Head(new Variable("list"))),
+                                    Cons(
+                                        new Head(new Variable("list")),
+                                        Cons(
+                                            new Application(
+                                                new Application(
+                                                    new Variable("insert"),
+                                                    new Variable("element")),
+                                                new Tail(new Variable("list"))),
+                                            Nil())),
+                                    Cons(
+                                        new Variable("element"),
+                                        Cons(
+                                            new Head(new Variable("list")),
+                                            Cons(new Tail(new Variable("list")), Nil()))))))))),
+            element),
+        list);
+  }
+
+  private static Expression sort(final Expression list) {
+    return new Application(
+        new Recursion(
+            new Lambda(
+                new Variable("sort"),
+                new Lambda(
+                    new Variable("list"),
+                    new ConditionalExpression(
+                        new Null(new Variable("list")),
+                        Nil(),
+                        insert(
+                            new Head(new Variable("list")),
+                            new Application(
+                                new Variable("sort"), new Tail(new Variable("list")))))))),
+        list);
+  }
+
+  private static Expression map(final Lambda lambda, final Expression list) {
+    return new Application(
+        new Application(
+            new Recursion(
+                new Lambda(
+                    new Variable("map"),
+                    new Lambda(
+                        new Variable("lambda"),
+                        new Lambda(
+                            new Variable("list"),
+                            new ConditionalExpression(
+                                new Null(new Variable("list")),
+                                Nil(),
+                                Cons(
+                                    new Application(
+                                        new Variable("lambda"), new Head(new Variable("list"))),
+                                    Cons(
+                                        new Application(
+                                            new Application(
+                                                new Variable("map"), new Variable("lambda")),
+                                            new Tail(new Variable("list"))),
+                                        Nil()))))))),
+            lambda),
+        list);
+  }
+
+  private static Expression take(final Number index, final Expression list) {
+    return new Application(
+        new Application(
+            new Recursion(
+                new Lambda(
+                    new Variable("take"),
+                    new Lambda(
+                        new Variable("index"),
+                        new Lambda(
+                            new Variable("list"),
+                            new ConditionalExpression(
+                                new LessThanOrEqual(new Variable("index"), new Number(0)),
+                                Nil(),
+                                new ConditionalExpression(
+                                    new Null(new Variable("list")),
+                                    Nil(),
+                                    Cons(
+                                        new Head(new Variable("list")),
+                                        Cons(
+                                            new Application(
+                                                new Application(
+                                                    new Variable("take"),
+                                                    new Plus(
+                                                        new Variable("index"),
+                                                        new Minus(new Number(1)))),
+                                                new Tail(new Variable("list"))),
+                                            Nil())))))))),
+            index),
+        list);
   }
 }

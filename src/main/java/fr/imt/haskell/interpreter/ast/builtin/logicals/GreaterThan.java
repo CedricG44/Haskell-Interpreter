@@ -14,9 +14,19 @@ public class GreaterThan extends BinaryExpression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return new Boolean(
+        ((Number) expL.reducePrinter()).getValue() > ((Number) expR.reducePrinter()).getValue());
+  }
+
+  @Override
   public Expression reduce() {
     System.out.println("[GreaterThan] Reduction step: " + this);
-    return new Boolean(((Number) expL.reduce()).getValue() > ((Number) expR.reduce()).getValue());
+    Expression expLeft = expL.reduce();
+    Expression expRight = expR.reduce();
+    System.out.println("expLeft: " + expLeft);
+    System.out.println("expRight: " + expRight);
+    return new Boolean(((Number) expLeft).getValue() > ((Number) expRight).getValue());
   }
 
   @Override

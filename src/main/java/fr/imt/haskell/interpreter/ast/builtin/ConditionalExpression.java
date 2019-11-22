@@ -24,17 +24,24 @@ public final class ConditionalExpression extends Expression {
   }
 
   @Override
+  public Expression reducePrinter() {
+    return ((Boolean) cond.reducePrinter()).getValue()
+        ? expL.reducePrinter()
+        : expR.reducePrinter();
+  }
+
+  @Override
   public Expression reduceByValue() {
     System.out.println("[ConditionalExpression] Reduction step: " + this);
-    return ((Boolean) cond.reduceByValue()).getValue() ? expL.reduceByValue() : expR.reduceByValue();
+    return ((Boolean) cond.reduceByValue()).getValue()
+        ? expL.reduceByValue()
+        : expR.reduceByValue();
   }
 
   @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new ConditionalExpression(
-        cond.instantiate(var, exp),
-        expL.instantiate(var, exp),
-        expR.instantiate(var, exp));
+        cond.instantiate(var, exp), expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
 
   @Override
