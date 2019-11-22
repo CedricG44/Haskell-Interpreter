@@ -1,8 +1,8 @@
 package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
 
+import java.util.AbstractMap;
 import java.util.Objects;
 
 /** Applications. */
@@ -22,10 +22,11 @@ public final class Application extends Expression {
     final Lambda lambda = (Lambda) expL.reduce(printer);
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reduce(printer);
-    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    printer.changes.onNext(
+        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 
@@ -36,10 +37,11 @@ public final class Application extends Expression {
 
     final Expression newExp =
         lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue(printer));
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByValue(printer);
-    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    printer.changes.onNext(
+        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 
@@ -49,10 +51,11 @@ public final class Application extends Expression {
     final Lambda lambda = (Lambda) expL.reduce(printer);
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reducePrinter(printer);
-    printer.changes.onNext(new Pair<>(newExp.toString(), newReducedExp.toString()));
+    printer.changes.onNext(
+        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 

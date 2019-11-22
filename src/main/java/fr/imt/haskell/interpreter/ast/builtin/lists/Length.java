@@ -6,7 +6,8 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** List lentgth built-in functions. */
 public final class Length extends UnaryExpression {
@@ -19,7 +20,7 @@ public final class Length extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(((List) exp.reduce(printer)).length());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -27,7 +28,7 @@ public final class Length extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(((List) exp.reduceByValue(printer)).length());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

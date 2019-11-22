@@ -6,6 +6,8 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Pair;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
+import java.util.AbstractMap;
+
 /** Pair second built-in functions. */
 public class Snd extends UnaryExpression {
 
@@ -17,7 +19,7 @@ public class Snd extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = ((Pair) exp.reduce(printer)).second();
-    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -25,7 +27,7 @@ public class Snd extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = ((Pair) exp.reduceByValue(printer)).first();
-    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

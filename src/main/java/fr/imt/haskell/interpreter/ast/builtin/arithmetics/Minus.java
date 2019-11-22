@@ -5,7 +5,8 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** Minus built-in functions. */
 public final class Minus extends UnaryExpression {
@@ -18,7 +19,7 @@ public final class Minus extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(-((Number) exp.reduce(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -26,7 +27,7 @@ public final class Minus extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(-((Number) exp.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -34,7 +35,7 @@ public final class Minus extends UnaryExpression {
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(-((Number) exp.reducePrinter(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

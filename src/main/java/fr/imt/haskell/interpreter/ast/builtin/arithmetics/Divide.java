@@ -5,7 +5,8 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** Divide built-in functions. */
 public final class Divide extends BinaryExpression {
@@ -21,7 +22,7 @@ public final class Divide extends BinaryExpression {
         new Number(
             ((Number) expL.reduce(printer)).getValue()
                 / ((Number) expR.reduce(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -32,7 +33,7 @@ public final class Divide extends BinaryExpression {
         new Number(
             ((Number) expL.reduceByValue(printer)).getValue()
                 / ((Number) expR.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -43,7 +44,7 @@ public final class Divide extends BinaryExpression {
         new Number(
             ((Number) expL.reducePrinter(printer)).getValue()
                 / ((Number) expR.reducePrinter(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

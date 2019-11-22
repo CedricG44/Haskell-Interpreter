@@ -6,7 +6,8 @@ import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** Less than built-in functions. */
 public class LessThan extends BinaryExpression {
@@ -22,7 +23,7 @@ public class LessThan extends BinaryExpression {
         new Boolean(
             ((Number) expL.reduce(printer)).getValue()
                 < ((Number) expR.reduce(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -33,7 +34,7 @@ public class LessThan extends BinaryExpression {
         new Boolean(
             ((Number) expL.reduceByValue(printer)).getValue()
                 < ((Number) expR.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

@@ -4,12 +4,13 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 public class Printer {
 
   private final Subject<String> root;
-  public final Subject<Pair<String, String>> changes;
+  public final Subject<AbstractMap.SimpleEntry<String, String>> changes;
 
   public Printer(Expression root) {
     this.root = BehaviorSubject.createDefault(root.toString());

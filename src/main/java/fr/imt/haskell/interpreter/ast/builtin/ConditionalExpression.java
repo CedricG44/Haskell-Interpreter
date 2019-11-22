@@ -4,7 +4,8 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** Conditional expressions. */
 public final class ConditionalExpression extends Expression {
@@ -24,7 +25,7 @@ public final class ConditionalExpression extends Expression {
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -33,7 +34,7 @@ public final class ConditionalExpression extends Expression {
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -42,7 +43,7 @@ public final class ConditionalExpression extends Expression {
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

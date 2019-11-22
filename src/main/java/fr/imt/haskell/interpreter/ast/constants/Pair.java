@@ -5,6 +5,7 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
+import java.util.AbstractMap;
 import java.util.Objects;
 
 public class Pair extends Constant {
@@ -29,7 +30,7 @@ public class Pair extends Constant {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Pair(left.reduce(printer), right.reduce(printer));
-    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -37,7 +38,7 @@ public class Pair extends Constant {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Pair(left.reduceByValue(printer), right.reduceByValue(printer));
-    printer.changes.onNext(new javafx.util.Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

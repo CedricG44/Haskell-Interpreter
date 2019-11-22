@@ -5,7 +5,8 @@ import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
-import javafx.util.Pair;
+
+import java.util.AbstractMap;
 
 /** Equal built-in functions. */
 public final class Equal extends BinaryExpression {
@@ -18,7 +19,7 @@ public final class Equal extends BinaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Boolean(expL.reduce(printer).equals(expR.reduce(printer)));
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -27,7 +28,7 @@ public final class Equal extends BinaryExpression {
     final String oldExp = toString();
     final Expression newExp =
         new Boolean(expL.reduceByValue(printer).equals(expR.reduceByValue(printer)));
-    printer.changes.onNext(new Pair<>(oldExp, newExp.toString()));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
