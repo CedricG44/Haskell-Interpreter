@@ -35,7 +35,7 @@ public final class Null extends UnaryExpression {
   @Override
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
-    final Expression newExp = new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
+    final Expression newExp = new Boolean(((List) exp.reducePrinter(printer)).isEmpty());
     printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }

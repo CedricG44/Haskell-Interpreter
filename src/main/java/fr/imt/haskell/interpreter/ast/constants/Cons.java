@@ -45,11 +45,6 @@ public final class Cons extends List {
   }
 
   @Override
-  public String print(final Printer printer) {
-    return "(" + head.reducePrinter(printer) + " : " + tail.reducePrinter(printer) + ")";
-  }
-
-  @Override
   public Expression reduce(final Printer printer) {
     return this;
   }

@@ -73,7 +73,7 @@ public class HaskellInterpreter {
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(4), Cons(new Number(5), Nil()))));
 
     final List listUnordered =
-        Cons(new Number(1), Cons(new Number(2), Cons(new Number(5), Cons(new Number(4), Nil()))));
+        Cons(new Number(2), Cons(new Number(1), Cons(new Number(5), Cons(new Number(4), Nil()))));
 
     /*    reduce(new Head(list));
     reduce(new Tail(list));
@@ -81,8 +81,9 @@ public class HaskellInterpreter {
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-    reduce(
-        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
+    //    reduce(
+    //        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new
+    // Number(1)))));
 
     // TODO: find the trick
     //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
@@ -122,22 +123,22 @@ public class HaskellInterpreter {
                                     new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
 
-    reduce(exp6);
+    reduce(exp5);
   }
 
   private static Expression infiniteList() {
-    return new Recursion(
-        new Lambda(new Variable("inf"), Cons(new Number(1),new Variable("inf"))));
+    return new Recursion(new Lambda(new Variable("inf"), Cons(new Number(1), new Variable("inf"))));
   }
 
   public static void reduce(final Expression exp) {
     System.out.println("\nExpression to reduce: " + exp + "\n");
     System.out.println(exp);
 
-    final Expression result = exp.reduce(new Printer(exp));
-    System.out.println("Résulat: " + result);
+    //    final Expression result = exp.reduce(new Printer(exp));
+    //    System.out.println("Résulat: " + result);
 
-    System.out.println("\nReduced expression with printer: " + result.print(new Printer(result)) + "\n");
+    System.out.println(
+        "\nReduced expression with printer: " + exp.reducePrinter(new Printer(exp)) + "\n");
   }
 
   private static Expression insert(final Expression element, final Expression list) {
@@ -160,10 +161,8 @@ public class HaskellInterpreter {
                                         new Head(new Variable("list")),
                                         new Application(
                                             new Application(
-                                                new Variable("insert"),
-                                                new Variable("element")),
-                                            new Tail(new Variable("list")))
-                                        ),
+                                                new Variable("insert"), new Variable("element")),
+                                            new Tail(new Variable("list")))),
                                     Cons(
                                         new Variable("element"),
                                         Cons(
@@ -206,12 +205,10 @@ public class HaskellInterpreter {
                                 Cons(
                                     new Application(
                                         new Variable("lambda"), new Head(new Variable("list"))),
-                                    Cons(
+                                    new Application(
                                         new Application(
-                                            new Application(
-                                                new Variable("map"), new Variable("lambda")),
-                                            new Tail(new Variable("list"))),
-                                        Nil()))))))),
+                                            new Variable("map"), new Variable("lambda")),
+                                        new Tail(new Variable("list"))))))))),
             lambda),
         list);
   }
@@ -234,15 +231,13 @@ public class HaskellInterpreter {
                                     Nil(),
                                     Cons(
                                         new Head(new Variable("list")),
-                                        Cons(
+                                        new Application(
                                             new Application(
-                                                new Application(
-                                                    new Variable("take"),
-                                                    new Plus(
-                                                        new Variable("index"),
-                                                        new Minus(new Number(1)))),
-                                                new Tail(new Variable("list"))),
-                                            Nil())))))))),
+                                                new Variable("take"),
+                                                new Plus(
+                                                    new Variable("index"),
+                                                    new Minus(new Number(1)))),
+                                            new Tail(new Variable("list")))))))))),
             index),
         list);
   }

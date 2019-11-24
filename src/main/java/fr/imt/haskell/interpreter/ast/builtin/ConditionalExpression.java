@@ -33,7 +33,9 @@ public final class ConditionalExpression extends Expression {
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp =
-        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
+        ((Boolean) cond.reducePrinter(printer)).getValue()
+            ? expL.reducePrinter(printer)
+            : expR.reducePrinter(printer);
     printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
@@ -42,7 +44,9 @@ public final class ConditionalExpression extends Expression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp =
-        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
+        ((Boolean) cond.reduceByValue(printer)).getValue()
+            ? expL.reduceByValue(printer)
+            : expR.reduceByValue(printer);
     printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }

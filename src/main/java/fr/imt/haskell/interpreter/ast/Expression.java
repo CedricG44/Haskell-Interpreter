@@ -18,8 +18,4 @@ public abstract class Expression {
   }
 
   public abstract Expression instantiate(final Variable var, final Expression exp);
-
-  public String print(final Printer printer) {
-    return "Print not implemented";
-  }
 }
