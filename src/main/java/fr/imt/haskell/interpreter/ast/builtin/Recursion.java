@@ -37,6 +37,14 @@ public final class Recursion extends Expression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Application(h, this).reduceByNeed(printer);
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Application(h, this).reducePrinter(printer);

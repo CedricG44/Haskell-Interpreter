@@ -32,6 +32,14 @@ public class Snd extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = ((Pair) exp.reduceByNeed(printer)).second();
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Snd(this.exp.instantiate(var, exp));
   }

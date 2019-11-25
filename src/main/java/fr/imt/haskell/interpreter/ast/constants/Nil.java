@@ -49,6 +49,11 @@ public final class Nil extends List {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    return this;
+  }
+
+  @Override
   public Expression instantiate(Variable var, Expression exp) {
     return this;
   }

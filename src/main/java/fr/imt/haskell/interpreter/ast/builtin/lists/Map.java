@@ -42,6 +42,14 @@ public final class Map extends UnaryExpression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = map(this.lambda, (List) exp).reduceByNeed(printer);
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Map(this.exp.instantiate(var, exp), lambda);
   }

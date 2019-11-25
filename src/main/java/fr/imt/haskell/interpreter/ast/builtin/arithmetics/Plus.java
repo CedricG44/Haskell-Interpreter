@@ -38,6 +38,17 @@ public final class Plus extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Number(
+            ((Number) expL.reduceByNeed(printer)).getValue()
+                + ((Number) expR.reduceByNeed(printer)).getValue());
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp =

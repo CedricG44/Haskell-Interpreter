@@ -29,10 +29,11 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    /*reduce(
-    new Application(
-        new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
-        new Number(5)));
+//    reduce(
+//        new Application(
+//            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+//            new Plus(new Number(5), new Number(2))));
+    /*
 
     reduce(
         new Application(
@@ -104,7 +105,8 @@ public class HaskellInterpreter {
         map(new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))), list);
     // TODO: fix
     Expression exp5 = sort(listUnordered);
-    Expression exp6 = take(new Number(6), infiniteList());
+    Expression exp6 = take(new Number(2), list);
+    Expression exp7 = take(new Number(3), infiniteList());
 
     Expression exp =
         new Application(
@@ -123,7 +125,7 @@ public class HaskellInterpreter {
                                     new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
 
-    reduce(exp5);
+        reduce(exp3);
   }
 
   private static Expression infiniteList() {
@@ -134,11 +136,11 @@ public class HaskellInterpreter {
     System.out.println("\nExpression to reduce: " + exp + "\n");
     System.out.println(exp);
 
-    //    final Expression result = exp.reduce(new Printer(exp));
-    //    System.out.println("Résulat: " + result);
+    final Expression result = exp.reduceByNeed(new Printer(exp));
+    System.out.println("Résultat: " + result);
 
-    System.out.println(
-        "\nReduced expression with printer: " + exp.reducePrinter(new Printer(exp)) + "\n");
+    //    System.out.println(
+    //        "\nReduced expression with printer: " + exp.reducePrinter(new Printer(exp)) + "\n");
   }
 
   private static Expression insert(final Expression element, final Expression list) {

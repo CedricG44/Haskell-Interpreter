@@ -46,6 +46,20 @@ public final class Application extends Expression {
   }
 
   @Override
+  public Expression reduceByNeed(Printer printer) {
+    final String oldExp = toString();
+    final Lambda lambda = (Lambda) expL.reduceByNeed(printer);
+
+    final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), new Indirection(expR));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+
+    final Expression newReducedExp = newExp.reduceByNeed(printer);
+    printer.changes.onNext(
+        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
+    return newReducedExp;
+  }
+
+  @Override
   public Expression reducePrinter(final Printer printer) {
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduce(printer);

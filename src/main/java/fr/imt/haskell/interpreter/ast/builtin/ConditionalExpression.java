@@ -52,6 +52,17 @@ public final class ConditionalExpression extends Expression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        ((Boolean) cond.reduceByNeed(printer)).getValue()
+            ? expL.reduceByNeed(printer)
+            : expR.reduceByNeed(printer);
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new ConditionalExpression(
         cond.instantiate(var, exp), expL.instantiate(var, exp), expR.instantiate(var, exp));

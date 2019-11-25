@@ -33,6 +33,15 @@ public final class Equal extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(expL.reduceByNeed(printer).equals(expR.reduceByNeed(printer)));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Equal(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

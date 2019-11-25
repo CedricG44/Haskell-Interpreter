@@ -43,6 +43,14 @@ public class Pair extends Constant {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp = new Pair(left.reduceByNeed(printer), right.reduceByNeed(printer));
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(Variable var, Expression exp) {
     return new Pair(left.instantiate(var, exp), right.instantiate(var, exp));
   }

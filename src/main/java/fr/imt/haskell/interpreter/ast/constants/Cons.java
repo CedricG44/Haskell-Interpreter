@@ -55,6 +55,12 @@ public final class Cons extends List {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    return new Cons(head.reduceByNeed(printer), tail.reduceByNeed(printer));
+    //    return this;
+  }
+
+  @Override
   public Expression reducePrinter(final Printer printer) {
     return new Cons(head.reducePrinter(printer), tail.reducePrinter(printer));
   }

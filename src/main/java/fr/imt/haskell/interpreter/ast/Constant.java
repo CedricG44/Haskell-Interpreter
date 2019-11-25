@@ -16,6 +16,11 @@ public abstract class Constant extends Expression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    return this;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return this;
   }

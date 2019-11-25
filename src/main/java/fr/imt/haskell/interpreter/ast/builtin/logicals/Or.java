@@ -38,6 +38,17 @@ public final class Or extends BinaryExpression {
   }
 
   @Override
+  public Expression reduceByNeed(final Printer printer) {
+    final String oldExp = toString();
+    final Expression newExp =
+        new Boolean(
+            ((Boolean) expL.reduceByNeed(printer)).getValue()
+                || ((Boolean) expR.reduceByNeed(printer)).getValue());
+    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    return newExp;
+  }
+
+  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Or(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }
