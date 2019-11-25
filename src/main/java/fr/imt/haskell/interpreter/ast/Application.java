@@ -22,10 +22,10 @@ public final class Application extends Expression {
     final Lambda lambda = (Lambda) expL.reduce(printer);
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reduce(printer);
-    printer.changes.onNext(
+    printer.onNext(
         new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
@@ -37,10 +37,10 @@ public final class Application extends Expression {
 
     final Expression newExp =
         lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue(printer));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByValue(printer);
-    printer.changes.onNext(
+    printer.onNext(
         new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
@@ -51,10 +51,10 @@ public final class Application extends Expression {
     final Lambda lambda = (Lambda) expL.reduceByNeed(printer);
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), new Indirection(expR));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByNeed(printer);
-    printer.changes.onNext(
+    printer.onNext(
         new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }

@@ -29,7 +29,7 @@ public final class Map extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = map(this.lambda, (List) exp).reduce(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -37,7 +37,7 @@ public final class Map extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = map(this.lambda, (List) exp.reduceByValue(printer));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -45,7 +45,7 @@ public final class Map extends UnaryExpression {
   public Expression reduceByNeed(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = map(this.lambda, (List) exp).reduceByNeed(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

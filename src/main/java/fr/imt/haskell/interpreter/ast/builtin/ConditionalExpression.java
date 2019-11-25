@@ -25,7 +25,7 @@ public final class ConditionalExpression extends Expression {
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -36,7 +36,7 @@ public final class ConditionalExpression extends Expression {
         ((Boolean) cond.reduceByValue(printer)).getValue()
             ? expL.reduceByValue(printer)
             : expR.reduceByValue(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -47,7 +47,7 @@ public final class ConditionalExpression extends Expression {
         ((Boolean) cond.reduceByNeed(printer)).getValue()
             ? expL.reduceByNeed(printer)
             : expR.reduceByNeed(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

@@ -21,7 +21,7 @@ public final class Recursion extends Expression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Application(h, this).reduce(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -32,7 +32,7 @@ public final class Recursion extends Expression {
     final String oldExp = toString();
     final Expression newExp =
         new Lambda(new Variable("x"), new Application(new Application(h, this), new Variable("x")));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -40,7 +40,7 @@ public final class Recursion extends Expression {
   public Expression reduceByNeed(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Application(h, this).reduceByNeed(printer);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

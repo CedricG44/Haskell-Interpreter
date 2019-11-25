@@ -23,7 +23,7 @@ public class GreaterThanOrEqual extends BinaryExpression {
         new Boolean(
             ((Number) expL.reduce(printer)).getValue()
                 >= ((Number) expR.reduce(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -34,7 +34,7 @@ public class GreaterThanOrEqual extends BinaryExpression {
         new Boolean(
             ((Number) expL.reduceByValue(printer)).getValue()
                 >= ((Number) expR.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -45,7 +45,7 @@ public class GreaterThanOrEqual extends BinaryExpression {
         new Boolean(
             ((Number) expL.reduceByNeed(printer)).getValue()
                 >= ((Number) expR.reduceByNeed(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

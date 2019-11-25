@@ -20,7 +20,7 @@ public final class Length extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(((List) exp.reduce(printer)).length());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -28,7 +28,7 @@ public final class Length extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(((List) exp.reduceByValue(printer)).length());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -36,7 +36,7 @@ public final class Length extends UnaryExpression {
   public Expression reduceByNeed(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Number(((List) exp.reduceByNeed(printer)).length());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

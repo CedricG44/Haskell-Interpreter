@@ -22,7 +22,7 @@ public final class Or extends BinaryExpression {
         new Boolean(
             ((Boolean) expL.reduce(printer)).getValue()
                 || ((Boolean) expR.reduce(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -33,7 +33,7 @@ public final class Or extends BinaryExpression {
         new Boolean(
             ((Boolean) expL.reduceByValue(printer)).getValue()
                 || ((Boolean) expR.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -44,7 +44,7 @@ public final class Or extends BinaryExpression {
         new Boolean(
             ((Boolean) expL.reduceByNeed(printer)).getValue()
                 || ((Boolean) expR.reduceByNeed(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

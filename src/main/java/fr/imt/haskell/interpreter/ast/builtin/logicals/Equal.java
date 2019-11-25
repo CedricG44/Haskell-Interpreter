@@ -19,7 +19,7 @@ public final class Equal extends BinaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Boolean(expL.reduce(printer).equals(expR.reduce(printer)));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -28,7 +28,7 @@ public final class Equal extends BinaryExpression {
     final String oldExp = toString();
     final Expression newExp =
         new Boolean(expL.reduceByValue(printer).equals(expR.reduceByValue(printer)));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -37,7 +37,7 @@ public final class Equal extends BinaryExpression {
     final String oldExp = toString();
     final Expression newExp =
         new Boolean(expL.reduceByNeed(printer).equals(expR.reduceByNeed(printer)));
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 

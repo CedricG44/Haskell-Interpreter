@@ -1,40 +1,28 @@
 package fr.imt.haskell.interpreter.ast.printer;
 
 import fr.imt.haskell.interpreter.ast.Expression;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.PublishSubject;
-import io.reactivex.subjects.Subject;
-
 import java.util.AbstractMap;
-import java.util.regex.Pattern;
 
 public class Printer {
 
   private boolean printBelowList;
-
-  private final Subject<String> root;
-  public final Subject<AbstractMap.SimpleEntry<String, String>> changes;
+  private String root;
 
   public Printer(boolean printBelowList, Expression root) {
     this.printBelowList = printBelowList;
-    this.root = BehaviorSubject.createDefault(root.toString());
-    changes = PublishSubject.create();
-
-    changes
-        .withLatestFrom(
-            this.root,
-            (changesValue, rootValue) -> {
-              final String newRoot =
-                  rootValue.replaceFirst(
-                      Pattern.quote(changesValue.getKey()), changesValue.getValue());
-              this.root.onNext(newRoot);
-              return newRoot;
-            })
-        .distinctUntilChanged()
-        .subscribe(System.out::println);
+    this.root = root.toString();
   }
 
-    public boolean isPrintBelowList() {
-        return printBelowList;
+  public void onNext(AbstractMap.SimpleEntry<String, String> changes) {
+    final String oldRoot = this.root;
+    this.root = this.root.replace(changes.getKey(), changes.getValue());
+
+    if (!(oldRoot.equals(this.root))) {
+      System.out.println(this.root);
     }
+  }
+
+  public boolean isPrintBelowList() {
+    return printBelowList;
+  }
 }

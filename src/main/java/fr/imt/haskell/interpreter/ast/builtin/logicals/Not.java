@@ -19,7 +19,7 @@ public final class Not extends UnaryExpression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Boolean(!((Boolean) exp.reduce(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -27,7 +27,7 @@ public final class Not extends UnaryExpression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Boolean(!((Boolean) exp.reduceByValue(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
@@ -35,7 +35,7 @@ public final class Not extends UnaryExpression {
   public Expression reduceByNeed(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp = new Boolean(!((Boolean) exp.reduceByNeed(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
     return newExp;
   }
 
