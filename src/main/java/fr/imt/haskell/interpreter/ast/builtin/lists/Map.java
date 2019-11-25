@@ -82,6 +82,6 @@ public final class Map extends UnaryExpression {
 
   @Override
   public String toString() {
-    return "(map " + exp + ")";
+    return "(map " + lambda + " " + exp + ")";
   }
 }
