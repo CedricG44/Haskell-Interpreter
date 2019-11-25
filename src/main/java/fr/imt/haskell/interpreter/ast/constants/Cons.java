@@ -46,23 +46,29 @@ public final class Cons extends List {
 
   @Override
   public Expression reduce(final Printer printer) {
-    return this;
+    if (printer.isPrintBelowList()) {
+      return new Cons(head.reduce(printer), tail.reduce(printer));
+    } else {
+      return this;
+    }
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    return this;
+    if (printer.isPrintBelowList()) {
+      return new Cons(head.reduceByValue(printer), tail.reduceByValue(printer));
+    } else {
+      return this;
+    }
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    return new Cons(head.reduceByNeed(printer), tail.reduceByNeed(printer));
-    //    return this;
-  }
-
-  @Override
-  public Expression reducePrinter(final Printer printer) {
-    return new Cons(head.reducePrinter(printer), tail.reducePrinter(printer));
+    if (printer.isPrintBelowList()) {
+      return new Cons(head.reduceByNeed(printer), tail.reduceByNeed(printer));
+    } else {
+      return this;
+    }
   }
 
   @Override

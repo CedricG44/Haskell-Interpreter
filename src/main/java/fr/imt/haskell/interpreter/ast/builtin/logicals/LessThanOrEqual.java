@@ -39,17 +39,6 @@ public class LessThanOrEqual extends BinaryExpression {
   }
 
   @Override
-  public Expression reducePrinter(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp =
-        new Boolean(
-            ((Number) expL.reducePrinter(printer)).getValue()
-                <= ((Number) expR.reducePrinter(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
-  }
-
-  @Override
   public Expression reduceByNeed(final Printer printer) {
     final String oldExp = toString();
     final Expression newExp =

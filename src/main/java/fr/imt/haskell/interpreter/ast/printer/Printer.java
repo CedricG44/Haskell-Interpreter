@@ -9,10 +9,13 @@ import java.util.AbstractMap;
 
 public class Printer {
 
+  private boolean printBelowList;
+
   private final Subject<String> root;
   public final Subject<AbstractMap.SimpleEntry<String, String>> changes;
 
-  public Printer(Expression root) {
+  public Printer(boolean printBelowList, Expression root) {
+    this.printBelowList = printBelowList;
     this.root = BehaviorSubject.createDefault(root.toString());
     changes = PublishSubject.create();
 
@@ -28,4 +31,8 @@ public class Printer {
         .distinctUntilChanged()
         .subscribe(System.out::println);
   }
+
+    public boolean isPrintBelowList() {
+        return printBelowList;
+    }
 }

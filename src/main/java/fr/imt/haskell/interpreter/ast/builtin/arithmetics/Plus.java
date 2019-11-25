@@ -49,17 +49,6 @@ public final class Plus extends BinaryExpression {
   }
 
   @Override
-  public Expression reducePrinter(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp =
-        new Number(
-            ((Number) expL.reducePrinter(printer)).getValue()
-                + ((Number) expR.reducePrinter(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
-  }
-
-  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Plus(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

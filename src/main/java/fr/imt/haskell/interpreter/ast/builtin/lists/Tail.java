@@ -40,14 +40,6 @@ public final class Tail extends UnaryExpression {
   }
 
   @Override
-  public Expression reducePrinter(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = ((List) exp.reducePrinter(printer)).tail();
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
-  }
-
-  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Tail(this.exp.instantiate(var, exp));
   }

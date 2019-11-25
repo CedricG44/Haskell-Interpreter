@@ -60,20 +60,6 @@ public final class Application extends Expression {
   }
 
   @Override
-  public Expression reducePrinter(final Printer printer) {
-    final String oldExp = toString();
-    final Lambda lambda = (Lambda) expL.reduce(printer);
-
-    final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-
-    final Expression newReducedExp = newExp.reducePrinter(printer);
-    printer.changes.onNext(
-        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
-    return newReducedExp;
-  }
-
-  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Application(expL.instantiate(var, exp), expR.instantiate(var, exp));
   }

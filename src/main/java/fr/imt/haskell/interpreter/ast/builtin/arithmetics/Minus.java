@@ -40,14 +40,6 @@ public final class Minus extends UnaryExpression {
   }
 
   @Override
-  public Expression reducePrinter(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(-((Number) exp.reducePrinter(printer)).getValue());
-    printer.changes.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
-  }
-
-  @Override
   public Expression instantiate(final Variable var, final Expression exp) {
     return new Minus(this.exp.instantiate(var, exp));
   }

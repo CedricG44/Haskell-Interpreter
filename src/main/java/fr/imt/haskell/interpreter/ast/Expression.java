@@ -17,9 +17,5 @@ public abstract class Expression {
     throw new UnsupportedOperationException("Weak Head Normal Form !");
   }
 
-  public Expression reducePrinter(final Printer printer) {
-    return this;
-  }
-
   public abstract Expression instantiate(final Variable var, final Expression exp);
 }
