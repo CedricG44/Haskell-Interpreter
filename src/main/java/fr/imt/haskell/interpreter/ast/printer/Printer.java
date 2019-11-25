@@ -6,6 +6,7 @@ import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.Subject;
 
 import java.util.AbstractMap;
+import java.util.regex.Pattern;
 
 public class Printer {
 
@@ -24,7 +25,8 @@ public class Printer {
             this.root,
             (changesValue, rootValue) -> {
               final String newRoot =
-                  rootValue.replace(changesValue.getKey(), changesValue.getValue());
+                  rootValue.replaceFirst(
+                      Pattern.quote(changesValue.getKey()), changesValue.getValue());
               this.root.onNext(newRoot);
               return newRoot;
             })
