@@ -5,7 +5,6 @@ import fr.imt.haskell.interpreter.ast.Expression;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
 import java.util.Objects;
 
 public class Pair extends Constant {
@@ -28,26 +27,26 @@ public class Pair extends Constant {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Pair(left.reduce(printer), right.reduce(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    if (printer.isPrintBelowList()) {
+      return new Pair(left.reduce(printer), right.reduce(printer));
+    }
+    return this;
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Pair(left.reduceByValue(printer), right.reduceByValue(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    if (printer.isPrintBelowList()) {
+      return new Pair(left.reduceByValue(printer), right.reduceByValue(printer));
+    }
+    return this;
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Pair(left.reduceByNeed(printer), right.reduceByNeed(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    if (printer.isPrintBelowList()) {
+      return new Pair(left.reduceByNeed(printer), right.reduceByNeed(printer));
+    }
+    return this;
   }
 
   @Override

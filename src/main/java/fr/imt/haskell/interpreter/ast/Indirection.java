@@ -13,12 +13,11 @@ public class Indirection extends Expression {
   @Override
   public Expression reduceByNeed(Printer printer) {
     exp = exp.reduceByNeed(printer);
-    return this.exp;
+    return exp;
   }
 
   @Override
   public Expression instantiate(Variable var, Expression exp) {
-//    return this.exp.instantiate(var, exp);
     return this;
   }
 

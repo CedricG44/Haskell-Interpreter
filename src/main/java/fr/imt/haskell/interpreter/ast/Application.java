@@ -20,13 +20,14 @@ public final class Application extends Expression {
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduce(printer);
+    final Expression reducedExp = new Application(lambda, expR);
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, reducedExp.toString()));
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), expR);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(reducedExp.toString(), newExp.toString()));
 
     final Expression newReducedExp = newExp.reduce(printer);
-    printer.onNext(
-        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 
@@ -34,14 +35,15 @@ public final class Application extends Expression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduceByValue(printer);
+    final Expression reducedExp = new Application(lambda, expR);
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, reducedExp.toString()));
 
     final Expression newExp =
         lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(reducedExp.toString(), newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByValue(printer);
-    printer.onNext(
-        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 
@@ -49,13 +51,14 @@ public final class Application extends Expression {
   public Expression reduceByNeed(Printer printer) {
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduceByNeed(printer);
+    final Expression reducedExp = new Application(lambda, expR);
+    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, reducedExp.toString()));
 
     final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), new Indirection(expR));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(reducedExp.toString(), newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByNeed(printer);
-    printer.onNext(
-        new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
+    printer.onNext(new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));
     return newReducedExp;
   }
 

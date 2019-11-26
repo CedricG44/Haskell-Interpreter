@@ -1,6 +1,8 @@
 package fr.imt.haskell.interpreter.ast.printer;
 
 import fr.imt.haskell.interpreter.ast.Expression;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.AbstractMap;
 
 public class Printer {
@@ -13,12 +15,12 @@ public class Printer {
     this.root = root.toString();
   }
 
-  public void onNext(AbstractMap.SimpleEntry<String, String> changes) {
-    final String oldRoot = this.root;
-    this.root = this.root.replace(changes.getKey(), changes.getValue());
+  public void onNext(final AbstractMap.SimpleEntry<String, String> changes) {
+    final String oldRoot = root;
+    root = StringUtils.replaceOnce(root, changes.getKey(), changes.getValue());
 
-    if (!(oldRoot.equals(this.root))) {
-      System.out.println(this.root);
+    if (!(oldRoot.equals(root))) {
+      System.out.println(root);
     }
   }
 

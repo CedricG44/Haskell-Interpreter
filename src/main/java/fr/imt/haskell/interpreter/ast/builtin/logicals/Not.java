@@ -6,8 +6,6 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** Not built-in functions. */
 public final class Not extends UnaryExpression {
 
@@ -17,26 +15,17 @@ public final class Not extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(!((Boolean) exp.reduce(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(!((Boolean) exp.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(!((Boolean) exp.reduceByValue(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(!((Boolean) exp.reduceByValue(printer)).getValue());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(!((Boolean) exp.reduceByNeed(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(!((Boolean) exp.reduceByNeed(printer)).getValue());
   }
 
   @Override

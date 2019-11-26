@@ -7,8 +7,6 @@ import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** List null built-in functions. */
 public final class Null extends UnaryExpression {
 
@@ -18,26 +16,17 @@ public final class Null extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(((List) exp.reduce(printer)).isEmpty());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(((List) exp.reduce(printer)).isEmpty());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Boolean(((List) exp.reduceByNeed(printer)).isEmpty());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(((List) exp.reduceByNeed(printer)).isEmpty());
   }
 
   @Override

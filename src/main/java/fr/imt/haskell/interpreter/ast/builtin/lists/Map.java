@@ -10,8 +10,6 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 import static fr.imt.haskell.interpreter.ast.constants.List.Cons;
 import static fr.imt.haskell.interpreter.ast.constants.List.Nil;
 
@@ -27,26 +25,17 @@ public final class Map extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = map(this.lambda, (List) exp).reduce(printer);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return map(this.lambda, (List) exp).reduce(printer);
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = map(this.lambda, (List) exp.reduceByValue(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return map(this.lambda, (List) exp.reduceByValue(printer));
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = map(this.lambda, (List) exp).reduceByNeed(printer);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return map(this.lambda, (List) exp).reduceByNeed(printer);
   }
 
   @Override

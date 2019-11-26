@@ -6,8 +6,6 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** Minus built-in functions. */
 public final class Minus extends UnaryExpression {
 
@@ -17,26 +15,17 @@ public final class Minus extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(-((Number) exp.reduce(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(-((Number) exp.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(-((Number) exp.reduceByValue(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(-((Number) exp.reduceByValue(printer)).getValue());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(-((Number) exp.reduceByNeed(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(-((Number) exp.reduceByNeed(printer)).getValue());
   }
 
   @Override

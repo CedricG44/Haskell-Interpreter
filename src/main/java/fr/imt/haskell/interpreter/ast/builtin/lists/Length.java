@@ -7,8 +7,6 @@ import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** List lentgth built-in functions. */
 public final class Length extends UnaryExpression {
 
@@ -18,26 +16,17 @@ public final class Length extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(((List) exp.reduce(printer)).length());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(((List) exp.reduce(printer)).length());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(((List) exp.reduceByValue(printer)).length());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(((List) exp.reduceByValue(printer)).length());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Number(((List) exp.reduceByNeed(printer)).length());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Number(((List) exp.reduceByNeed(printer)).length());
   }
 
   @Override

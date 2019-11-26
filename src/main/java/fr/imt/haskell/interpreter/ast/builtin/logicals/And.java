@@ -6,8 +6,6 @@ import fr.imt.haskell.interpreter.ast.builtin.BinaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.Boolean;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** And built-in functions. */
 public final class And extends BinaryExpression {
 
@@ -17,35 +15,22 @@ public final class And extends BinaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp =
-        new Boolean(
-            ((Boolean) expL.reduce(printer)).getValue()
-                && ((Boolean) expR.reduce(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(
+        ((Boolean) expL.reduce(printer)).getValue() && ((Boolean) expR.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp =
-        new Boolean(
-            ((Boolean) expL.reduceByValue(printer)).getValue()
-                && ((Boolean) expR.reduceByValue(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(
+        ((Boolean) expL.reduceByValue(printer)).getValue()
+            && ((Boolean) expR.reduceByValue(printer)).getValue());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp =
-        new Boolean(
-            ((Boolean) expL.reduceByNeed(printer)).getValue()
-                && ((Boolean) expR.reduceByNeed(printer)).getValue());
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Boolean(
+        ((Boolean) expL.reduceByNeed(printer)).getValue()
+            && ((Boolean) expR.reduceByNeed(printer)).getValue());
   }
 
   @Override

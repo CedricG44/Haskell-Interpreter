@@ -110,6 +110,16 @@ public class ExpressionTest {
             new ConditionalExpression(
                 new Not(new Equal(new Number(20), new Number(20))),
                 new Number(42),
+                new ConditionalExpression(
+                    new Not(new Equal(new Number(20), new Number(20))),
+                    new Number(42),
+                    new Number(666))),
+            new Number(666)
+          },
+          {
+            new ConditionalExpression(
+                new Not(new Equal(new Number(20), new Number(20))),
+                new Number(42),
                 new Application(
                     new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
                     new Number(5))),
@@ -151,7 +161,7 @@ public class ExpressionTest {
     System.out.println("\nExpression to reduce: " + exp + "\n");
     System.out.println(exp);
     try {
-      final Expression reducedExp = exp.reduce(new Printer(false, exp));
+      final Expression reducedExp = exp.reduceByValue(new Printer(true, exp));
       System.out.println(reducedExp);
       assertEquals(expectedExp, reducedExp);
     } catch (Exception ex) {

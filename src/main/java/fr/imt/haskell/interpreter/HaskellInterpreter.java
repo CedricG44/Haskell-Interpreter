@@ -29,10 +29,10 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    //    reduce(
-    //        new Application(
-    //            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
-    //            new Plus(new Number(5), new Number(2))));
+    reduce(
+        new Application(
+            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+            new Plus(new Number(5), new Number(2))));
     /*
 
     reduce(
@@ -82,9 +82,8 @@ public class HaskellInterpreter {
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-    //    reduce(
-    //        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new
-    // Number(1)))));
+    reduce(
+        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
 
     // TODO: find the trick
     //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
@@ -125,7 +124,7 @@ public class HaskellInterpreter {
                                     new Plus(new Variable("n"), new Minus(new Number(1))))))))),
             new Number(5));
 
-    reduce(exp3);
+    // reduce(exp3);
   }
 
   private static Expression infiniteList() {
@@ -136,7 +135,7 @@ public class HaskellInterpreter {
     System.out.println("\nExpression to reduce: " + exp + "\n");
     System.out.println(exp);
 
-    final Expression result = exp.reduceByNeed(new Printer(true, exp));
+    final Expression result = exp.reduce(new Printer(true, exp));
     System.out.println("Résultat: " + result);
   }
 

@@ -6,8 +6,6 @@ import fr.imt.haskell.interpreter.ast.builtin.UnaryExpression;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** List tail built-in functions. */
 public final class Tail extends UnaryExpression {
 
@@ -17,26 +15,17 @@ public final class Tail extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = ((List) exp.reduce(printer)).tail();
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return ((List) exp.reduce(printer)).tail();
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = ((List) exp.reduceByValue(printer)).tail();
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return ((List) exp.reduceByValue(printer)).tail();
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = ((List) exp.reduceByNeed(printer)).tail();
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return ((List) exp.reduceByNeed(printer)).tail();
   }
 
   @Override

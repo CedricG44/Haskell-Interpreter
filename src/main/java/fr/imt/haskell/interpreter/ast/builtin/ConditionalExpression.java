@@ -23,10 +23,20 @@ public final class ConditionalExpression extends Expression {
   @Override
   public Expression reduce(final Printer printer) {
     final String oldExp = toString();
-    final Expression newExp =
-        ((Boolean) cond.reduce(printer)).getValue() ? expL.reduce(printer) : expR.reduce(printer);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    final Expression reducedCond = cond.reduce(printer);
+    printer.onNext(
+        new AbstractMap.SimpleEntry<>(
+            oldExp, new ConditionalExpression(reducedCond, expL, expR).toString()));
+
+    if (((Boolean) reducedCond).getValue()) {
+      final Expression newExp = expL.reduce(printer);
+      printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+      return newExp;
+    } else {
+      final Expression newExp = expR.reduce(printer);
+      printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
+      return newExp;
+    }
   }
 
   @Override
