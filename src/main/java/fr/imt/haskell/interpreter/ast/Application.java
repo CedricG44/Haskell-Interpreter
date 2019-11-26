@@ -35,12 +35,14 @@ public final class Application extends Expression {
   public Expression reduceByValue(final Printer printer) {
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduceByValue(printer);
-    final Expression reducedExp = new Application(lambda, expR);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, reducedExp.toString()));
+    final Expression reducedExpR = expR.reduceByValue(printer);
+    printer.onNext(
+        new AbstractMap.SimpleEntry<>(oldExp, new Application(expL, reducedExpR).toString()));
 
-    final Expression newExp =
-        lambda.getExp().instantiate(lambda.getVar(), expR.reduceByValue(printer));
-    printer.onNext(new AbstractMap.SimpleEntry<>(reducedExp.toString(), newExp.toString()));
+    final Expression newExp = lambda.getExp().instantiate(lambda.getVar(), reducedExpR);
+    printer.onNext(
+        new AbstractMap.SimpleEntry<>(
+            new Application(expL, reducedExpR).toString(), newExp.toString()));
 
     final Expression newReducedExp = newExp.reduceByValue(printer);
     printer.onNext(new AbstractMap.SimpleEntry<>(newExp.toString(), newReducedExp.toString()));

@@ -29,10 +29,10 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    reduce(
-        new Application(
-            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
-            new Plus(new Number(5), new Number(2))));
+    //    reduce(
+    //        new Application(
+    //            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+    //            new Plus(new Number(5), new Number(2))));
     /*
 
     reduce(
@@ -43,16 +43,40 @@ public class HaskellInterpreter {
                     new Application(
                         new Lambda(new Variable("y"), new Minus(new Variable("y"))), new Number(5)),
                     new Variable("z"))),
-            new Number(42)));
+            new Number(42)));*/
 
-    reduce(
+    final Expression exp1 =
         new Application(
             new Application(
-                new Lambda(new Variable("x"), new Variable("x")),
-                new Lambda(new Variable("y"), new Variable("y"))),
-            new Lambda(new Variable("z"), new Variable("z"))));
+                new Lambda(new Variable("w"), new Variable("w")),
+                new Application(
+                    new Lambda(
+                        new Variable("x"), new Application(new Variable("x"), new Variable("x"))),
+                    new Lambda(new Variable("y"), new Variable("y")))),
+            new Lambda(new Variable("z"), new Variable("z")));
 
-    reduce(new Equal(new Minus(new Minus(new Number(5))), new Number(5)));*/
+    //    final Expression exp56 =
+    //        new Application(
+    //            new Application(
+    //                new Lambda(new Variable("x"), new Variable("x")),
+    //                new Lambda(
+    //                    new Variable("y"), new Application(new Variable("y"), new
+    // Variable("y")))),
+    //            new Lambda(new Variable("z"), new Variable("z")));
+
+    final Expression exp54 =
+        new Application(
+            new Application(
+                new Lambda(new Variable("w"), new Variable("w")),
+                new Lambda(
+                    new Variable("x"), new Application(new Variable("x"), new Variable("x")))),
+            new Application(
+                new Lambda(new Variable("y"), new Variable("y")),
+                new Lambda(new Variable("z"), new Variable("z"))));
+
+    reduce(exp54, true);
+    reduceByValue(exp54, true);
+    reduceByNeed(exp54, true);
 
     final Expression factorial =
         new Lambda(
@@ -82,8 +106,9 @@ public class HaskellInterpreter {
     reduce(new Head(list));
     reduce(new Length(list));
     reduce(new Equal(new Head(list), new Number(1)));*/
-    reduce(
-        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1)))));
+    final Expression mapExp =
+        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))));
+    //    reduce(mapExp, true);
 
     // TODO: find the trick
     //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
@@ -97,7 +122,7 @@ public class HaskellInterpreter {
     reduce(new Tail(listList));
     reduce(new Length(listList));*/
 
-    Expression exp1 = Cons(new Plus(new Number(1), new Number(2)), Nil());
+    Expression expCons = Cons(new Plus(new Number(1), new Number(2)), Nil());
     Expression exp2 = infiniteList();
     Expression exp3 = insert(new Number(3), list);
     Expression exp4 =
@@ -131,11 +156,27 @@ public class HaskellInterpreter {
     return new Recursion(new Lambda(new Variable("inf"), Cons(new Number(1), new Variable("inf"))));
   }
 
-  public static void reduce(final Expression exp) {
-    System.out.println("\nExpression to reduce: " + exp + "\n");
+  public static void reduce(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by name: " + exp + "\n");
     System.out.println(exp);
 
-    final Expression result = exp.reduce(new Printer(true, exp));
+    final Expression result = exp.reduce(new Printer(printBelowList, exp));
+    System.out.println("Résultat: " + result);
+  }
+
+  public static void reduceByValue(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by value: " + exp + "\n");
+    System.out.println(exp);
+
+    final Expression result = exp.reduceByValue(new Printer(printBelowList, exp));
+    System.out.println("Résultat: " + result);
+  }
+
+  public static void reduceByNeed(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by need: " + exp + "\n");
+    System.out.println(exp);
+
+    final Expression result = exp.reduceByNeed(new Printer(printBelowList, exp));
     System.out.println("Résultat: " + result);
   }
 
