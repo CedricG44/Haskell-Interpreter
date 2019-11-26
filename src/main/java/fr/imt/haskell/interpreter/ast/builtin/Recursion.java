@@ -6,8 +6,6 @@ import fr.imt.haskell.interpreter.ast.Lambda;
 import fr.imt.haskell.interpreter.ast.Variable;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
-import java.util.AbstractMap;
-
 /** Recursive built-in functions (fixpoint combinator). */
 public final class Recursion extends Expression {
 
@@ -26,19 +24,13 @@ public final class Recursion extends Expression {
   public Expression reduceByValue(final Printer printer) {
     // Y combinator strict
     // Y(f) = x -> f(Y(f), x)
-    final String oldExp = toString();
-    final Expression newExp =
-        new Lambda(new Variable("x"), new Application(new Application(h, this), new Variable("x")));
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Lambda(
+        new Variable("x"), new Application(new Application(h, this), new Variable("x")));
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
-    final String oldExp = toString();
-    final Expression newExp = new Application(h, this).reduceByNeed(printer);
-    printer.onNext(new AbstractMap.SimpleEntry<>(oldExp, newExp.toString()));
-    return newExp;
+    return new Application(h, this).reduceByNeed(printer);
   }
 
   @Override

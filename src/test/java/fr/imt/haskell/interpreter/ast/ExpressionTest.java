@@ -161,7 +161,7 @@ public class ExpressionTest {
     System.out.println("\nExpression to reduce: " + exp + "\n");
     System.out.println(exp);
     try {
-      final Expression reducedExp = exp.reduceByValue(new Printer(true, exp));
+      final Expression reducedExp = exp.reduce(new Printer(true, exp));
       System.out.println(reducedExp);
       assertEquals(expectedExp, reducedExp);
     } catch (Exception ex) {
