@@ -18,6 +18,7 @@ public final class Application extends Expression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduce(printer);
     final Expression reducedExp = new Application(lambda, expR);
@@ -33,6 +34,7 @@ public final class Application extends Expression {
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduceByValue(printer);
     final Expression reducedExpR = expR.reduceByValue(printer);
@@ -51,6 +53,7 @@ public final class Application extends Expression {
 
   @Override
   public Expression reduceByNeed(Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Lambda lambda = (Lambda) expL.reduceByNeed(printer);
     final Expression reducedExp = new Application(lambda, expR);

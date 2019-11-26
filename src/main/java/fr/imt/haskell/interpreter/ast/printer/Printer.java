@@ -8,6 +8,7 @@ import java.util.AbstractMap;
 public class Printer {
 
   private boolean printBelowList;
+  private int reductionSteps = 0;
   private String root;
 
   public Printer(boolean printBelowList, Expression root) {
@@ -26,5 +27,13 @@ public class Printer {
 
   public boolean isPrintBelowList() {
     return printBelowList;
+  }
+
+  public void incrementSteps() {
+    reductionSteps++;
+  }
+
+  public int getReductionSteps() {
+    return reductionSteps;
   }
 }

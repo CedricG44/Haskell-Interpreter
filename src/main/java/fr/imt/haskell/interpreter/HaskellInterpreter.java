@@ -10,7 +10,7 @@ import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Minus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Plus;
 import fr.imt.haskell.interpreter.ast.builtin.arithmetics.Times;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Head;
-import fr.imt.haskell.interpreter.ast.builtin.lists.Map;
+import fr.imt.haskell.interpreter.ast.builtin.lists.Length;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Null;
 import fr.imt.haskell.interpreter.ast.builtin.lists.Tail;
 import fr.imt.haskell.interpreter.ast.builtin.logicals.Equal;
@@ -19,6 +19,8 @@ import fr.imt.haskell.interpreter.ast.builtin.logicals.LessThanOrEqual;
 import fr.imt.haskell.interpreter.ast.constants.List;
 import fr.imt.haskell.interpreter.ast.constants.Number;
 import fr.imt.haskell.interpreter.ast.printer.Printer;
+
+import java.util.ArrayList;
 
 import static fr.imt.haskell.interpreter.ast.constants.List.Cons;
 import static fr.imt.haskell.interpreter.ast.constants.List.Nil;
@@ -29,42 +31,10 @@ public class HaskellInterpreter {
   public static void main(String[] args) {
     System.out.println("HaskellInterpreter !\n");
 
-    //    reduce(
-    //        new Application(
-    //            new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
-    //            new Plus(new Number(5), new Number(2))));
-    /*
+    final ArrayList<Expression> expressions = new ArrayList<>();
 
-    reduce(
-        new Application(
-            new Lambda(
-                new Variable("z"),
-                new Plus(
-                    new Application(
-                        new Lambda(new Variable("y"), new Minus(new Variable("y"))), new Number(5)),
-                    new Variable("z"))),
-            new Number(42)));*/
-
-    final Expression exp1 =
-        new Application(
-            new Application(
-                new Lambda(new Variable("w"), new Variable("w")),
-                new Application(
-                    new Lambda(
-                        new Variable("x"), new Application(new Variable("x"), new Variable("x"))),
-                    new Lambda(new Variable("y"), new Variable("y")))),
-            new Lambda(new Variable("z"), new Variable("z")));
-
-    //    final Expression exp56 =
-    //        new Application(
-    //            new Application(
-    //                new Lambda(new Variable("x"), new Variable("x")),
-    //                new Lambda(
-    //                    new Variable("y"), new Application(new Variable("y"), new
-    // Variable("y")))),
-    //            new Lambda(new Variable("z"), new Variable("z")));
-
-    final Expression exp54 =
+    // (((\w -> w) (\x -> (x x))) ((\y -> y) (\z -> z)))
+    expressions.add(
         new Application(
             new Application(
                 new Lambda(new Variable("w"), new Variable("w")),
@@ -72,115 +42,92 @@ public class HaskellInterpreter {
                     new Variable("x"), new Application(new Variable("x"), new Variable("x")))),
             new Application(
                 new Lambda(new Variable("y"), new Variable("y")),
-                new Lambda(new Variable("z"), new Variable("z"))));
-
-    reduce(exp54, true);
-    reduceByValue(exp54, true);
-    reduceByNeed(exp54, true);
-
-    final Expression factorial =
-        new Lambda(
-            new Variable("fac"),
-            new Lambda(
-                new Variable("n"),
-                new ConditionalExpression(
-                    new Equal(new Variable("n"), new Number(0)),
-                    new Number(1),
-                    new Times(
-                        new Variable("n"),
-                        new Application(
-                            new Variable("fac"),
-                            new Plus(new Variable("n"), new Minus(new Number(1))))))));
-
-    /*reduce(new Application(new Recursion(factorial), new Number(1)));*/
+                new Lambda(new Variable("z"), new Variable("z")))));
 
     final List list =
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(4), Cons(new Number(5), Nil()))));
-
     final List listUnordered =
         Cons(new Number(2), Cons(new Number(1), Cons(new Number(5), Cons(new Number(4), Nil()))));
 
-    /*    reduce(new Head(list));
-    reduce(new Tail(list));
-    reduce(new Null(list));
-    reduce(new Head(list));
-    reduce(new Length(list));
-    reduce(new Equal(new Head(list), new Number(1)));*/
-    final Expression mapExp =
-        new Map(list, new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))));
-    //    reduce(mapExp, true);
+    expressions.add(new Tail(list));
+    expressions.add(new Null(list));
+    expressions.add(new Head(list));
+    expressions.add(new Length(list));
+    expressions.add(new Equal(new Head(list), new Number(1)));
+    expressions.add(
+        myMap(new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))), list));
+    expressions.add(myInsert(new Number(3), list));
+    expressions.add(myTake(new Number(2), list));
+    // expressions.add(mySort(listUnordered));
 
-    // TODO: find the trick
-    //    reduce(new Map(list, new Plus(new Variable("x"), new Number(1))));
+    reduceByName(infiniteList(), false);
+    reduceByValue(infiniteList(), false);
+    reduceByNeed(infiniteList(), false);
+    // reduceByName(infiniteList(), true);
+    // reduceByValue(infiniteList(), true);
+    // reduceByNeed(infiniteList(), true);
 
-    /*    final List<List<Number>> listList =
-        Cons(
-            Cons(new Number(1), Cons(new Number(2), Nil())),
-            Cons(Cons(new Number(3), Nil()), Nil()));
+    expressions.forEach(
+        exp -> {
+          reduceByName(exp, true);
+          reduceByValue(exp, true);
+          reduceByNeed(exp, true);
+        });
+  }
 
-    reduce(new Head(listList));
-    reduce(new Tail(listList));
-    reduce(new Length(listList));*/
+  private static void reduceByName(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by name: " + exp + "\n");
+    System.out.println(exp);
 
-    Expression expCons = Cons(new Plus(new Number(1), new Number(2)), Nil());
-    Expression exp2 = infiniteList();
-    Expression exp3 = insert(new Number(3), list);
-    Expression exp4 =
-        map(new Lambda(new Variable("x"), new Plus(new Variable("x"), new Number(1))), list);
-    // TODO: fix
-    Expression exp5 = sort(listUnordered);
-    Expression exp6 = take(new Number(2), list);
-    Expression exp7 = take(new Number(3), infiniteList());
+    final Printer printer = new Printer(printBelowList, exp);
+    final Expression result = exp.reduce(printer);
+    System.out.println("Result: " + result);
+    System.out.println("Reduction steps: " + printer.getReductionSteps() + "\n");
+  }
 
-    Expression exp =
-        new Application(
-            new Recursion(
+  private static void reduceByValue(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by value: " + exp + "\n");
+    System.out.println(exp);
+
+    final Printer printer = new Printer(printBelowList, exp);
+    final Expression result = exp.reduceByValue(printer);
+    System.out.println("Result: " + result);
+    System.out.println("Reduction steps: " + printer.getReductionSteps() + "\n");
+  }
+
+  private static void reduceByNeed(final Expression exp, boolean printBelowList) {
+    System.out.println("\nExpression to reduce by need: " + exp + "\n");
+    System.out.println(exp);
+
+    final Printer printer = new Printer(printBelowList, exp);
+    final Expression result = exp.reduceByNeed(printer);
+    System.out.println("Result: " + result);
+    System.out.println("Reduction steps: " + printer.getReductionSteps() + "\n");
+  }
+
+  private static Expression factorial(final int value) {
+    return new Application(
+        new Recursion(
+            new Lambda(
+                new Variable("fac"),
                 new Lambda(
-                    new Variable("fac"),
-                    new Lambda(
-                        new Variable("n"),
-                        new ConditionalExpression(
-                            new Equal(new Variable("n"), new Number(0)),
-                            new Number(1),
-                            new Times(
-                                new Variable("n"),
-                                new Application(
-                                    new Variable("fac"),
-                                    new Plus(new Variable("n"), new Minus(new Number(1))))))))),
-            new Number(5));
-
-    // reduce(exp3);
+                    new Variable("n"),
+                    new ConditionalExpression(
+                        new Equal(new Variable("n"), new Number(0)),
+                        new Number(1),
+                        new Times(
+                            new Variable("n"),
+                            new Application(
+                                new Variable("fac"),
+                                new Plus(new Variable("n"), new Minus(new Number(1))))))))),
+        new Number(value));
   }
 
   private static Expression infiniteList() {
     return new Recursion(new Lambda(new Variable("inf"), Cons(new Number(1), new Variable("inf"))));
   }
 
-  public static void reduce(final Expression exp, boolean printBelowList) {
-    System.out.println("\nExpression to reduce by name: " + exp + "\n");
-    System.out.println(exp);
-
-    final Expression result = exp.reduce(new Printer(printBelowList, exp));
-    System.out.println("Résultat: " + result);
-  }
-
-  public static void reduceByValue(final Expression exp, boolean printBelowList) {
-    System.out.println("\nExpression to reduce by value: " + exp + "\n");
-    System.out.println(exp);
-
-    final Expression result = exp.reduceByValue(new Printer(printBelowList, exp));
-    System.out.println("Résultat: " + result);
-  }
-
-  public static void reduceByNeed(final Expression exp, boolean printBelowList) {
-    System.out.println("\nExpression to reduce by need: " + exp + "\n");
-    System.out.println(exp);
-
-    final Expression result = exp.reduceByNeed(new Printer(printBelowList, exp));
-    System.out.println("Résultat: " + result);
-  }
-
-  private static Expression insert(final Expression element, final Expression list) {
+  private static Expression myInsert(final Expression element, final Expression list) {
     return new Application(
         new Application(
             new Recursion(
@@ -211,7 +158,7 @@ public class HaskellInterpreter {
         list);
   }
 
-  private static Expression sort(final Expression list) {
+  private static Expression mySort(final Expression list) {
     return new Application(
         new Recursion(
             new Lambda(
@@ -221,14 +168,14 @@ public class HaskellInterpreter {
                     new ConditionalExpression(
                         new Null(new Variable("list")),
                         Nil(),
-                        insert(
+                        myInsert(
                             new Head(new Variable("list")),
                             new Application(
                                 new Variable("sort"), new Tail(new Variable("list")))))))),
         list);
   }
 
-  private static Expression map(final Lambda lambda, final Expression list) {
+  private static Expression myMap(final Lambda lambda, final Expression list) {
     return new Application(
         new Application(
             new Recursion(
@@ -252,7 +199,7 @@ public class HaskellInterpreter {
         list);
   }
 
-  private static Expression take(final Number index, final Expression list) {
+  private static Expression myTake(final Number index, final Expression list) {
     return new Application(
         new Application(
             new Recursion(

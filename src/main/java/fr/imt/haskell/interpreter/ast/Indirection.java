@@ -2,22 +2,23 @@ package fr.imt.haskell.interpreter.ast;
 
 import fr.imt.haskell.interpreter.ast.printer.Printer;
 
+/** Indirection wrapper for call by need. */
 public class Indirection extends Expression {
 
-  Expression exp;
+  private Expression exp;
 
   public Indirection(Expression exp) {
     this.exp = exp;
   }
 
   @Override
-  public Expression reduceByNeed(Printer printer) {
+  public Expression reduceByNeed(final Printer printer) {
     exp = exp.reduceByNeed(printer);
     return exp;
   }
 
   @Override
-  public Expression instantiate(Variable var, Expression exp) {
+  public Expression instantiate(final Variable var, final Expression exp) {
     return this;
   }
 
