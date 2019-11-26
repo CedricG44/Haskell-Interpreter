@@ -15,16 +15,19 @@ public final class Equal extends BinaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(expL.reduce(printer).equals(expR.reduce(printer)));
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(expL.reduceByValue(printer).equals(expR.reduceByValue(printer)));
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(expL.reduceByNeed(printer).equals(expR.reduceByNeed(printer)));
   }
 

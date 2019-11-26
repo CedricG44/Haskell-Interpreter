@@ -16,16 +16,19 @@ public final class Null extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(((List) exp.reduce(printer)).isEmpty());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(((List) exp.reduceByValue(printer)).isEmpty());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(((List) exp.reduceByNeed(printer)).isEmpty());
   }
 

@@ -15,16 +15,19 @@ public final class Not extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(!((Boolean) exp.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(!((Boolean) exp.reduceByValue(printer)).getValue());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(!((Boolean) exp.reduceByNeed(printer)).getValue());
   }
 

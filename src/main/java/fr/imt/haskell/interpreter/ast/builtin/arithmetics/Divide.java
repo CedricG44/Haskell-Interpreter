@@ -15,12 +15,14 @@ public final class Divide extends BinaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Number(
         ((Number) expL.reduce(printer)).getValue() / ((Number) expR.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Number(
         ((Number) expL.reduceByValue(printer)).getValue()
             / ((Number) expR.reduceByValue(printer)).getValue());
@@ -28,6 +30,7 @@ public final class Divide extends BinaryExpression {
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Number(
         ((Number) expL.reduceByNeed(printer)).getValue()
             / ((Number) expR.reduceByNeed(printer)).getValue());

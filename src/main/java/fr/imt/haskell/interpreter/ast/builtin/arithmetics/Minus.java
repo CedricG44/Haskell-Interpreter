@@ -15,16 +15,19 @@ public final class Minus extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Number(-((Number) exp.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Number(-((Number) exp.reduceByValue(printer)).getValue());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Number(-((Number) exp.reduceByNeed(printer)).getValue());
   }
 

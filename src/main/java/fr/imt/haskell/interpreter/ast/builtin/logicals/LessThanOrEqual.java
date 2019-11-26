@@ -16,12 +16,14 @@ public class LessThanOrEqual extends BinaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Number) expL.reduce(printer)).getValue() <= ((Number) expR.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Number) expL.reduceByValue(printer)).getValue()
             <= ((Number) expR.reduceByValue(printer)).getValue());
@@ -29,6 +31,7 @@ public class LessThanOrEqual extends BinaryExpression {
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Number) expL.reduceByNeed(printer)).getValue()
             <= ((Number) expR.reduceByNeed(printer)).getValue());

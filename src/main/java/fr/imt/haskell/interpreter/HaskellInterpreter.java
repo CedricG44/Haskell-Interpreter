@@ -44,6 +44,13 @@ public class HaskellInterpreter {
                 new Lambda(new Variable("y"), new Variable("y")),
                 new Lambda(new Variable("z"), new Variable("z")))));
 
+    expressions.add(
+        new Application(
+            new Lambda(new Variable("x"), new Times(new Variable("x"), new Number(2))),
+            new Application(
+                new Lambda(new Variable("x"), new Plus(new Variable("x"), new Variable("x"))),
+                new Plus(new Number(5), new Number(2)))));
+
     final List list =
         Cons(new Number(1), Cons(new Number(2), Cons(new Number(4), Cons(new Number(5), Nil()))));
     final List listUnordered =
@@ -60,9 +67,9 @@ public class HaskellInterpreter {
     expressions.add(myTake(new Number(2), list));
     // expressions.add(mySort(listUnordered));
 
-    reduceByName(infiniteList(), false);
-    reduceByValue(infiniteList(), false);
-    reduceByNeed(infiniteList(), false);
+//    reduceByName(infiniteList(), false);
+//    reduceByValue(infiniteList(), false);
+//    reduceByNeed(infiniteList(), false);
     // reduceByName(infiniteList(), true);
     // reduceByValue(infiniteList(), true);
     // reduceByNeed(infiniteList(), true);

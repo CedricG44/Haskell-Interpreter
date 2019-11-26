@@ -15,12 +15,14 @@ public final class Or extends BinaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Boolean) expL.reduce(printer)).getValue() || ((Boolean) expR.reduce(printer)).getValue());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Boolean) expL.reduceByValue(printer)).getValue()
             || ((Boolean) expR.reduceByValue(printer)).getValue());
@@ -28,6 +30,7 @@ public final class Or extends BinaryExpression {
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Boolean(
         ((Boolean) expL.reduceByNeed(printer)).getValue()
             || ((Boolean) expR.reduceByNeed(printer)).getValue());

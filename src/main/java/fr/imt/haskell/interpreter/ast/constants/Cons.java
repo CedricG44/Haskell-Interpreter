@@ -42,6 +42,7 @@ public final class Cons extends List {
   @Override
   public Expression reduce(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Cons(head.reduce(printer), tail.reduce(printer));
     }
     return this;
@@ -50,6 +51,7 @@ public final class Cons extends List {
   @Override
   public Expression reduceByValue(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Cons(head.reduceByValue(printer), tail.reduceByValue(printer));
     }
     return this;
@@ -58,6 +60,7 @@ public final class Cons extends List {
   @Override
   public Expression reduceByNeed(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Cons(head.reduceByNeed(printer), tail.reduceByNeed(printer));
     }
     return this;

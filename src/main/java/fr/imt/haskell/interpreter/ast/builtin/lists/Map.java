@@ -25,16 +25,19 @@ public final class Map extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return map(this.lambda, (List) exp).reduce(printer);
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return map(this.lambda, (List) exp.reduceByValue(printer));
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return map(this.lambda, (List) exp).reduceByNeed(printer);
   }
 

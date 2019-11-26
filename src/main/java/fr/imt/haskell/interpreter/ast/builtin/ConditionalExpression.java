@@ -22,6 +22,7 @@ public final class ConditionalExpression extends Expression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Expression reducedCond = cond.reduce(printer);
     printer.onNext(
@@ -41,6 +42,7 @@ public final class ConditionalExpression extends Expression {
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduceByValue(printer)).getValue()
@@ -52,6 +54,7 @@ public final class ConditionalExpression extends Expression {
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     final String oldExp = toString();
     final Expression newExp =
         ((Boolean) cond.reduceByNeed(printer)).getValue()

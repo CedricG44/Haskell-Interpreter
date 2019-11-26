@@ -28,6 +28,7 @@ public class Pair extends Constant {
   @Override
   public Expression reduce(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Pair(left.reduce(printer), right.reduce(printer));
     }
     return this;
@@ -36,6 +37,7 @@ public class Pair extends Constant {
   @Override
   public Expression reduceByValue(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Pair(left.reduceByValue(printer), right.reduceByValue(printer));
     }
     return this;
@@ -44,6 +46,7 @@ public class Pair extends Constant {
   @Override
   public Expression reduceByNeed(final Printer printer) {
     if (printer.isPrintBelowList()) {
+      printer.incrementSteps();
       return new Pair(left.reduceByNeed(printer), right.reduceByNeed(printer));
     }
     return this;

@@ -15,16 +15,19 @@ public class Snd extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return ((Pair) exp.reduce(printer)).second();
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return ((Pair) exp.reduceByValue(printer)).first();
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return ((Pair) exp.reduceByNeed(printer)).second();
   }
 

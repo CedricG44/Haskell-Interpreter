@@ -15,16 +15,19 @@ public final class Head extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return ((List) exp.reduce(printer)).head();
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return ((List) exp.reduceByValue(printer)).head();
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return ((List) exp.reduceByNeed(printer)).head();
   }
 

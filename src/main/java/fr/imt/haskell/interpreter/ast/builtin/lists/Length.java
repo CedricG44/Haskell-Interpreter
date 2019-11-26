@@ -16,16 +16,19 @@ public final class Length extends UnaryExpression {
 
   @Override
   public Expression reduce(final Printer printer) {
+    printer.incrementSteps();
     return new Number(((List) exp.reduce(printer)).length());
   }
 
   @Override
   public Expression reduceByValue(final Printer printer) {
+    printer.incrementSteps();
     return new Number(((List) exp.reduceByValue(printer)).length());
   }
 
   @Override
   public Expression reduceByNeed(final Printer printer) {
+    printer.incrementSteps();
     return new Number(((List) exp.reduceByNeed(printer)).length());
   }
 
